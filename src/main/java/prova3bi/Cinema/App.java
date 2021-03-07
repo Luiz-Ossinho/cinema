@@ -5,6 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import prova3bi.Cinema.Data.DBContext;
+import prova3bi.Cinema.Data.Repositories.LoginRepository;
+import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Domain.Interfaces.ILoginRepository;
 
 import java.io.IOException;
 
@@ -32,6 +36,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+    	ILoginRepository loginRepo = new LoginRepository(new DBContext());
+    	loginRepo.Add(new Login("Usuario1", "SenhaDigitda123"));
+    	var login = loginRepo.Get("Usuario1");
         launch();
     }
 
