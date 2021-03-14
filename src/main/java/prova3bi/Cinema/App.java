@@ -47,7 +47,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
     	ILoginRepository loginRepo = new LoginRepository(new DBContext());
-    	loginRepo.Add(new Login("Usuario1", "SenhaDigitda123"));
+    	loginRepo.Add(new Login("Usuario1", "SenhaDigitda123", NivelPermissao.Admin));
     	var login = loginRepo.Get("Usuario1");
     	System.out.println(Login.Hash("123"));
     	
