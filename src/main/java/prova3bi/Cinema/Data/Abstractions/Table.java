@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 public @interface Table {
 	String nome();
 
-	String[] fks();
+	String[] fks() default {};
 }

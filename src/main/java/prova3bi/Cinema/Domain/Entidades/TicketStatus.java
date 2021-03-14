@@ -1,15 +1,16 @@
 package prova3bi.Cinema.Domain.Entidades;
 
-public enum TicketStatus {
-	Pendente(false), Pago(true);
+public enum TicketStatus implements IEnumColumn {
+	Pendente(1), Quitado(2);
 
-	TicketStatus(boolean value) {
+	TicketStatus(int value) {
 		this.value = value;
 	}
 
-	private boolean value;
+	private int value;
 
-	public boolean getValue() {
+	@Override
+	public int valor() {
 		return value;
 	}
 

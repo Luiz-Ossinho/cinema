@@ -1,9 +1,9 @@
 package prova3bi.Cinema.Domain.Entidades;
 
-public class Posicao {
+public class PosicaoObsolete {
 	private int coluna;
 	private char linha;
-	public Posicao(int coluna, char linha) {
+	public PosicaoObsolete(int coluna, char linha) {
 		this.coluna = coluna;
 		this.linha = linha;
 	}

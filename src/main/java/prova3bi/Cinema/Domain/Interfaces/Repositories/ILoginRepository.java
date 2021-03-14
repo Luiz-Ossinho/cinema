@@ -1,4 +1,4 @@
-package prova3bi.Cinema.Domain.Interfaces;
+package prova3bi.Cinema.Domain.Interfaces.Repositories;
 
 import prova3bi.Cinema.Domain.Entidades.Login;
 

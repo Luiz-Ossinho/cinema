@@ -4,7 +4,7 @@ import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
 import prova3bi.Cinema.Data.Abstractions.QueryComand;
 import prova3bi.Cinema.Domain.Entidades.Login;
-import prova3bi.Cinema.Domain.Interfaces.ILoginRepository;
+import prova3bi.Cinema.Domain.Interfaces.Repositories.ILoginRepository;
 
 public class LoginRepository implements ILoginRepository {
 
@@ -26,7 +26,8 @@ public class LoginRepository implements ILoginRepository {
 	public int Add(Login entidade) {
 		Query<Login> query =  new Query<Login>(QueryComand.Insert, Login.class)
 				.value(entidade.user, "user")
-				.value(entidade.hash, "hash");
+				.value(entidade.hash, "hash")
+				.value(entidade.nivelPermissao, "nivelPermissao");
 
 		return context.execute(query);
 	}

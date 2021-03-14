@@ -1,6 +1,6 @@
 package prova3bi.Cinema.Domain.Entidades;
 
-public enum TipoSala {
+public enum TipoSala implements IEnumColumn {
 	DBox(1), XD(2), Prime(3);
 
 	TipoSala(int value) {
@@ -9,8 +9,8 @@ public enum TipoSala {
 
 	private int value;
 
-	public int getValue() {
-		return value;
+	@Override
+	public int valor() {
+		return this.value;
 	}
-
 }

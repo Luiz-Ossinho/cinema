@@ -58,7 +58,9 @@ public class DBContext {
 		int update = -1;
 		int generatedKey = -1;
 		try {
-			PreparedStatement pstm = DB.connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
+			String queryStr = query.toString();
+			var pstm = DB.connection.prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
+			
 			update = pstm.executeUpdate();
 			generatedKey = pstm.getGeneratedKeys().getInt(1);
 		} catch (SQLException e) {

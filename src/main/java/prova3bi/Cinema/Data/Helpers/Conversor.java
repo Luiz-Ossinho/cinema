@@ -8,31 +8,69 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import javafx.util.Pair;
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.Table;
 import prova3bi.Cinema.Domain.Entidades.Entidade;
+import prova3bi.Cinema.Domain.Entidades.IEnumColumn;
 
 public class Conversor {
+
+	private static Comparator<Pair<Field, Column>> alphabeticComparator = new Comparator<Pair<Field, Column>>() {
+		@Override
+		public int compare(Pair<Field, Column> o1, Pair<Field, Column> o2) {
+			String a = o1.getValue().nome();
+			String b = o2.getValue().nome();
+			int i = a.compareTo(b);
+			return i;
+		}
+	};
 
 	public static <T extends Entidade> List<T> convert(ResultSet from, Class<T> to) throws SQLException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		List<T> intances = new ArrayList<T>();
-		var columns = getColumns(to);
-		var idName = to.getAnnotation(Table.class).nome() + "ID";
-		columns.add(idColumn(idName));
-		Collections.sort(columns, Column.comp);
+		var columnPairs = getColumns(to);
+		var readContrucotr = getReadConstructor(to);
+
 		while (from.next()) {
 			Collection<Object> parametrosConstrutor = new ArrayList<Object>();
-			for (Column column : columns)
-				parametrosConstrutor.add(getObject(from, column.nome()));
-			
-			intances.add((T) getReadConstructor(to).newInstance(parametrosConstrutor.toArray()));
+
+			for (Pair<Field, Column> pair : columnPairs) {
+				var column = pair.getValue();
+				var fieldType = pair.getKey().getType();
+				if (IEnumColumn.class.isAssignableFrom(fieldType)) {
+					parametrosConstrutor.add(getEnumObject(from, fieldType.getEnumConstants(), column.nome()));
+				} else {
+					parametrosConstrutor.add(getObject(from, column.nome()));
+				}
+			}
+			T instance = (T) readContrucotr.newInstance(parametrosConstrutor.toArray());
+			intances.add(instance);
 		}
+
 		return intances;
+	}
+
+	private static <T extends Entidade> List<Pair<Field, Column>> getColumns(Class<T> toClass) {
+		var columnPairs = getDeclaredColumns(toClass);
+		addIdColumn(columnPairs, toClass);
+		columnPairs.sort(alphabeticComparator);
+
+		return columnPairs;
+	}
+
+	private static <T> void addIdColumn(List<Pair<Field, Column>> columnPairs, Class<T> to) {
+		try {
+			var idColumn = idColumn(to.getAnnotation(Table.class).nome() + "ID");
+			var mockField = Conversor.class.getField("mockField");
+			var pair = new Pair<Field, Column>(mockField, idColumn);
+			columnPairs.add(pair);
+		} catch (NoSuchFieldException | SecurityException e) {
+		}
 	}
 
 	private static Object getObject(ResultSet results, String columnName) {
@@ -43,6 +81,24 @@ public class Conversor {
 			e.printStackTrace();
 		}
 		return obj;
+	}
+
+	private static Object getEnumObject(ResultSet results, Object[] enumConstants, String columnName) {
+		int obj = 0;
+		Object enumConstant = null;
+		try {
+			obj = results.getInt(columnName);
+			for (int i = 0; i < enumConstants.length; i++) {
+				IEnumColumn enumColumn = (IEnumColumn) enumConstants[i];
+				if (enumColumn.valor() == obj) {
+					enumConstant = enumConstants[i];
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return enumConstant;
 	}
 
 	private static <T extends Entidade> Constructor<?> getReadConstructor(Class<T> toClass) {
@@ -56,14 +112,17 @@ public class Conversor {
 		return readCtor;
 	}
 
-	private static <T extends Entidade> ArrayList<Column> getColumns(Class<T> toClass) {
-		ArrayList<Column> columns = new ArrayList<Column>();
+	private static <T extends Entidade> List<Pair<Field, Column>> getDeclaredColumns(Class<T> toClass) {
+		var columns = new ArrayList<Pair<Field, Column>>();
 		for (Field field : toClass.getDeclaredFields()) {
-			if (field.isAnnotationPresent(Column.class))
-				columns.add(field.getAnnotation(Column.class));
+			if (field.isAnnotationPresent(Column.class)) {
+				columns.add(new Pair<Field, Column>(field, field.getAnnotation(Column.class)));
+			}
 		}
 		return columns;
 	}
+
+	public static final int mockField = 0;
 
 	private static Column idColumn(final String tableID) {
 		var annotation = new Column() {
@@ -78,13 +137,13 @@ public class Conversor {
 			}
 
 			@Override
-			public Class<?> tipo() {
-				return Integer.class;
+			public String nome() {
+				return tableID;
 			}
 
 			@Override
-			public String nome() {
-				return tableID;
+			public boolean isFK() {
+				return false;
 			}
 		};
 

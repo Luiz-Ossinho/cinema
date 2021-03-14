@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.util.Pair;
 import prova3bi.Cinema.Data.Helpers.QueryHelper;
 import prova3bi.Cinema.Domain.Entidades.Entidade;
+import prova3bi.Cinema.Domain.Entidades.IEnumColumn;
 
 public class Query<T extends Entidade> {
 	public enum Modifiers {
@@ -36,7 +37,7 @@ public class Query<T extends Entidade> {
 	public List<String> conditions = new ArrayList<String>();
 
 	// nome da coluna FK e nome da Tabela alvo
-	public List<Join> Joins = new ArrayList<Join>();
+	public List<JoinObsolete> JoinObsoletes = new ArrayList<JoinObsolete>();
 
 	// Values para inserir no INSERT, NAO USADO EM OUTROS CASOS
 	public List<Pair<String, Class<?>>> values = new ArrayList<Pair<String, Class<?>>>();
@@ -69,25 +70,57 @@ public class Query<T extends Entidade> {
 		return this;
 	}
 
+	public Query<T> value(Object value, String fieldName) {
+		var pair = QueryHelper.Value(value.toString(), fieldName, type);
+		this.values.add((Pair<String, Class<?>>) pair);
+		String columnName = "";
+		try {
+			columnName = type.getField(fieldName).getAnnotation(Column.class).nome();
+		} catch (NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+		}
+		this.properties.add(columnName);
+		return this;
+	}
+	
 	public Query<T> value(String value, String fieldName) {
 		var pair = QueryHelper.Value(value, fieldName, type);
 		this.values.add((Pair<String, Class<?>>) pair);
-		this.properties.add(fieldName);
+		String columnName = "";
+		try {
+			columnName = type.getField(fieldName).getAnnotation(Column.class).nome();
+		} catch (NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+		}
+		this.properties.add(columnName);
+		return this;
+	}
+	
+	public Query<T> value(IEnumColumn enumColumn, String fieldName) {
+		var pair = QueryHelper.Value(enumColumn.valor()+"", fieldName, type);
+		this.values.add((Pair<String, Class<?>>) pair);
+		String columnName = "";
+		try {
+			columnName = type.getField(fieldName).getAnnotation(Column.class).nome();
+		} catch (NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+		}
+		this.properties.add(columnName);
 		return this;
 	}
 
 	public Query<T> like(String value, String field) {
-		this.conditions.add(QueryHelper.Like(value, field, type));
+		this.conditions.add(QueryHelper.like(value, field, type));
 		return this;
 	}
-
-	public Query addNestedCondition(String compose, String condition) {
-		this.conditions.add(QueryHelper.Compose(compose, condition));
+	
+	public Query<T> equal(String value, String field) {
+		this.conditions.add(QueryHelper.equal(value, field, type));
 		return this;
 	}
-
-	public Query addNestedCondition(Composite composite, String condition) {
-		this.conditions.add(QueryHelper.Compose(composite.obj, condition));
+	
+	public Query<T> PKEquals(String value) {
+		this.conditions.add(QueryHelper.PKEquals(value, type));
 		return this;
 	}
 
@@ -112,17 +145,17 @@ public class Query<T extends Entidade> {
 
 	// region Join Functions
 	public Query InnerJoin(String joined, String obj, String FKName) {
-		this.Joins.add(new Join(joined, obj, this.target, FKName));
+		this.JoinObsoletes.add(new JoinObsolete(joined, obj, this.target, FKName));
 		return this;
 	}
 
 	public Query InnerJoin(Composite composite) {
-		this.Joins.add(new Join(composite, this.target));
+		this.JoinObsoletes.add(new JoinObsolete(composite, this.target));
 		return this;
 	}
 
-	public Query addJoin(Join join) {
-		this.Joins.add(join);
+	public Query addJoin(JoinObsolete joinObsolete) {
+		this.JoinObsoletes.add(joinObsolete);
 		return this;
 	}
 
@@ -227,12 +260,12 @@ public class Query<T extends Entidade> {
 	// JOIN Locais a1 ON Voos.LCPartidaID = a1.LocaisID
 	private String getAnyJoins() {
 		String strJoins = "";
-		if (this.Joins.isEmpty())
+		if (this.JoinObsoletes.isEmpty())
 			return strJoins;
 		else {
 			strJoins += "\n";
-			for (Join join : this.Joins) {
-				strJoins += "Join " + join.Joined + " " + join.obj + " ON " + join.condition + "\n";
+			for (JoinObsolete joinObsolete : this.JoinObsoletes) {
+				strJoins += "Join " + joinObsolete.Joined + " " + joinObsolete.obj + " ON " + joinObsolete.condition + "\n";
 			}
 			return strJoins;
 		}

@@ -22,18 +22,20 @@ public class DatabaseConnection {
 	public DatabaseConnection(Class... tables) throws Exception {
 		getDBConnection();
 		List<Class> compositeTables = new ArrayList<Class>();
-		String createTableSql = "";
+		List<String> createTablesSql =  new ArrayList<String>();
 		for (Class tableClass : tables) {
 			try {
 				Table annotation = (Table) tableClass.getAnnotation(Table.class);
-				createTableSql += CreateScript(tableClass, annotation);
+				createTablesSql.add(CreateScript(tableClass, annotation));
 				if (annotation.fks().length >= 1)
 					compositeTables.add(tableClass);
 			} catch (Exception e) {
 				throw e;
 			}
 		}
-		connection.createStatement().execute(createTableSql);
+		for (String createTableCommand : createTablesSql) {
+			connection.createStatement().execute(createTableCommand);
+		}
 	}
 
 	private String CreateScript(Class tableClass, Table tableAnnotation) {
@@ -41,8 +43,10 @@ public class DatabaseConnection {
 		String pk = nomeTabela + "ID";
 		List<Pair<String, String>> atributos = new ArrayList<Pair<String, String>>();
 		for (Field field : tableClass.getDeclaredFields()) {
-			var annotation = field.getAnnotation(Column.class);
-			atributos.add(new Pair<String, String>(annotation.nome(),annotation.tipoSql()));
+			if (field.isAnnotationPresent(Column.class)) {
+				var annotation = field.getAnnotation(Column.class);
+				atributos.add(new Pair<String, String>(annotation.nome(), annotation.tipoSql()));
+			}
 		}
 		String sql = "CREATE TABLE IF NOT EXISTS " + nomeTabela + " \n";
 		sql += "( \n";
@@ -51,7 +55,7 @@ public class DatabaseConnection {
 		sql += " ); \n";
 		return sql;
 	}
-	
+
 	private String getAnyAtributes(List<Pair<String, String>> atributes) {
 		String atributesSql = "";
 		int j = 0;
@@ -63,7 +67,6 @@ public class DatabaseConnection {
 		}
 		return atributesSql;
 	}
-	
 
 	public void getDBConnection() throws SQLException {
 		try {
