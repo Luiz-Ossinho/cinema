@@ -1,6 +1,6 @@
 package prova3bi.Cinema.Domain.Entidades;
 
-import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -36,15 +36,20 @@ public class Login extends Entidade {
 		this.nivelPermissao = nivelPermissao;
 	}
 
-	public static String Hash(String senha) {
-		String hash = null;
-		try {
-			byte messageDigest[] = MessageDigest.getInstance("MD5").digest(senha.getBytes("UTF-8"));
-			hash = new String(messageDigest, "UTF-8");
-		} catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return hash;
+	public static String Hash(String str) {
+		MessageDigest m = null;
+        String md5hash = null;
+        try {
+            m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+                 e.printStackTrace();
+        }        
+        if(m != null) {
+              m.update(str.getBytes(),0,str.length());
+              BigInteger i = new BigInteger(1, m.digest());
+              md5hash = String.format("%1$032x", i);
+          }
+       return md5hash;
 	}
 
 	@Override

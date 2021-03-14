@@ -45,24 +45,13 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
-	public static void main(String[] args) {
-		// var filmeTest = new Filme(0);
-		var context = new DBContext();
-//		ILoginRepository loginRepo = new LoginRepository(context);
-//		loginRepo.Add(new Login("Usuario8", "SenhaDigitda123", NivelPermissao.Admin));
-//		var login = loginRepo.Get("Usuario8");
-//		IMovieRepository filmesRepo = new MovieRepository(context);
-//		var newFilme = new Filme("Pantera Negrao", "", "Sinopse braba la", Audio.Dublado);
-//		int id = filmesRepo.Add(newFilme);
-//		var filme = filmesRepo.Get(id);
-//		IRoomRepository salasRepo = new RoomRepository(context);
-//		var sala = new Sala(TipoSala.XD, 64, 123);
-//		salasRepo.Add(sala);
-//		var salas = salasRepo.GetAll();
-//		Codigo acima Funcionando
-//		var listalevementeMaior = SessionService.testeLogica(10);
-//		var listaMaxima = SessionService.testeLogica(15);
-		launch();
-	}
+    public static void main(String[] args) {
+    	ILoginRepository loginRepo = new LoginRepository(new DBContext());
+    	loginRepo.Add(new Login("Usuario1", "SenhaDigitda123"));
+    	var login = loginRepo.Get("Usuario1");
+    	System.out.println(Login.Hash("123"));
+    	
+        launch();
+    }
 
 }
