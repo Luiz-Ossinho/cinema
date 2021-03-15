@@ -2,10 +2,8 @@
 	<img alt="Cinenow" src=".github/cinenow.png" width="200px" />
 </h1>
 
-  <p  align="center">
-
-<a  href="#"  target="_blank"  rel="noopener noreferrer"><img  alt="Made by"  src="https://img.shields.io/badge/Done%20for-Educational%20Purpose%20-%23ff0657"></a>
-
+<p  align="center">
+<a  href="#"  target="_blank"  rel="noopener noreferrer"><img  alt="Made by"  src="https://img.shields.io/badge/Done%20for-	Educational%20Purpose%20-%23ff0657"></a>
 </p>
 
 <h1 align="center">
