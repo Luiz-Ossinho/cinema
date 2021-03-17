@@ -1,5 +1,7 @@
 package prova3bi.Cinema.Domain.Entidades;
 
+import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
+
 public enum NivelPermissao implements IEnumColumn {
 	Admin(1), Atendente(2);
 

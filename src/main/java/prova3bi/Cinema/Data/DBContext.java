@@ -3,26 +3,23 @@ package prova3bi.Cinema.Data;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import prova3bi.Cinema.Data.Abstractions.Query;
 import prova3bi.Cinema.Data.Abstractions.Table;
 import prova3bi.Cinema.Data.Helpers.Conversor;
 import prova3bi.Cinema.Domain.Entidades.Entidade;
 
-public class DBContext {
-	private DatabaseConnection DB;
+public class DBContext implements AutoCloseable {
+	private DatabaseConnection DBConnection;
 
 	public DBContext() {
 		try {
 			var tabelas = getClasses();
-			DB = new DatabaseConnection(tabelas);
+			DBConnection = new DatabaseConnection(tabelas);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -32,7 +29,7 @@ public class DBContext {
 		ResultSet results = null;
 		T instance = null;
 		try {
-			results = DB.connection.createStatement().executeQuery(fromQuery.toString());
+			results = DBConnection.connection.createStatement().executeQuery(fromQuery.toString());
 			instance = Conversor.convert(results, fromQuery.type).stream().findFirst().get();
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| SQLException e) {
@@ -45,7 +42,7 @@ public class DBContext {
 		ResultSet results = null;
 		List<T> instances = null;
 		try {
-			results = DB.connection.createStatement().executeQuery(fromQuery.toString());
+			results = DBConnection.connection.createStatement().executeQuery(fromQuery.toString());
 			instances = Conversor.convert(results, fromQuery.type);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| SQLException e) {
@@ -54,13 +51,13 @@ public class DBContext {
 		return instances;
 	};
 
-	public int execute(Query query) {
+	public int execute(Query<?> query) {
 		int update = -1;
 		int generatedKey = -1;
 		try {
 			String queryStr = query.toString();
-			var pstm = DB.connection.prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
-			
+			var pstm = DBConnection.connection.prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
+
 			update = pstm.executeUpdate();
 			generatedKey = pstm.getGeneratedKeys().getInt(1);
 		} catch (SQLException e) {
@@ -71,16 +68,16 @@ public class DBContext {
 
 	private static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-	private static Class[] getClasses() throws ClassNotFoundException, IOException {
-		String packageName = "prova3bi.Cinema.Domain.Entidades";
-		String path = packageName.replace('.', '/');
-		Enumeration<URL> resources = classLoader.getResources(path);
-		List<File> dirs = new ArrayList<File>();
+	private static Class<?>[] getClasses() throws ClassNotFoundException, IOException {
+		var packageName = "prova3bi.Cinema.Domain.Entidades";
+		var path = packageName.replace('.', '/');
+		var resources = classLoader.getResources(path);
+		var dirs = new ArrayList<File>();
 		while (resources.hasMoreElements()) {
-			URL resource = resources.nextElement();
+			var resource = resources.nextElement();
 			dirs.add(new File(resource.getFile()));
 		}
-		ArrayList<Class> classes = new ArrayList<Class>();
+		var classes = new ArrayList<Class<?>>();
 		for (File directory : dirs) {
 			classes.addAll(findClasses(directory, packageName));
 		}
@@ -88,12 +85,12 @@ public class DBContext {
 		return filteredStream.toArray(Class[]::new);
 	}
 
-	private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
-		List<Class> classes = new ArrayList<Class>();
+	private static List<Class<?>> findClasses(File directory, String packageName) throws ClassNotFoundException {
+		var classes = new ArrayList<Class<?>>();
 		if (!directory.exists()) {
 			return classes;
 		}
-		File[] files = directory.listFiles();
+		var files = directory.listFiles();
 		for (File file : files) {
 			if (file.isDirectory()) {
 				assert !file.getName().contains(".");
@@ -104,6 +101,12 @@ public class DBContext {
 			}
 		}
 		return classes;
+	}
+
+	@Override
+	public void close() throws Exception {
+		if (!DBConnection.EnsureClosedConnection())
+			throw new Exception("Nao foi possivel fechar conexao com o banco de dados");
 	}
 
 }

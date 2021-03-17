@@ -7,7 +7,6 @@ public class Ticket extends Entidade {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
 	public TicketStatus status;
 	public Poltrona poltrona;
 	

@@ -1,5 +1,7 @@
 package prova3bi.Cinema.Domain.Entidades;
 
+import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
+
 public enum TipoSala implements IEnumColumn {
 	DBox(1), XD(2), Prime(3);
 

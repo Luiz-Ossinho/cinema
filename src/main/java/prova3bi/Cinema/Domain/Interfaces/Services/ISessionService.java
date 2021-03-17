@@ -6,5 +6,5 @@ import prova3bi.Cinema.Domain.Entidades.Sessao;
 
 public interface ISessionService {
 	public int Add(Sessao session);
-	public List<Sessao> GetAll();
+	public List<Sessao> GetNext();
 }

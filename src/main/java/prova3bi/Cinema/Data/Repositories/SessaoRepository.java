@@ -25,11 +25,11 @@ public class SessaoRepository implements ISessaoRepository{
 	@Override
 	public int Add(Sessao entidade) {
 		Query<Sessao> query =  new Query<Sessao>(QueryComand.Insert, Sessao.class)
-				.value(entidade.DHInicio, "")
-				.value(entidade.DHTermino, "")
-				.value(entidade.filme.getId(), "")
-				.value(entidade.preco, "")
-				.value(entidade.sala.getId(), "");
+				.value(entidade.DHInicio, "DHInicio")
+				.value(entidade.DHTermino, "DHTermino")
+				.value(entidade.filme.getId(), "filme")
+				.value(entidade.preco, "preco")
+				.value(entidade.sala.getId(), "sala");
 		
 		return context.execute(query);
 	}

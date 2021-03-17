@@ -1,10 +1,10 @@
 package prova3bi.Cinema.Services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import prova3bi.Cinema.Data.Abstractions.Nest;
+import prova3bi.Cinema.Domain.Entidades.EstadoSessao;
 import prova3bi.Cinema.Domain.Entidades.Poltrona;
 import prova3bi.Cinema.Domain.Entidades.Sessao;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
@@ -35,11 +35,22 @@ public class SessionService implements ISessionService {
 		if (Nest.Action(session.sala) == Nest.New)
 			session.sala.setId(roomRepo.Add(session.sala));
 
+		var generatedKey = sessionRepo.Add(session);
+		session.setId(generatedKey);
+
+		addAnyChairs(session);
+
+		return generatedKey;
+	}
+
+	private void addAnyChairs(Sessao session) {
 		var NearestSmallerSquare = getSmallerNearestSquare(session.sala.numPoltronas);
 		var squareRoot = (int) Math.sqrt(NearestSmallerSquare);
 		for (int i = 0; i < squareRoot; i++) {
 			for (int j = 0; j < squareRoot; j++) {
-				chairRepo.Add(new Poltrona(session, getColumnLetters(j), i + 1));
+				var poltrona = new Poltrona(session, getColumnLetters(j), i + 1);
+				chairRepo.Add(poltrona);
+				session.poltronas.add(poltrona);
 			}
 		}
 		var excesso = session.sala.numPoltronas - NearestSmallerSquare;
@@ -55,15 +66,17 @@ public class SessionService implements ISessionService {
 				if (rowExtra == 0)
 					rowExtra = squareRoot;
 			}
-			chairRepo.Add(new Poltrona(session, letraExtra, rowExtra));
+
+			var poltrona = new Poltrona(session, letraExtra, rowExtra);
+			chairRepo.Add(poltrona);
+			session.poltronas.add(poltrona);
 		}
-		return sessionRepo.Add(session);
 	}
 
 	private static int getSmallerNearestSquare(int integer) {
 		int NearestSmallerSquare = -1;
-		for (int i = integer; i > 0; i--) {
-			if (isPerfect(i)) {
+		for (int i = integer; i > -1; i--) {
+			if ((Math.sqrt(i) - Math.floor(Math.sqrt(i))) == 0) {
 				NearestSmallerSquare = i;
 				break;
 			}
@@ -71,16 +84,10 @@ public class SessionService implements ISessionService {
 		return NearestSmallerSquare;
 	}
 
-	private static boolean isPerfect(int N) {
-		if ((Math.sqrt(N) - Math.floor(Math.sqrt(N))) != 0)
-			return false;
-		return true;
-	}
-
-	public static String[] lettersArray = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+	private static String[] lettersArray = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
 			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-	public static String getColumnLetters(int columnNumber) {
+	private static String getColumnLetters(int columnNumber) {
 		String letters = "";
 		if (columnNumber <= 26) {
 			letters += lettersArray[columnNumber];
@@ -88,14 +95,26 @@ public class SessionService implements ISessionService {
 			letters += getColumnLetters((int) columnNumber / 26);
 			letters += getColumnLetters(columnNumber % 26);
 		}
-
 		return letters;
 	}
 
 	@Override
-	public List<Sessao> GetAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Sessao> GetNext() {
+		var allSessions = sessionRepo.GetAll();
+		var nextSessions = new ArrayList<Sessao>();
+		for (Sessao sessao : allSessions) {
+			if (sessao.verEstado() != EstadoSessao.JaTerminou) {
+				sessao.filme = movieRepo.Get(sessao.filme.getId());
+				sessao.sala = roomRepo.Get(sessao.sala.getId());
+				var poltronas = chairRepo.GetAllFromSession(sessao.getId());
+				for (Poltrona poltrona : poltronas) {
+					poltrona.sessao = sessao;
+					sessao.poltronas.add(poltrona);
+				}
+				nextSessions.add(sessao);
+			}
+		}
+		return nextSessions;
 	}
 
 }

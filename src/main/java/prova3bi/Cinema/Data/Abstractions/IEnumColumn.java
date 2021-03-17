@@ -1,0 +1,7 @@
+package prova3bi.Cinema.Data.Abstractions;
+
+// INTERFACE USADA PARA CRIAR INSTANCIAS VIA REFLECTION NO CONVERSOR GENERICO
+// APENAS MARCA QUE O ENUMERAVEL VAI SER GUARDADO NO BANCO COM UM VALOR INT
+public interface IEnumColumn {
+	public int valor();
+}

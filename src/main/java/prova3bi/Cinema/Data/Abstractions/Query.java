@@ -1,11 +1,11 @@
 package prova3bi.Cinema.Data.Abstractions;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 import prova3bi.Cinema.Data.Helpers.QueryHelper;
 import prova3bi.Cinema.Domain.Entidades.Entidade;
-import prova3bi.Cinema.Domain.Entidades.IEnumColumn;
 
 public class Query<T extends Entidade> {
 	public enum Modifiers {
@@ -30,30 +30,17 @@ public class Query<T extends Entidade> {
 	public Class<T> type;
 	private String target;
 
-	// Algo como LIMIT 5 ou Distinct
-	private String modifier = "";
-
 	// condicao booleana, de preferencia no formato (condicao)
 	public List<String> conditions = new ArrayList<String>();
-
-	// nome da coluna FK e nome da Tabela alvo
-	public List<JoinObsolete> JoinObsoletes = new ArrayList<JoinObsolete>();
 
 	// Values para inserir no INSERT, NAO USADO EM OUTROS CASOS
 	public List<Pair<String, Class<?>>> values = new ArrayList<Pair<String, Class<?>>>();
 
+	private String modifier;
+
 	public Query(QueryComand comand, Class<T> type) {
 		this.comand = comand;
 		this.type = type;
-		this.modifier = "";
-		target = type.getAnnotation(Table.class).nome();
-	}
-
-	public Query(QueryComand comand, String modifier, Class<T> type) {
-		this.comand = comand;
-		this.properties = new ArrayList<String>();
-		this.type = type;
-		this.modifier = modifier;
 		target = type.getAnnotation(Table.class).nome();
 	}
 
@@ -65,7 +52,7 @@ public class Query<T extends Entidade> {
 		target = type.getAnnotation(Table.class).nome();
 	}
 
-	public Query addCondition(String condition) {
+	public Query<T> addCondition(String condition) {
 		this.conditions.add(condition);
 		return this;
 	}
@@ -82,7 +69,7 @@ public class Query<T extends Entidade> {
 		this.properties.add(columnName);
 		return this;
 	}
-	
+
 	public Query<T> value(String value, String fieldName) {
 		var pair = QueryHelper.Value(value, fieldName, type);
 		this.values.add((Pair<String, Class<?>>) pair);
@@ -95,9 +82,9 @@ public class Query<T extends Entidade> {
 		this.properties.add(columnName);
 		return this;
 	}
-	
+
 	public Query<T> value(IEnumColumn enumColumn, String fieldName) {
-		var pair = QueryHelper.Value(enumColumn.valor()+"", fieldName, type);
+		var pair = QueryHelper.Value(enumColumn.valor() + "", fieldName, type);
 		this.values.add((Pair<String, Class<?>>) pair);
 		String columnName = "";
 		try {
@@ -113,54 +100,24 @@ public class Query<T extends Entidade> {
 		this.conditions.add(QueryHelper.like(value, field, type));
 		return this;
 	}
-	
+
 	public Query<T> equal(String value, String field) {
 		this.conditions.add(QueryHelper.equal(value, field, type));
 		return this;
 	}
-	
+
 	public Query<T> PKEquals(String value) {
 		this.conditions.add(QueryHelper.PKEquals(value, type));
 		return this;
 	}
 
-	// region Properties Functions
-	public Query addProperties(String[] properties) {
-		for (String property : properties) {
-			this.properties.add(property);
-		}
-		return this;
-	}
-
-	public Query addProperty(String property) {
-		this.properties.add(property);
-		return this;
-	}
-	// endregion
-
-	public Query addPKCondition(String condition) {
+	public Query<T> addPKCondition(String condition) {
 		this.addCondition(this.target + "." + this.target + "ID " + condition);
 		return this;
 	}
 
-	// region Join Functions
-	public Query InnerJoin(String joined, String obj, String FKName) {
-		this.JoinObsoletes.add(new JoinObsolete(joined, obj, this.target, FKName));
-		return this;
-	}
-
-	public Query InnerJoin(Composite composite) {
-		this.JoinObsoletes.add(new JoinObsolete(composite, this.target));
-		return this;
-	}
-
-	public Query addJoin(JoinObsolete joinObsolete) {
-		this.JoinObsoletes.add(joinObsolete);
-		return this;
-	}
-
 	private String BuildInsert() {
-		String query = this.comand.getCommand() + " ";
+		var query = this.comand.getCommand() + " ";
 		query += this.getAnySuffix() + " ";
 		query += this.target + "(";
 		query += this.getAnyProperties() + ")\n";
@@ -169,13 +126,14 @@ public class Query<T extends Entidade> {
 	}
 
 	private String BuildSelect() {
-		String query = this.comand.getCommand() + " ";
+		var query = this.comand.getCommand() + " ";
 		query += this.getAnyProperties() + " ";
 		query += this.getAnySuffix() + " ";
 		query += this.target + " ";
-		query += this.getAnyJoins();
+		// Joins nao implementados ainda
+		// query += this.getAnyJoins();
 		query += this.getAnyConditions();
-		//query += this.modifier + " ";
+		query += this.getAnyModifier();
 		return query;
 	}
 
@@ -197,14 +155,14 @@ public class Query<T extends Entidade> {
 	}
 
 	private String getAnySuffix() {
-		String strComandSuffix = "";
+		var strComandSuffix = "";
 		if (this.comand.hasSuffix())
 			strComandSuffix += this.comand.getSuffix();
 		return strComandSuffix;
 	}
 
 	private String getAnyProperties() {
-		String strProperties = "";
+		var strProperties = "";
 		switch (this.comand) {
 		case Insert:
 			for (String property : this.properties) {
@@ -227,14 +185,17 @@ public class Query<T extends Entidade> {
 	}
 
 	private String getAnyValues() {
-		String strValues = "";
+		var strValues = "";
 		if (this.values.isEmpty())
 			return strValues;
 		else {
 			strValues += "Values(";
 			for (Pair<String, Class<?>> pair : this.values) {
-				if (pair.getValue().getTypeName().equals(String.class.getTypeName()))
+				var valueTypeName = pair.getValue().getTypeName();
+				if (valueTypeName.equals(String.class.getTypeName()))
 					strValues += "\"" + pair.getKey() + "\"" + ", ";
+				else if (valueTypeName.equals(LocalDateTime.class.getTypeName()))
+					strValues += "\"" + pair.getKey().replace('T', ' ') + "\"" + ", ";
 				else
 					strValues += pair.getKey() + ", ";
 			}
@@ -244,7 +205,7 @@ public class Query<T extends Entidade> {
 	}
 
 	private String getAnyConditions() {
-		String strConditions = "";
+		var strConditions = "";
 		if (this.conditions.isEmpty())
 			return strConditions;
 		else {
@@ -257,17 +218,13 @@ public class Query<T extends Entidade> {
 		}
 	}
 
-	// JOIN Locais a1 ON Voos.LCPartidaID = a1.LocaisID
-	private String getAnyJoins() {
-		String strJoins = "";
-		if (this.JoinObsoletes.isEmpty())
-			return strJoins;
+	private String getAnyModifier() {
+		var strModifier = "";
+		if (this.modifier.isEmpty())
+			return this.modifier;
 		else {
-			strJoins += "\n";
-			for (JoinObsolete joinObsolete : this.JoinObsoletes) {
-				strJoins += "Join " + joinObsolete.Joined + " " + joinObsolete.obj + " ON " + joinObsolete.condition + "\n";
-			}
-			return strJoins;
+			strModifier += "\n" + this.modifier;
+			return strModifier;
 		}
 	}
 }

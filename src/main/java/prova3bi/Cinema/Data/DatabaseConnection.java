@@ -19,26 +19,41 @@ public class DatabaseConnection {
 	private String DB_DRIVER = "org.sqlite.JDBC";
 	private String DB_CONNECTION = "jdbc:sqlite:cinema.db";
 
-	public DatabaseConnection(Class... tables) throws Exception {
+	public DatabaseConnection(Class<?>... tables) throws Exception {
 		getDBConnection();
-		List<Class> compositeTables = new ArrayList<Class>();
-		List<String> createTablesSql =  new ArrayList<String>();
-		for (Class tableClass : tables) {
-			try {
-				Table annotation = (Table) tableClass.getAnnotation(Table.class);
-				createTablesSql.add(CreateScript(tableClass, annotation));
-				if (annotation.fks().length >= 1)
-					compositeTables.add(tableClass);
-			} catch (Exception e) {
-				throw e;
+		EnsureTablesFunctional(tables);
+	}
+
+	private void EnsureTablesFunctional(Class<?>[] tables) throws Exception {
+		var dependentTables = EnsureTablesCreated(tables);
+		var alterTableQueries = new ArrayList<String>();
+		for (var dependentTable : dependentTables) {
+			Table annotation = (Table) dependentTable.getAnnotation(Table.class);
+			for (var FKInformation : annotation.fks()) {
+				alterTableQueries.add(AlterScript(FKInformation, annotation));
 			}
 		}
-		for (String createTableCommand : createTablesSql) {
-			connection.createStatement().execute(createTableCommand);
+		for (String alterTableCommand : alterTableQueries) {
+			connection.createStatement().execute(alterTableCommand);
 		}
 	}
 
-	private String CreateScript(Class tableClass, Table tableAnnotation) {
+	private List<Class<?>> EnsureTablesCreated(Class<?>[] tablesToCreate) throws SQLException {
+		var dependentTables = new ArrayList<Class<?>>();
+		var createTableQueries = new ArrayList<String>();
+		for (Class<?> tableClass : tablesToCreate) {
+			var annotation = (Table) tableClass.getAnnotation(Table.class);
+			createTableQueries.add(CreateScript(tableClass, annotation));
+			if (annotation.fks().length >= 1)
+				dependentTables.add(tableClass);
+		}
+		for (String createTableCommand : createTableQueries) {
+			connection.createStatement().execute(createTableCommand);
+		}
+		return dependentTables;
+	}
+
+	private String CreateScript(Class<?> tableClass, Table tableAnnotation) {
 		String nomeTabela = tableAnnotation.nome();
 		String pk = nomeTabela + "ID";
 		List<Pair<String, String>> atributos = new ArrayList<Pair<String, String>>();
@@ -53,6 +68,20 @@ public class DatabaseConnection {
 		sql += " " + pk + " INTEGER PRIMARY KEY AUTOINCREMENT" + ", \n";
 		sql += getAnyAtributes(atributos);
 		sql += " ); \n";
+		return sql;
+	}
+
+	// ALTER TABLE nomeTabela
+	// ADD COLUMN FKColumnName INTEGER REFERENCES
+	// FKTargetTableName(FKTargetTablePK);
+	private String AlterScript(String FKInformation, Table tableAnnotation) {
+		String nomeTabela = tableAnnotation.nome();
+		var split = FKInformation.split(";");
+		var FKColumnName = split[0];
+		var FKTargetTableName = split[1];
+		var FKTargetTablePK = FKTargetTableName + "ID";
+		String sql = "ALTER TABLE " + nomeTabela + " \n";
+		sql += "ADD COLUMN " + FKColumnName + " INTEGER REFERENCES " + FKTargetTableName + "(" + FKTargetTablePK + ")";
 		return sql;
 	}
 
@@ -81,14 +110,11 @@ public class DatabaseConnection {
 		}
 	}
 
-	private void DisconnectDB() {
-		try {
-			if (!this.connection.isClosed()) {
-				this.connection.close();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.err.println(e.getMessage());
+	public boolean EnsureClosedConnection() throws Exception {
+		if (!this.connection.isClosed()) {
+			this.connection.close();
+			return true;
 		}
+		return false;
 	}
 }

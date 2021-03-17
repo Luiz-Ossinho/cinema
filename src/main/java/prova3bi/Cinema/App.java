@@ -5,21 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import prova3bi.Cinema.Data.DBContext;
-import prova3bi.Cinema.Data.Repositories.LoginRepository;
-import prova3bi.Cinema.Data.Repositories.MovieRepository;
-import prova3bi.Cinema.Data.Repositories.RoomRepository;
-import prova3bi.Cinema.Domain.Entidades.TrilhaSonora;
-import prova3bi.Cinema.Domain.Entidades.Filme;
-import prova3bi.Cinema.Domain.Entidades.Login;
-import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
-import prova3bi.Cinema.Domain.Entidades.Sala;
-import prova3bi.Cinema.Domain.Entidades.TipoSala;
-import prova3bi.Cinema.Domain.Interfaces.Repositories.ILoginRepository;
-import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
-import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
-import prova3bi.Cinema.Services.SessionService;
-
 import java.io.IOException;
 
 /**
@@ -45,13 +30,17 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
-    public static void main(String[] args) {
-    	ILoginRepository loginRepo = new LoginRepository(new DBContext());
-    	loginRepo.Add(new Login("Usuario1", "SenhaDigitda123", NivelPermissao.Admin));
-    	var login = loginRepo.Get("Usuario1");
-    	System.out.println(Login.Hash("123"));
-    	
-        launch();
-    }
+	public static void main(String[] args) {
+//		var DH = LocalDateTime.now().plusHours(2);
+//		var DHLater = DH.plusHours(2);
+//		var room = new Sala(TipoSala.Prime, 15, 13);
+//		var movie = new Filme("Filme Generico", "", "Sinopse braba", TrilhaSonora.Legendado);
+//		var session = new Sessao(DH, DHLater, room, movie, 12d);
+//		var sessionService = UnitFactory.getSessionService();
+//		var list = sessionService.GetNext();
+// CODIGO USADO PARA TESTAR
+// NO MEU FUNCIONOU KKKKKKKK
+		launch();
+	}
 
 }

@@ -27,7 +27,6 @@ public class Login extends Entidade {
 		this.nivelPermissao = nivelPermissao;
 	}
 
-	// os parametros devem ter o mesmo nome da coluna e estar em ordem alfabetica
 	@Builder(Is.Read)
 	public Login(int LoginsId, String hash, NivelPermissao nivelPermissao, String usuario) {
 		super(LoginsId);
@@ -36,6 +35,8 @@ public class Login extends Entidade {
 		this.nivelPermissao = nivelPermissao;
 	}
 
+	// Retorna uma hash MD5 equivalente a string inserida
+	// Usuado na criptografia de senhas
 	public static String Hash(String str) {
 		MessageDigest m = null;
         String md5hash = null;

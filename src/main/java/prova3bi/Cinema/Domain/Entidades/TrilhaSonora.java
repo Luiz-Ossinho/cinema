@@ -1,5 +1,7 @@
 package prova3bi.Cinema.Domain.Entidades;
 
+import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
+
 public enum TrilhaSonora implements IEnumColumn {
 	Dublado(1, "Audio dublado"), Legendado(2, "Audio original com legenda"), Orignal(3, "Audio original");
 

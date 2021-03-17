@@ -7,16 +7,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
 import javafx.util.Pair;
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Column;
+import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
 import prova3bi.Cinema.Data.Abstractions.Table;
 import prova3bi.Cinema.Domain.Entidades.Entidade;
-import prova3bi.Cinema.Domain.Entidades.IEnumColumn;
 
 public class Conversor {
 
@@ -32,14 +31,12 @@ public class Conversor {
 
 	public static <T extends Entidade> List<T> convert(ResultSet from, Class<T> to) throws SQLException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		List<T> intances = new ArrayList<T>();
+		var intances = new ArrayList<T>();
 		var columnPairs = getColumns(to);
 		var readContrucotr = getReadConstructor(to);
-
 		while (from.next()) {
-			Collection<Object> parametrosConstrutor = new ArrayList<Object>();
-
-			for (Pair<Field, Column> pair : columnPairs) {
+			var parametrosConstrutor = new ArrayList<Object>();
+			for (var pair : columnPairs) {
 				var column = pair.getValue();
 				var fieldType = pair.getKey().getType();
 				if (IEnumColumn.class.isAssignableFrom(fieldType)) {
@@ -48,7 +45,7 @@ public class Conversor {
 					parametrosConstrutor.add(getObject(from, column.nome()));
 				}
 			}
-			T instance = (T) readContrucotr.newInstance(parametrosConstrutor.toArray());
+			T instance = ((T) readContrucotr.newInstance(parametrosConstrutor.toArray()));
 			intances.add(instance);
 		}
 
@@ -89,7 +86,7 @@ public class Conversor {
 		try {
 			obj = results.getInt(columnName);
 			for (int i = 0; i < enumConstants.length; i++) {
-				IEnumColumn enumColumn = (IEnumColumn) enumConstants[i];
+				var enumColumn = (IEnumColumn) enumConstants[i];
 				if (enumColumn.valor() == obj) {
 					enumConstant = enumConstants[i];
 					break;
@@ -103,7 +100,7 @@ public class Conversor {
 
 	private static <T extends Entidade> Constructor<?> getReadConstructor(Class<T> toClass) {
 		Constructor<?> readCtor = null;
-		for (Constructor<?> ctor : toClass.getConstructors()) {
+		for (var ctor : toClass.getConstructors()) {
 			if (ctor.getAnnotation(Builder.class).value() == Builder.Is.Read) {
 				readCtor = ctor;
 				break;
@@ -139,11 +136,6 @@ public class Conversor {
 			@Override
 			public String nome() {
 				return tableID;
-			}
-
-			@Override
-			public boolean isFK() {
-				return false;
 			}
 		};
 

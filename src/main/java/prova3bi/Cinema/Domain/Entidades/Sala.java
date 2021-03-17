@@ -16,13 +16,17 @@ public class Sala extends Entidade {
 		this.numeroSala = numeroSala;
 	}
 
-	// ChairNum RoomNum RoomsId roomType
 	@Builder(Is.Read)
 	public Sala(int ChairNum, int RoomNum, int RoomsId, TipoSala roomType) {
 		super(RoomsId);
 		this.tipo = roomType;
 		this.numPoltronas = ChairNum;
 		this.numeroSala = RoomNum;
+	}
+
+	@Builder(Is.Temp)
+	public Sala(int RoomsId) {
+		super(RoomsId);
 	}
 
 	@Column(nome = "roomType", tipoSql = "INTEGER")
