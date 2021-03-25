@@ -76,7 +76,8 @@ public class SessionService implements ISessionService {
 	private static int getSmallerNearestSquare(int integer) {
 		int NearestSmallerSquare = -1;
 		for (int i = integer; i > -1; i--) {
-			if ((Math.sqrt(i) - Math.floor(Math.sqrt(i))) == 0) {
+			var sqrt = Math.sqrt(i);
+			if ((sqrt - Math.floor(sqrt)) == 0) {
 				NearestSmallerSquare = i;
 				break;
 			}
@@ -88,7 +89,7 @@ public class SessionService implements ISessionService {
 			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
 	private static String getColumnLetters(int columnNumber) {
-		String letters = "";
+		var letters = "";
 		if (columnNumber <= 26) {
 			letters += lettersArray[columnNumber];
 		} else {
@@ -102,12 +103,12 @@ public class SessionService implements ISessionService {
 	public List<Sessao> GetNext() {
 		var allSessions = sessionRepo.GetAll();
 		var nextSessions = new ArrayList<Sessao>();
-		for (Sessao sessao : allSessions) {
+		for (var sessao : allSessions) {
 			if (sessao.verEstado() != EstadoSessao.JaTerminou) {
 				sessao.filme = movieRepo.Get(sessao.filme.getId());
 				sessao.sala = roomRepo.Get(sessao.sala.getId());
 				var poltronas = chairRepo.GetAllFromSession(sessao.getId());
-				for (Poltrona poltrona : poltronas) {
+				for (var poltrona : poltronas) {
 					poltrona.sessao = sessao;
 					sessao.poltronas.add(poltrona);
 				}
