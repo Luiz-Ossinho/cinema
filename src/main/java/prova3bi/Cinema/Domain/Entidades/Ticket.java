@@ -25,6 +25,10 @@ public class Ticket extends Entidade {
 	public TicketStatus status;
 	@Column(nome = "poltrona", tipoSql = "INTEGER")
 	public Poltrona poltrona;
+
+	public void Quitar() {
+		this.status = TicketStatus.Quitado;
+	}
 	
 	@Override
 	public boolean isValid() {

@@ -22,7 +22,28 @@ public class Query<T extends Entidade> {
 		}
 	}
 
-	public QueryComand comand;
+	public enum Comand {
+		Select("SELECT", "FROM"), Insert("INSERT", "INTO"), Update("UPDATE", "SET");
+
+		public String comand;
+		public String suffix;
+		private boolean hasSuffix = false;
+
+		Comand(String comando, String sufixoComando) {
+			comand = comando;
+			suffix = sufixoComando;
+			if (sufixoComando == null || sufixoComando.trim().isEmpty())
+				hasSuffix = false;
+			else
+				hasSuffix = true;
+		}
+
+		public boolean hasSuffix() {
+			return hasSuffix;
+		}
+	}
+
+	public Comand comand;
 
 	public List<String> properties = new ArrayList<String>();
 
@@ -38,13 +59,13 @@ public class Query<T extends Entidade> {
 
 	private String modifier;
 
-	public Query(QueryComand comand, Class<T> type) {
+	public Query(Comand comand, Class<T> type) {
 		this.comand = comand;
 		this.type = type;
 		target = type.getAnnotation(Table.class).nome();
 	}
 
-	public Query(QueryComand comand, Modifiers modifier, Class<T> type) {
+	public Query(Comand comand, Modifiers modifier, Class<T> type) {
 		this.comand = comand;
 		this.properties = new ArrayList<String>();
 		this.type = type;
@@ -71,8 +92,7 @@ public class Query<T extends Entidade> {
 	}
 
 	public Query<T> value(String value, String fieldName) {
-		var pair = QueryHelper.Value(value, fieldName, type);
-		this.values.add((Pair<String, Class<?>>) pair);
+		this.values.add(QueryHelper.Value(value, fieldName, type));
 		String columnName = "";
 		try {
 			columnName = type.getField(fieldName).getAnnotation(Column.class).nome();
@@ -117,7 +137,7 @@ public class Query<T extends Entidade> {
 	}
 
 	private String BuildInsert() {
-		var query = this.comand.getCommand() + " ";
+		var query = this.comand.comand + " ";
 		query += this.getAnySuffix() + " ";
 		query += this.target + "(";
 		query += this.getAnyProperties() + ")\n";
@@ -126,14 +146,21 @@ public class Query<T extends Entidade> {
 	}
 
 	private String BuildSelect() {
-		var query = this.comand.getCommand() + " ";
+		var query = this.comand.comand + " ";
 		query += this.getAnyProperties() + " ";
 		query += this.getAnySuffix() + " ";
 		query += this.target + " ";
-		// Joins nao implementados ainda
-		// query += this.getAnyJoins();
 		query += this.getAnyConditions();
 		query += this.getAnyModifier();
+		return query;
+	}
+
+	private String BuildUpdate() {
+		var query = this.comand.comand + " "; // update
+		query += this.target + " \n";
+		query += this.getAnySuffix() + " "; // update tableName \nSet
+		query += this.getAnyProperties() + " \n";
+		query += this.getAnyConditions();
 		return query;
 	}
 
@@ -147,17 +174,17 @@ public class Query<T extends Entidade> {
 		case Insert:
 			query = BuildInsert();
 			break;
-
-		default:
+		case Update:
+			query = BuildUpdate();
 			break;
 		}
 		return query;
 	}
 
 	private String getAnySuffix() {
-		var strComandSuffix = "";
+		String strComandSuffix = null;
 		if (this.comand.hasSuffix())
-			strComandSuffix += this.comand.getSuffix();
+			strComandSuffix = this.comand.suffix;
 		return strComandSuffix;
 	}
 
@@ -179,6 +206,14 @@ public class Query<T extends Entidade> {
 				}
 				strProperties = strProperties.substring(0, strProperties.length() - 2);
 			}
+			break;
+		case Update:
+			for (int i = 0; i < this.properties.size(); i++) {
+				var property = this.properties.get(i);
+				var value = this.values.get(i);
+				strProperties += property + " = " + value.getKey() + ", ";
+			}
+			strProperties = strProperties.substring(0, strProperties.length() - 2);
 			break;
 		}
 		return strProperties;

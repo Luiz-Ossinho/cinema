@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prova3bi.Cinema.Data.Abstractions.Nest;
-import prova3bi.Cinema.Domain.Entidades.EstadoSessao;
 import prova3bi.Cinema.Domain.Entidades.Poltrona;
 import prova3bi.Cinema.Domain.Entidades.Sessao;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
@@ -104,7 +103,7 @@ public class SessionService implements ISessionService {
 		var allSessions = sessionRepo.GetAll();
 		var nextSessions = new ArrayList<Sessao>();
 		for (var sessao : allSessions) {
-			if (sessao.verEstado() != EstadoSessao.JaTerminou) {
+			if (sessao.verEstado() != Sessao.Estado.JaTerminou) {
 				sessao.filme = movieRepo.Get(sessao.filme.getId());
 				sessao.sala = roomRepo.Get(sessao.sala.getId());
 				var poltronas = chairRepo.GetAllFromSession(sessao.getId());

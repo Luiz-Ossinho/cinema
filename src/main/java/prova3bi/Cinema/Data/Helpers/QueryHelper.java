@@ -59,13 +59,13 @@ public class QueryHelper {
 		return equalsParticle(nestingParticle(tableName, tableName+"ID"), value);
 	}
 
-	public static <T> Pair<String, ?> Value(String value, String fieldName, Class<T> type) {
+	public static <T> Pair<String, Class<?>> Value(String value, String fieldName, Class<T> type) {
 		Class<?> columnType = null;
 		try {
 			columnType = type.getField(fieldName).getType();
 		} catch (NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
 		}
-		return new Pair<String, Object>(value, columnType);
+		return new Pair<String, Class<?>>(value, columnType);
 	}
 }
