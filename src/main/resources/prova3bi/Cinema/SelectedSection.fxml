@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1200.0" style="-fx-background-color: #14111f;" stylesheets="@Styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prova3bi.Cinema.SelectedSectionController">
+   <children>
+      <AnchorPane prefHeight="635.0" prefWidth="1200.0">
+         <children>
+            <Pane layoutX="146.0" layoutY="59.0" prefHeight="220.0" prefWidth="300.0" style="-fx-background-color: #000; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ff0657;">
+               <children>
+                  <ImageView fitHeight="220.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+               </children></Pane>
+            <Pane layoutX="146.0" layoutY="229.0" prefHeight="389.0" prefWidth="300.0" style="-fx-background-color: #eee; -fx-background-radius: 16;">
+               <children>
+                  <Label layoutX="27.0" layoutY="42.0" style="-fx-font-size: 26;" styleClass="fontBold" text="Joker" />
+                  <Label layoutX="27.0" layoutY="22.0" style="-fx-font-size: 40; -fx-text-fill: #000;" styleClass="fontBold" text="JOKER" />
+                  <Label layoutX="27.0" layoutY="79.0" style="-fx-font-family: Roboto; -fx-text-fill: #9c9595; -fx-font-size: 14;" text="Duraçao:" />
+                  <Label layoutX="27.0" layoutY="110.0" style="-fx-font-family: Roboto; -fx-text-fill: #000; -fx-font-size: 16;" text="Sinopse:" />
+                  <Label layoutX="28.0" layoutY="258.0" style="-fx-font-family: Roboto; -fx-text-fill: #000; -fx-font-size: 16;" text="Diretor e elenco notavel:" />
+                  <Label layoutX="28.0" layoutY="317.0" style="-fx-font-family: Roboto; -fx-text-fill: #000; -fx-font-size: 16;" text="Genero:" />
+               </children></Pane>
+            <Label layoutX="517.0" layoutY="87.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 20;" text="Ticket" />
+            <Label layoutX="518.0" layoutY="111.0" style="-fx-font-size: 40;" styleClass="fontBold" text="25 reais" />
+            <Pane layoutX="517.0" layoutY="182.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #fff; -fx-background-radius: 4;" />
+            <Pane layoutX="517.0" layoutY="209.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-background-radius: 4;" />
+            <Label layoutX="548.0" layoutY="182.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Desocupado" />
+            <Label layoutX="548.0" layoutY="209.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Ocupado" />
+            <Button layoutX="994.0" layoutY="59.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #fff; -fx-font-family: Roboto; -fx-text-fill: #ff0657; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&lt;" />
+            <Label layoutX="517.0" layoutY="558.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Temos" />
+            <Label layoutX="599.0" layoutY="558.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="cadeiras ocupadas!" />
+            <Label layoutX="517.0" layoutY="578.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Selecione o local mais confortavel disponivel." />
+            <Button layoutX="949.0" layoutY="556.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&gt;" />
+            <HBox layoutX="517.0" layoutY="278.0" prefHeight="246.0" prefWidth="477.0">
+               <children>
+                  <GridPane prefHeight="0.0" prefWidth="0.0">
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>
