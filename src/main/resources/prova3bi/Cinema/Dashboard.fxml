@@ -15,16 +15,11 @@
             <Label layoutX="245.0" layoutY="64.0" style="-fx-font-size: 36; -fx-text-fill: #ff0657;" styleClass="fontBold" text="board" />
             <Pane layoutX="146.0" layoutY="155.0" prefHeight="200.0" prefWidth="330.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
                <children>
-                  <Pane layoutX="266.0" layoutY="136.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
+                  <Pane layoutX="272.0" layoutY="142.0" prefHeight="44.0" prefWidth="44.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
                      <children>
-                        <Label layoutX="16.0" layoutY="3.0" style="-fx-font-size: 36; -fx-text-fill: #221d34; -fx-font-family: Roboto;" text="&gt;" />
+                        <Label layoutX="14.0" layoutY="3.0" style="-fx-font-size: 30; -fx-text-fill: #221d34; -fx-font-family: Roboto;" text="&gt;" />
                      </children></Pane>
-                  <ImageView fitHeight="59.0" fitWidth="61.0" layoutX="28.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/movieIcon.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="102.0" layoutY="34.0" style="-fx-font-size: 36; -fx-text-fill: #221d34;" styleClass="fontBold" text="Sessoes" />
+                  <Label layoutX="28.0" layoutY="37.0" style="-fx-font-size: 36; -fx-text-fill: #221d34;" styleClass="fontBold" text="Sessoes" />
                   <Label layoutX="28.0" layoutY="89.0" style="-fx-font-family: Roboto; -fx-font-size: 16; -fx-text-fill: #221d34;" text="Listagem de sessoes." />
                   <Label layoutX="46.0" layoutY="109.0" style="-fx-font-family: Roboto; -fx-font-size: 16; -fx-text-fill: #221d34;" text="disponiveis" />
                </children></Pane>
@@ -35,9 +30,9 @@
             </ImageView>
             <Pane layoutX="498.0" layoutY="155.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
                <children>
-                  <Pane layoutX="186.0" layoutY="136.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
+                  <Pane layoutX="192.0" layoutY="142.0" prefHeight="44.0" prefWidth="44.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
                      <children>
-                        <Label layoutX="16.0" layoutY="3.0" style="-fx-font-size: 36; -fx-text-fill: #221d34; -fx-font-family: Roboto;" text="&gt;" />
+                        <Label layoutX="14.0" layoutY="3.0" style="-fx-font-size: 30; -fx-text-fill: #221d34; -fx-font-family: Roboto;" text="&gt;" />
                      </children></Pane>
                   <Label layoutX="28.0" layoutY="89.0" style="-fx-font-family: Roboto; -fx-font-size: 16; -fx-text-fill: #221d34;" text="Listagem de funcionarios" />
                   <ImageView fitHeight="59.0" fitWidth="61.0" layoutX="28.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
@@ -54,9 +49,9 @@
                   <Image url="@../Images/ticket.png" />
                </image>
             </ImageView>
-            <Pane layoutX="563.0" layoutY="542.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
+            <Pane layoutX="563.0" layoutY="542.0" prefHeight="44.0" prefWidth="44.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
                <children>
-                  <Label layoutX="16.0" layoutY="3.0" style="-fx-font-size: 36; -fx-text-fill: #221d34; -fx-font-family: Roboto;" text="&gt;" />
+                  <Label layoutX="14.0" layoutY="3.0" style="-fx-font-size: 30; -fx-text-fill: #221d34; -fx-font-family: Roboto;" text="&gt;" />
                </children></Pane>
             <Label layoutX="344.0" layoutY="511.0" style="-fx-font-family: Roboto; -fx-font-size: 18; -fx-text-fill: #f0f2f0;" text="Quitaçao de ticket para a" />
             <Label layoutX="344.0" layoutY="528.0" style="-fx-font-family: Roboto; -fx-font-size: 18; -fx-text-fill: #f0f2f0;" text="validaçao de ingresso." />

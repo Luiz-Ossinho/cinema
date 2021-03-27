@@ -20,6 +20,9 @@
 	-fx-font-family: 'Roboto'
 }
 
+#inputWithIcon{
+	-fx-padding: 0.0 0.0 0.0 46.0;
+}
 
 
 
