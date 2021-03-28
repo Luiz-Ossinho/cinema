@@ -2,13 +2,16 @@ package prova3bi.Cinema.Services;
 
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Repositories.ChairRepository;
+import prova3bi.Cinema.Data.Repositories.LoginRepository;
 import prova3bi.Cinema.Data.Repositories.MovieRepository;
 import prova3bi.Cinema.Data.Repositories.RoomRepository;
 import prova3bi.Cinema.Data.Repositories.SessaoRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
+import prova3bi.Cinema.Domain.Interfaces.Repositories.ILoginRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ISessaoRepository;
+import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
 import prova3bi.Cinema.Domain.Interfaces.Services.ISessionService;
 
 // USE ESSES METODOS PARA OBTER INSTANCIAS
@@ -24,12 +27,20 @@ public class UnitFactory {
 	private static IMovieRepository movieRepo;
 	private static IRoomRepository roomRepo;
 	private static ISessaoRepository sessionRepo;
+	private static ILoginRepository loginRepo;
+	private static ILoginService loginService;
 	private static ISessionService sessionService;
 
 	public static DBContext getContext() {
 		if (context == null)
 			context = new DBContext();
 		return context;
+	}
+
+	public static ILoginRepository getLoginRepo() {
+		if (loginRepo == null)
+			loginRepo = new LoginRepository(getContext());
+		return loginRepo;
 	}
 
 	public static IChairRepository getChairRepo() {
@@ -60,5 +71,11 @@ public class UnitFactory {
 		if (sessionService == null)
 			sessionService = new SessionService(getSessionRepo(), getRoomRepo(), getMovieRepo(), getChairRepo());
 		return sessionService;
+	}
+
+	public static ILoginService getLoginService() {
+		if (loginService == null)
+			loginService = new LoginService(getLoginRepo());
+		return loginService;
 	}
 }

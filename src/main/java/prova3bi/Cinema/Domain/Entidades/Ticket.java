@@ -1,10 +1,18 @@
 package prova3bi.Cinema.Domain.Entidades;
 
+<<<<<<< HEAD
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+=======
+import prova3bi.Cinema.Data.Abstractions.Builder;
+import prova3bi.Cinema.Data.Abstractions.Builder.Is;
+import prova3bi.Cinema.Data.Abstractions.Column;
+import prova3bi.Cinema.Data.Abstractions.Table;
+>>>>>>> refs/remotes/origin/feature/JisusDepresso
 
+<<<<<<< HEAD
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -22,10 +30,32 @@ public class Ticket extends Entidade {
 	public Ticket(int id) {
 		super(id);
 		// TODO Auto-generated constructor stub
+=======
+@Table(nome = "Tickets", fks = { "poltrona;Poltronas"})
+public class Ticket extends Entidade {
+	
+	@Builder(Is.Read)
+	public Ticket(int TicketsID, TicketStatus status, int poltrona) {
+		super(TicketsID);
+		this.status = status;
+		this.poltrona = new Poltrona(poltrona);
+>>>>>>> refs/remotes/origin/feature/JisusDepresso
 	}
 	
+	@Builder(Is.Insert)
+	public Ticket(Poltrona poltrona) {
+		super(-1);
+		this.poltrona = poltrona;
+	}
+	
+	@Column(nome = "status", tipoSql = "INTEGER")
 	public TicketStatus status;
+	@Column(nome = "poltrona", tipoSql = "INTEGER")
 	public Poltrona poltrona;
+
+	public void Quitar() {
+		this.status = TicketStatus.Quitado;
+	}
 	
 	@Override
 	public boolean isValid() {

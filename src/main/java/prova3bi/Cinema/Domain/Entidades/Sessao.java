@@ -34,8 +34,17 @@ public class Sessao extends Entidade {
 		return counter;
 	}
 
-	public EstadoSessao verEstado() {
-		return EstadoSessao.obterEstado(this);
+	public Estado verEstado() {
+		Estado estado = null;
+		if (this.DHInicio.isAfter(LocalDateTime.now()))
+			estado = Estado.VaiComecar;
+		else if (this.DHInicio.isBefore(LocalDateTime.now()) && this.DHTermino.isAfter(LocalDateTime.now()))
+			estado = Estado.EmAndamento;
+		else if (this.numPoltronasVagas()<=0)
+			estado = Estado.Lotada;
+		else if (this.DHTermino.isBefore(LocalDateTime.now()))
+			estado = Estado.JaTerminou;
+		return estado;
 	}
 
 	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSSSS");
@@ -66,6 +75,10 @@ public class Sessao extends Entidade {
 		super(SessionsId);
 	}
 
+	public enum Estado {
+		VaiComecar, EmAndamento, Lotada, JaTerminou;
+	}
+	
 	@Override
 	public boolean isValid() {
 		return false;

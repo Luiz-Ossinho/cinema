@@ -27,6 +27,11 @@ public class Poltrona extends Entidade {
 		this.ocupada = isOccupied == 0 ? false : true;
 	}
 
+	@Builder(Is.Temp)
+	public Poltrona(int PoltronasID) {
+		super(PoltronasID);
+	}
+
 	@Column(nome = "session", tipoSql = "INTEGER")
 	public Sessao sessao;
 	@Column(nome = "isOccupied", tipoSql = "BOOLEAN")

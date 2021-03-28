@@ -1,10 +1,13 @@
 package prova3bi.Cinema;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+<<<<<<< HEAD
 import prova3bi.Cinema.Domain.Entidades.Ticket;
 
 import java.awt.Color;
@@ -34,6 +37,8 @@ import com.lowagie.text.pdf.PdfWriter;
 
 //import api iText
 
+=======
+>>>>>>> refs/remotes/origin/feature/JisusDepresso
 /**
  * JavaFX App
  */
@@ -43,7 +48,7 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		scene = new Scene(loadFXML("primary"), 640, 480);
+		scene = new Scene(loadFXML("InitialPage"), 1200, 675);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -78,5 +83,4 @@ public class App extends Application {
 		*/
 		launch();
 	}
-
 }
