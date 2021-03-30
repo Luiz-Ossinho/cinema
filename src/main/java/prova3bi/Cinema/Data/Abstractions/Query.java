@@ -254,12 +254,12 @@ public class Query<T extends Entidade> {
 	}
 
 	private String getAnyModifier() {
-		var strModifier = "";
-		if (this.modifier.isEmpty())
-			return this.modifier;
-		else {
-			strModifier += "\n" + this.modifier;
-			return strModifier;
-		}
-	}
+        var strModifier = "";
+        if (this.modifier==null)
+            return strModifier;
+        else {
+            strModifier += "\n" + this.modifier;
+            return strModifier;
+        }
+    }
 }

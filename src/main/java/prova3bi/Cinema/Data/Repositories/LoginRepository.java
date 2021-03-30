@@ -17,17 +17,16 @@ public class LoginRepository implements ILoginRepository {
 
 	@Override
 	public Login Get(String user) {
-		Query<Login> query = new Query<Login>(Query.Comand.Select, Query.Modifiers.Limit1, Login.class)
-				.like(user, "user");
+		Query<Login> query = new Query<Login>(Query.Comand.Select, Query.Modifiers.Limit1, Login.class).like(user,
+				"user");
 
 		return context.get(query);
 	}
 
 	@Override
 	public int Add(Login entidade) {
-		Query<Login> query =  new Query<Login>(Query.Comand.Insert, Login.class)
-				.value(entidade.user, "user")
-				.value(entidade.nivelPermissao, "nivelPermissao");
+		Query<Login> query = new Query<Login>(Query.Comand.Insert, Login.class).value(entidade.user, "user")
+				.value(entidade.hash, "hash").value(entidade.nivelPermissao, "nivelPermissao");
 
 		return context.execute(query);
 	}
@@ -35,7 +34,7 @@ public class LoginRepository implements ILoginRepository {
 	@Override
 	public Collection<Login> GetAll() {
 		Query<Login> query = new Query<Login>(Query.Comand.Select, Login.class);
-		
+
 		return context.getAll(query);
 	}
 }

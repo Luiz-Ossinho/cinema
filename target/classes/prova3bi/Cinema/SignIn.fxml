@@ -22,11 +22,11 @@
             </ImageView>
             <Label layoutX="737.0" layoutY="218.0" style="-fx-font-size: 36;" styleClass="fontBold" text="cine" />
             <Label layoutX="816.0" layoutY="218.0" style="-fx-font-size: 36; -fx-text-fill: #ff0657;" styleClass="fontBold" text="now" />
-            <TextField id="inputWithIcon" layoutX="743.0" layoutY="319.0" prefHeight="60.0" prefWidth="300.0" promptText="Email">
+            <TextField id="inputWithIcon" fx:id="textField" layoutX="743.0" layoutY="319.0" prefHeight="60.0" prefWidth="300.0" promptText="Email">
                <font>
                   <Font size="14.0" />
                </font></TextField>
-            <PasswordField id="inputWithIcon" layoutX="743.0" layoutY="398.0" prefHeight="60.0" prefWidth="300.0" promptText="Senha">
+            <PasswordField id="inputWithIcon" fx:id="passField" layoutX="743.0" layoutY="398.0" prefHeight="60.0" prefWidth="300.0" promptText="Senha">
                <font>
                   <Font size="14.0" />
                </font></PasswordField>

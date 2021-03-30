@@ -49,7 +49,6 @@ public class SignInController implements Initializable {
 				Login log = service.VerificarUsuario(text1, text2);
 
 				if (log != null) {
-					App.setRoot("Dashboard");
 					this.signedUser = log;
 
 				} else {
@@ -60,6 +59,7 @@ public class SignInController implements Initializable {
 			}
 			DashboardController controller = new DashboardController();
 			controller.setUserSigned(signedUser);
+			App.setRoot("Dashboard");
 		}
 	}
 
