@@ -26,4 +26,11 @@ public class LoginService implements ILoginService {
 	public int Add(Login login) {
 		return loginRepo.Add(login);
 	}
+
+	@Override
+	public boolean IsFirstLogin() {
+		if(loginRepo.GetAll().size()>0)
+			return true;
+		return false;
+	}
 }
