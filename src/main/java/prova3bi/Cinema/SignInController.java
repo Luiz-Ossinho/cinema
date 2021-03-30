@@ -10,6 +10,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
 import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Util.Alerts;
@@ -24,6 +26,8 @@ public class SignInController implements Initializable {
 
 	private ILoginService service;
 
+	private Login signedUser;
+	
 	@FXML
 	private void switchGoBack(MouseEvent event) throws IOException {
 		App.setRoot("InitialPage");
@@ -35,14 +39,27 @@ public class SignInController implements Initializable {
 			Alerts.showAlert("Ops... aconteceu algum problema!", "Pelo visto você esqueceu de inserir os dados.",
 					"Preencha os campos para continuar!", AlertType.INFORMATION);
 		} else {
-
-			if (service.VerificarUsuario(textField.getText(), passField.getText()) != null) {
-				App.setRoot("Dashboard");
+			String text1 = textField.getText();
+			String text2 = passField.getText();
+			if (!service.IsFirstLogin()) {
+				Login log = new Login(text1, text2, NivelPermissao.Admin);
+				service.Add(log);
+				this.signedUser = log;
 			} else {
-				Alerts.showAlert("Ops... aconteceu algum problema!",
-						"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
-			}
+				Login log = service.VerificarUsuario(text1, text2);
 
+				if (log != null) {
+					App.setRoot("Dashboard");
+					this.signedUser = log;
+
+				} else {
+					Alerts.showAlert("Ops... aconteceu algum problema!",
+							"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
+				}
+
+			}
+			DashboardController controller = new DashboardController();
+			controller.setUserSigned(signedUser);
 		}
 	}
 
