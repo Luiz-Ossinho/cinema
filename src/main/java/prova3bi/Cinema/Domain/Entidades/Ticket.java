@@ -23,7 +23,7 @@ public class Ticket extends Entidade {
 	
 	@Column(nome = "status", tipoSql = "INTEGER")
 	public TicketStatus status;
-	@Column(nome = "poltrona", tipoSql = "INTEGER")
+	@Column(nome = "poltrona", tipoSql = "INTEGER", isFk = true)
 	public Poltrona poltrona;
 
 	public void Quitar() {

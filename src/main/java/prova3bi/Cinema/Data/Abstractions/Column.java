@@ -13,4 +13,6 @@ public @interface Column {
 	String nome();
 
 	String tipoSql();
+	
+	boolean isFk() default false;
 }

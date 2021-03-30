@@ -137,6 +137,11 @@ public class Conversor {
 			public String nome() {
 				return tableID;
 			}
+
+			@Override
+			public boolean isFk() {
+				return false;
+			}
 		};
 
 		return annotation;
