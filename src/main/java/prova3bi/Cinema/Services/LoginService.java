@@ -10,7 +10,6 @@ public class LoginService implements ILoginService {
 	
 	@Override
 	public Login VerificarUsuario(String nomeUsuario, String senha) {
-		
 		var login = loginRepo.Get(nomeUsuario);
 		var hash = Login.Hash(senha);
 		if(login.hash == hash) {
@@ -21,5 +20,10 @@ public class LoginService implements ILoginService {
 
 	public LoginService(ILoginRepository loginRepo) {
 		this.loginRepo = loginRepo;
+	}
+
+	@Override
+	public int Add(Login login) {
+		return loginRepo.Add(login);
 	}
 }
