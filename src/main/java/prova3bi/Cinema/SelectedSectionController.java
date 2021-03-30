@@ -29,7 +29,6 @@ public class SelectedSectionController implements Initializable {
 				column = 0;
 				row++;
 			}
-
 		}
 	}
 
