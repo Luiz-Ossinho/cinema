@@ -1,5 +1,7 @@
 package prova3bi.Cinema.Data.Repositories;
 
+import java.util.Collection;
+
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
 import prova3bi.Cinema.Domain.Entidades.Login;
@@ -25,9 +27,15 @@ public class LoginRepository implements ILoginRepository {
 	public int Add(Login entidade) {
 		Query<Login> query =  new Query<Login>(Query.Comand.Insert, Login.class)
 				.value(entidade.user, "user")
-				.value(entidade.hash, "hash")
 				.value(entidade.nivelPermissao, "nivelPermissao");
 
 		return context.execute(query);
+	}
+
+	@Override
+	public Collection<Login> GetAll() {
+		Query<Login> query = new Query<Login>(Query.Comand.Select, Login.class);
+		
+		return context.getAll(query);
 	}
 }
