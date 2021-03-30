@@ -60,7 +60,8 @@ public class DatabaseConnection {
 		for (Field field : tableClass.getDeclaredFields()) {
 			if (field.isAnnotationPresent(Column.class)) {
 				var annotation = field.getAnnotation(Column.class);
-				atributos.add(new Pair<String, String>(annotation.nome(), annotation.tipoSql()));
+				if(!annotation.isFk())
+					atributos.add(new Pair<String, String>(annotation.nome(), annotation.tipoSql()));
 			}
 		}
 		String sql = "CREATE TABLE IF NOT EXISTS " + nomeTabela + " \n";

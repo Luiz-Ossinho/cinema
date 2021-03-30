@@ -32,7 +32,7 @@ public class Poltrona extends Entidade {
 		super(PoltronasID);
 	}
 
-	@Column(nome = "session", tipoSql = "INTEGER")
+	@Column(nome = "session", tipoSql = "INTEGER", isFk = true)
 	public Sessao sessao;
 	@Column(nome = "isOccupied", tipoSql = "BOOLEAN")
 	public boolean ocupada;

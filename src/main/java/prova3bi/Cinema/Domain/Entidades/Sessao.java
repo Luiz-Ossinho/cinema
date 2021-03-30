@@ -18,9 +18,9 @@ public class Sessao extends Entidade {
 	public LocalDateTime DHTermino;
 	@Column(nome = "price", tipoSql = "NUMERIC")
 	public double preco;
-	@Column(nome = "room", tipoSql = "INTEGER")
+	@Column(nome = "room", tipoSql = "INTEGER", isFk = true)
 	public Sala sala;
-	@Column(nome = "movie", tipoSql = "INTEGER")
+	@Column(nome = "movie", tipoSql = "INTEGER", isFk = true)
 	public Filme filme;
 
 	public List<Poltrona> poltronas = new ArrayList<Poltrona>();
