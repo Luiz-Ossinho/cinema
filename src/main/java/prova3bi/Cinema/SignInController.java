@@ -13,6 +13,7 @@ import prova3bi.Cinema.Domain.Entidades.Login;
 import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
 import prova3bi.Cinema.Services.UnitFactory;
+import prova3bi.Cinema.Singletons.LoginHolder;
 import prova3bi.Cinema.Util.Alerts;
 
 public class SignInController implements Initializable {
@@ -24,8 +25,6 @@ public class SignInController implements Initializable {
 	private PasswordField passField;
 
 	private ILoginService service;
-
-	private Login signedUser;
 
 	@FXML
 	private void switchGoBack(MouseEvent event) throws IOException {
@@ -45,11 +44,13 @@ public class SignInController implements Initializable {
 
 		if (service.IsFirstLogin()) {
 			Login log = new Login(username, password, NivelPermissao.Admin);
-			this.signedUser = service.Add(log);
+			LoginHolder.getInstance().setLogin(service.Add(log));
+			GoToDashboard();
 		} else {
 			Login log = service.VerificarUsuario(username, password);
 			if (log != null) {
-				this.signedUser = log;
+				LoginHolder.getInstance().setLogin(log);
+				GoToDashboard();
 			} else {
 				Alerts.showAlert("Ops... aconteceu algum problema!",
 						"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
@@ -57,6 +58,15 @@ public class SignInController implements Initializable {
 		}
 	}
 
+	public void GoToDashboard() {
+		try {
+			App.setRoot("Dashboard");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		service = UnitFactory.getLoginService();

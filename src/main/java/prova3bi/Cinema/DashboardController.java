@@ -5,18 +5,15 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Singletons.LoginHolder;
 
 public class DashboardController implements Initializable {
 
-	private Login userSigned;
-
-	public void setUserSigned(Login userSigned) {
-		this.userSigned = userSigned;
-	}
+	private Login signedUser;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println(userSigned.toString());
+		signedUser = LoginHolder.getInstance().getLogin();
 	}
 
 }
