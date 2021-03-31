@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+//import api iText
+
 /**
  * JavaFX App
  */
@@ -30,6 +32,8 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
+
+
 	public static void main(String[] args) {
 //		var DH = LocalDateTime.now().plusHours(2);
 //		var DHLater = DH.plusHours(2);
@@ -40,6 +44,13 @@ public class App extends Application {
 //		var list = sessionService.GetNext();
 // CODIGO USADO PARA TESTAR
 // NO MEU FUNCIONOU KKKKKKKK
+/*		ArrayList<Ticket> tickets = new ArrayList<>();
+		tickets.add(new Ticket(1));
+		tickets.add(new Ticket(2));
+		tickets.add(new Ticket(3));
+		tickets.add(new Ticket(4));
+		Ticket.createPDF(tickets);
+		*/
 		launch();
 	}
 }
