@@ -1,7 +1,10 @@
 package prova3bi.Cinema.Data.Repositories;
 
+import java.util.List;
+
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
+import prova3bi.Cinema.Data.Abstractions.Query.Comand;
 import prova3bi.Cinema.Domain.Entidades.Sala;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
 
@@ -20,13 +23,13 @@ public class RoomRepository implements IRoomRepository {
 		return context.execute(query);
 	}
 
-// Nenhum uso encontrado
-//	@Override
-//	public List<Sala> GetAll() {
-//		Query<Sala> query = new Query<Sala>(QueryComand.Select, Sala.class);
-//
-//		return context.getAll(query);
-//	}
+// Uso encontrado babaca
+	@Override
+	public List<Sala> GetAll() {
+		Query<Sala> query = new Query<Sala>(Comand.Select, Sala.class);
+
+		return context.getAll(query);
+	}
 
 	@Override
 	public Sala Get(int id) {

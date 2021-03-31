@@ -9,6 +9,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import prova3bi.Cinema.Domain.Validator;
 import prova3bi.Cinema.Domain.Entidades.Login;
 import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
@@ -36,33 +37,38 @@ public class SignInController implements Initializable {
 		var username = textField.getText();
 		var password = passField.getText();
 
-		if (username.isEmpty() || password.isEmpty()) {
+		if (Validator.isNullOrEmpty(username) || Validator.isNullOrEmpty(password)) {
 			Alerts.showAlert("Ops... aconteceu algum problema!", "Pelo visto você esqueceu de inserir os dados.",
 					"Preencha os campos para continuar!", AlertType.INFORMATION);
 			return;
 		}
 
-		if (service.IsFirstLogin()) {
-			Login log = new Login(username, password, NivelPermissao.Admin);
-			LoginHolder.getInstance().setLogin(service.Add(log));
-			GoToDashboard();
-		} else {
-			Login log = service.VerificarUsuario(username, password);
-			if (log != null) {
-				LoginHolder.getInstance().setLogin(log);
-				GoToDashboard();
-			} else {
-				Alerts.showAlert("Ops... aconteceu algum problema!",
-						"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
-			}
-		}
+		if (service.IsFirstLogin())
+			FirstLogin(username, password);
+		else
+			UsualLogin(username, password);
 	}
-
-	public void GoToDashboard() {
+	
+	private void FirstLogin(String username, String password){
+		Login log = new Login(username, password, NivelPermissao.Admin);
+		LoginHolder.getInstance().setLogin(service.Add(log));
+		GoToDashboard();
+	}
+	
+	private void UsualLogin(String username, String password) {
+		Login log = service.VerificarUsuario(username, password);
+		if (log != null) {
+			LoginHolder.getInstance().setLogin(log);
+			GoToDashboard();
+		} else 
+			Alerts.showAlert("Ops... aconteceu algum problema!",
+					"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
+	}
+	
+	private void GoToDashboard() {
 		try {
 			App.setRoot("Dashboard");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

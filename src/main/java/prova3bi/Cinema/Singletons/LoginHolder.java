@@ -5,7 +5,7 @@ import prova3bi.Cinema.Domain.Entidades.Login;
 public final class LoginHolder {
 	private Login login;
 	
-	private static LoginHolder singleton = new LoginHolder();
+	private static LoginHolder holder = new LoginHolder();
 	
 	public Login getLogin() {
 		return login;
@@ -16,7 +16,7 @@ public final class LoginHolder {
 	}
 
 	public static LoginHolder getInstance() {
-		return singleton;
+		return holder;
 	}
 
 }
