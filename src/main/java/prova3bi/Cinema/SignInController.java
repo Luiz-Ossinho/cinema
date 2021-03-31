@@ -3,7 +3,6 @@ package prova3bi.Cinema;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -27,7 +26,7 @@ public class SignInController implements Initializable {
 	private ILoginService service;
 
 	private Login signedUser;
-	
+
 	@FXML
 	private void switchGoBack(MouseEvent event) throws IOException {
 		App.setRoot("InitialPage");
@@ -35,31 +34,26 @@ public class SignInController implements Initializable {
 
 	@FXML
 	private void switchLogin() throws IOException {
-		if (textField.getText().isEmpty() || passField.getText().isEmpty()) {
+		var username = textField.getText();
+		var password = passField.getText();
+
+		if (username.isEmpty() || password.isEmpty()) {
 			Alerts.showAlert("Ops... aconteceu algum problema!", "Pelo visto você esqueceu de inserir os dados.",
 					"Preencha os campos para continuar!", AlertType.INFORMATION);
+			return;
+		}
+
+		if (service.IsFirstLogin()) {
+			Login log = new Login(username, password, NivelPermissao.Admin);
+			this.signedUser = service.Add(log);
 		} else {
-			String text1 = textField.getText();
-			String text2 = passField.getText();
-			if (!service.IsFirstLogin()) {
-				Login log = new Login(text1, text2, NivelPermissao.Admin);
-				service.Add(log);
+			Login log = service.VerificarUsuario(username, password);
+			if (log != null) {
 				this.signedUser = log;
 			} else {
-				Login log = service.VerificarUsuario(text1, text2);
-
-				if (log != null) {
-					this.signedUser = log;
-
-				} else {
-					Alerts.showAlert("Ops... aconteceu algum problema!",
-							"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
-				}
-
+				Alerts.showAlert("Ops... aconteceu algum problema!",
+						"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
 			}
-			DashboardController controller = new DashboardController();
-			controller.setUserSigned(signedUser);
-			App.setRoot("Dashboard");
 		}
 	}
 

@@ -34,7 +34,13 @@ public class DatabaseConnection {
 			}
 		}
 		for (String alterTableCommand : alterTableQueries) {
+			try { 
 			connection.createStatement().execute(alterTableCommand);
+			}catch (SQLException e) {
+				if(!e.getMessage().contains("exists")) {
+					throw e;
+				}
+			}
 		}
 	}
 
