@@ -37,7 +37,7 @@ public class DatabaseConnection {
 			try { 
 			connection.createStatement().execute(alterTableCommand);
 			}catch (SQLException e) {
-				if(!e.getMessage().contains("exists")) {
+				if(!e.getMessage().contains("duplicate")) {
 					throw e;
 				}
 			}
