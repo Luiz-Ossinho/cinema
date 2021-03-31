@@ -9,9 +9,9 @@ import prova3bi.Cinema.Domain.Entidades.Login;
 public class DashboardController implements Initializable {
 
 	private Login userSigned;
-
-	public void setUserSigned(Login userSigned) {
-		this.userSigned = userSigned;
+	
+	public DashboardController(Login log) {
+		this.userSigned = log;
 	}
 
 	@Override

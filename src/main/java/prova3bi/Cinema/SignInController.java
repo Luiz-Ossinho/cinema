@@ -5,11 +5,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import prova3bi.Cinema.Domain.Entidades.Login;
 import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
@@ -57,9 +59,9 @@ public class SignInController implements Initializable {
 				}
 
 			}
-			DashboardController controller = new DashboardController();
-			controller.setUserSigned(signedUser);
-			App.setRoot("Dashboard");
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+			loader.setController(new DashboardController(signedUser));
+			loader.load();
 		}
 	}
 
