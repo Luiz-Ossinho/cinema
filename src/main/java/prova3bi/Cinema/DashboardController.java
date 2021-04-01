@@ -9,7 +9,15 @@ import prova3bi.Cinema.Singletons.LoginHolder;
 
 public class DashboardController implements Initializable {
 
+<<<<<<< HEAD
 	private Login signedUser;
+=======
+	private Login userSigned;
+	
+	public DashboardController(Login log) {
+		this.userSigned = log;
+	}
+>>>>>>> refs/remotes/origin/feature/GuilhermeSantosUI
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
