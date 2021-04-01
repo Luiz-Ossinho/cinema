@@ -1,2 +1,3 @@
 /cinema.db
 *.class
+*/target/**
