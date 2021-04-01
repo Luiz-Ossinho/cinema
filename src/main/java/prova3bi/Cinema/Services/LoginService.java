@@ -23,14 +23,15 @@ public class LoginService implements ILoginService {
 	}
 
 	@Override
-	public int Add(Login login) {
-		return loginRepo.Add(login);
+	public Login Add(Login login) {
+		login.setId(loginRepo.Add(login));
+		return login;
 	}
 
 	@Override
 	public boolean IsFirstLogin() {
 		if(loginRepo.GetAll().size()>0)
-			return true;
-		return false;
+			return false;
+		return true;
 	}
 }
