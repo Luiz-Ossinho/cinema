@@ -15,7 +15,7 @@
    <children>
       <AnchorPane prefHeight="635.0" prefWidth="1200.0" stylesheets="@Styles/application.css">
          <children>
-            <ImageView fitHeight="698.0" fitWidth="1267.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.02;">
+            <ImageView fitHeight="809.0" fitWidth="1228.0" layoutX="-4.0" layoutY="-25.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.08;">
                <image>
                   <Image url="@../Images/backgroundLogin.jpg" />
                </image>

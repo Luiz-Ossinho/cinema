@@ -1,5 +1,6 @@
 package prova3bi.Cinema;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -51,6 +53,11 @@ public class SectionListController implements Initializable {
 
 		return lm;
 
+	}
+	
+	@FXML 
+	private void switchGoBack(MouseEvent event) throws IOException{
+		App.setRoot("InitialPage");
 	}
 
 	@Override
