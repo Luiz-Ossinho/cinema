@@ -3,13 +3,16 @@ package prova3bi.Cinema;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import prova3bi.Cinema.Domain.Validator;
+import javafx.scene.layout.Pane;
 import prova3bi.Cinema.Domain.Entidades.Login;
 import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;

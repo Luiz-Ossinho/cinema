@@ -12,7 +12,7 @@ public class LoginService implements ILoginService {
 	public Login VerificarUsuario(String nomeUsuario, String senha) {
 		var login = loginRepo.Get(nomeUsuario);
 		var hash = Login.Hash(senha);
-		if(login.hash == hash) {
+		if(login.hash.equals(hash)) {
 			return login;
 		}
 		return null;
