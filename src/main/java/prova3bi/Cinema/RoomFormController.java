@@ -1,19 +1,24 @@
 package prova3bi.Cinema;
 
+import java.net.URL;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import prova3bi.Cinema.Domain.Entidades.Sala;
+import prova3bi.Cinema.Domain.Entidades.TipoSala;
 import prova3bi.Cinema.Exception.ValidateException;
 
-public class RoomFormController {
+public class RoomFormController implements Initializable{
 
 	@FXML
-	private TextField txtType;
+	private ComboBox<TipoSala> cbType;
 
 	@FXML
 	private TextField txtRoomNumber;
@@ -45,10 +50,11 @@ public class RoomFormController {
 		// Sala class = new Sala();
 		ValidateException exception = new ValidateException("Validation error");
 		
-		if (txtType.getText() == null || txtType.getText().trim().equals("")) {
+		if (cbType.getValue() == null) {
 			exception.addError("type", "!");
+		} else {
+			// section.setPacienteid(cbPatient.getValue());
 		}
-		// class.setDescricao(txtType.getText());
 
 		if (txtRoomNumber.getText() == null || txtRoomNumber.getText().trim().equals("")) {
 			exception.addError("seats", "!");
@@ -68,6 +74,11 @@ public class RoomFormController {
 		txtTypeLabel.setText((fields.contains("type") ? errors.get("type") : ""));
 		txtSeatsLabel.setText((fields.contains("seats") ? errors.get("seats") : ""));
 		txtClassLabel.setText((fields.contains("class") ? errors.get("class") : ""));
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		cbType.getItems().setAll(TipoSala.values());
 	}
 
 }

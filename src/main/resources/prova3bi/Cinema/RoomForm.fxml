@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,16 +14,7 @@
    <children>
       <AnchorPane prefHeight="635.0" prefWidth="1200.0">
          <children>
-            <Pane layoutX="62.0" layoutY="110.0" prefHeight="52.0" prefWidth="277.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
-               <children>
-                  <TextField fx:id="txtType" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Tipo" style="-fx-background-color: transparent;" />
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="24.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/text.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
+            <ComboBox fx:id="cbType" layoutX="62.0" layoutY="110.0" prefHeight="52.0" prefWidth="277.0" promptText="Tipo" style="-fx-background-color: #fff; -fx-background-radius: 8;" />
             <Pane layoutX="62.0" layoutY="234.0" prefHeight="52.0" prefWidth="277.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
                <children>
                   <TextField fx:id="txtRoomNumber" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Número da sala" style="-fx-background-color: transparent;" />

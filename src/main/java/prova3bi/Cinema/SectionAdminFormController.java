@@ -108,28 +108,28 @@ public class SectionAdminFormController implements Initializable {
 		ValidateException exception = new ValidateException("Validation error");
 
 		if (txtInitialTime.getText() == null || txtInitialTime.getText().trim().equals("")) {
-			exception.addError("itime", "Field can't be empty");
+			exception.addError("itime", "!");
 		}
 		// section.setDescricao(txtDescription.getText());
 
 		if (txtFinalTime.getText() == null || txtFinalTime.getText().trim().equals("")) {
-			exception.addError("ftime", "Field can't be empty");
+			exception.addError("ftime", "!");
 		}
 		// section.setDescricao(txtDescription.getText());
 
 		if (txtPrice.getText() == null || txtPrice.getText().trim().equals("")) {
-			exception.addError("price", "Field can't be empty");
+			exception.addError("price", "!");
 		}
 		// section.setDescricao(txtDescription.getText());
 
 		if (cbClass.getValue() == null) {
-			exception.addError("class", "Field can't be empty");
+			exception.addError("class", "!");
 		} else {
 			// section.setPacienteid(cbPatient.getValue());
 		}
 
 		if (cbMovie.getValue() == null) {
-			exception.addError("movie", "Field can't be empty");
+			exception.addError("movie", "!");
 		} else {
 			// section.setPacienteid(cbPatient.getValue());
 		}
