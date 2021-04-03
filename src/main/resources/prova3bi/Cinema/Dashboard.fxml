@@ -55,7 +55,11 @@
             <Label fx:id="levelAuthorization" layoutX="146.0" layoutY="106.0" style="-fx-font-family: Roboto; -fx-font-size: 16; -fx-text-fill: fff;" />
             <Pane layoutX="146.0" layoutY="69.0" onMouseClicked="#switchGoBack" prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
                <children>
-                  <Label layoutX="13.0" layoutY="5.0" style="-fx-font-size: 24; -fx-text-fill: #ff0657; -fx-font-family: Roboto;" text="&lt;" />
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="9.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/logOut.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
          </children>

@@ -20,17 +20,17 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	void switchAddEmployee(MouseEvent event) throws IOException {
-		App.setRoot("");
+		App.setRoot("EmployeeAdminForm");
 	}
 
 	@FXML
 	void switchAddSection(MouseEvent event) throws IOException {
-		App.setRoot("");
+		App.setRoot("SectionAdminForm");
 	}
 
 	@FXML
 	void switchGoBack(MouseEvent event) throws IOException {
-		App.setRoot("");
+		App.setRoot("InitialPage");
 	}
 
 	@FXML
