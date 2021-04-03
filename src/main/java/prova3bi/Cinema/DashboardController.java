@@ -30,6 +30,7 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	void switchGoBack(MouseEvent event) throws IOException {
+		LoginHolder.getInstance().limparLogin();
 		App.setRoot("InitialPage");
 	}
 

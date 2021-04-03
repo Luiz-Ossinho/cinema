@@ -15,6 +15,10 @@ public final class LoginHolder {
 		this.login = login;
 	}
 
+	public void limparLogin() {
+		this.login = null;
+	}
+	
 	public static LoginHolder getInstance() {
 		return holder;
 	}

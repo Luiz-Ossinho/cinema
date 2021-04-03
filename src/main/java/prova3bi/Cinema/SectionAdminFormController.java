@@ -92,9 +92,9 @@ public class SectionAdminFormController implements Initializable {
 	}
 
 	@FXML
-	void switchClassModal(MouseEvent event) throws IOException {
+	void switchRoomModal(MouseEvent event) throws IOException {
 		Stage stage = new Stage();
-		Parent root = FXMLLoader.load(SectionAdminFormController.class.getResource("ClassForm.fxml"));
+		Parent root = FXMLLoader.load(SectionAdminFormController.class.getResource("RoomForm.fxml"));
 		stage.setScene(new Scene(root));
 		stage.setTitle("Uma nova sala ?!");
 		stage.initModality(Modality.WINDOW_MODAL);

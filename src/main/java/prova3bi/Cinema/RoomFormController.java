@@ -10,13 +10,13 @@ import javafx.scene.control.TextField;
 import prova3bi.Cinema.Domain.Entidades.Sala;
 import prova3bi.Cinema.Exception.ValidateException;
 
-public class ClassFormController {
+public class RoomFormController {
 
 	@FXML
 	private TextField txtType;
 
 	@FXML
-	private TextField txtNumverClass;
+	private TextField txtRoomNumber;
 
 	@FXML
 	private TextField txtNumberSeats;
@@ -44,13 +44,13 @@ public class ClassFormController {
 	private Sala getFormData() {
 		// Sala class = new Sala();
 		ValidateException exception = new ValidateException("Validation error");
-
+		
 		if (txtType.getText() == null || txtType.getText().trim().equals("")) {
 			exception.addError("type", "!");
 		}
 		// class.setDescricao(txtType.getText());
 
-		if (txtNumverClass.getText() == null || txtNumverClass.getText().trim().equals("")) {
+		if (txtRoomNumber.getText() == null || txtRoomNumber.getText().trim().equals("")) {
 			exception.addError("seats", "!");
 		}
 		// class.setDescricao(txtNumverClass.getText());
