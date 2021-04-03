@@ -25,5 +25,15 @@
 }
 
 
+#btSubmit{
+	-fx-background-color: #fff;
+	-fx-background-radius: 8.0;
+	-fx-text-fill: #ff0657;
+	-fx-font-size: 20.0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-family: 'Roboto'
+}
+
 
 
