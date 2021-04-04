@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import prova3bi.Cinema.Domain.Entidades.Ticket;
@@ -35,6 +36,20 @@ public class TicketListAuthorizationController {
 	@FXML
 	void switchGoBack(MouseEvent event) throws IOException {
 		App.setRoot("Dashboard");
+	}
+
+	private void initializeNodes() {
+		columnSeat.setCellValueFactory(new PropertyValueFactory<>("id"));
+		columnStatus.setCellValueFactory(new PropertyValueFactory<>("name"));
+	/*	columnSection.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Appointment, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(TableColumn.CellDataFeatures<Appointment, String> param) {
+						return new SimpleStringProperty(param.getValue().getPacienteid().getNome());
+					}
+				});*/
+
+		//appointmentTable.setItems(sortedData);
 	}
 
 	private void initChangeStatusButtons() {
