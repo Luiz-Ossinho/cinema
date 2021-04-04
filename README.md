@@ -42,12 +42,12 @@ MVC or Model View Controller
 - [x] Initial page
 - [x] SignIn
 - [x] Dashboard
-- [ ] Employee Form
+- [x] Employee Form
 - [x] Movie form
 - [x] Class form
 - [x] Section Forn
 - [x] Section
-- [ ] Selected Section
+- [x] Selected Section
 
 
 
