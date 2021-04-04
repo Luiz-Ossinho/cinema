@@ -1,4 +1,4 @@
-package prova3bi.Cinema.Domain.Entidades;
+package prova3bi.Cinema.Domain.Entities;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -11,17 +11,17 @@ import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.Table;
 
 @Table(nome = "Logins")
-public class Login extends Entidade {
+public class Login extends Entity {
 
 	@Column(nome = "user", tipoSql = "NVARCHAR(32)")
 	public String user;
 	@Column(nome = "hash", tipoSql = "NVARCHAR(32)")
 	public String hash;
 	@Column(nome = "nivelPermissao", tipoSql = "INTEGER")
-	public NivelPermissao nivelPermissao;
+	public PermissionLevel nivelPermissao;
 
 	@Builder(Is.Insert)
-	public Login(String user, String senha, NivelPermissao nivelPermissao) {
+	public Login(String user, String senha, PermissionLevel nivelPermissao) {
 		super(-1);
 		this.user = user;
 		this.hash = Hash(senha);
@@ -29,7 +29,7 @@ public class Login extends Entidade {
 	}
 
 	@Builder(Is.Read)
-	public Login(int LoginsId, String hash, NivelPermissao nivelPermissao, String usuario) {
+	public Login(int LoginsId, String hash, PermissionLevel nivelPermissao, String usuario) {
 		super(LoginsId);
 		this.user = usuario;
 		this.hash = hash;

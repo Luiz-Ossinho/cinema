@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class SectionListController implements Initializable {
+public class SessionListController implements Initializable {
 
 	@FXML
 	private HBox backgroundScene;

@@ -5,7 +5,7 @@ import java.util.List;
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
 import prova3bi.Cinema.Data.Abstractions.Query.Comand;
-import prova3bi.Cinema.Domain.Entidades.Sala;
+import prova3bi.Cinema.Domain.Entities.Room;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
 
 public class RoomRepository implements IRoomRepository {
@@ -16,8 +16,8 @@ public class RoomRepository implements IRoomRepository {
 	}
 
 	@Override
-	public int Add(Sala sala) {
-		Query<Sala> query = new Query<Sala>(Query.Comand.Insert, Sala.class).value(sala.numeroSala, "numeroSala")
+	public int Add(Room sala) {
+		Query<Room> query = new Query<Room>(Query.Comand.Insert, Room.class).value(sala.numeroSala, "numeroSala")
 				.value(sala.numPoltronas, "numPoltronas").value(sala.tipo, "tipo");
 
 		return context.execute(query);
@@ -25,15 +25,15 @@ public class RoomRepository implements IRoomRepository {
 
 // Uso encontrado babaca
 	@Override
-	public List<Sala> GetAll() {
-		Query<Sala> query = new Query<Sala>(Comand.Select, Sala.class);
+	public List<Room> GetAll() {
+		Query<Room> query = new Query<Room>(Comand.Select, Room.class);
 
 		return context.getAll(query);
 	}
 
 	@Override
-	public Sala Get(int id) {
-		Query<Sala> query = new Query<Sala>(Query.Comand.Select, Query.Modifiers.Limit1, Sala.class)
+	public Room Get(int id) {
+		Query<Room> query = new Query<Room>(Query.Comand.Select, Query.Modifiers.Limit1, Room.class)
 				.PKEquals(id + "");
 
 		return context.get(query);

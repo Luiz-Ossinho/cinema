@@ -1,4 +1,4 @@
-package prova3bi.Cinema.Domain.Entidades;
+package prova3bi.Cinema.Domain.Entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +14,7 @@ import prova3bi.Cinema.Domain.Validations.ValidationHelper;
 import prova3bi.Cinema.Domain.Validations.Validator;
 
 @Table(nome = "Sessions", fks = { "movie;Movies", "room;Rooms" })
-public class Sessao extends Entidade {
+public class Session extends Entity {
 
 	@Column(nome = "DHStart", tipoSql = "TEXT")
 	public LocalDateTime DHInicio;
@@ -23,38 +23,38 @@ public class Sessao extends Entidade {
 	@Column(nome = "price", tipoSql = "NUMERIC")
 	public double preco;
 	@Column(nome = "room", tipoSql = "INTEGER", isFk = true)
-	public Sala sala;
+	public Room sala;
 	@Column(nome = "movie", tipoSql = "INTEGER", isFk = true)
-	public Filme filme;
+	public Movie filme;
 
-	public List<Poltrona> poltronas = new ArrayList<Poltrona>();
+	public List<Chair> chair = new ArrayList<Chair>();
 
 	public int numPoltronasVagas() {
 		int counter = 0;
-		for (var poltrona : poltronas) {
-			if (!poltrona.ocupada)
+		for (var chair : chair) {
+			if (!chair.ocupada)
 				counter++;
 		}
 		return counter;
 	}
 
-	public Estado verEstado() {
-		Estado estado = null;
+	public State verEstado() {
+		State estado = null;
 		if (this.DHInicio.isAfter(LocalDateTime.now()))
-			estado = Estado.VaiComecar;
+			estado = State.VaiComecar;
 		else if (this.DHInicio.isBefore(LocalDateTime.now()) && this.DHTermino.isAfter(LocalDateTime.now()))
-			estado = Estado.EmAndamento;
+			estado = State.EmAndamento;
 		else if (this.numPoltronasVagas()<=0)
-			estado = Estado.Lotada;
+			estado = State.Lotada;
 		else if (this.DHTermino.isBefore(LocalDateTime.now()))
-			estado = Estado.JaTerminou;
+			estado = State.JaTerminou;
 		return estado;
 	}
 
 	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSSSS");
 
 	@Builder(Builder.Is.Insert)
-	public Sessao(LocalDateTime dHInicio, LocalDateTime dHTermino, Sala sala, Filme filme, double preco) {
+	public Session(LocalDateTime dHInicio, LocalDateTime dHTermino, Room sala, Movie filme, double preco) {
 		super(-1);
 		this.DHInicio = dHInicio;
 		this.DHTermino = dHTermino;
@@ -65,34 +65,34 @@ public class Sessao extends Entidade {
 
 	// DHEnd DHStart SessionsId movie price room
 	@Builder(Builder.Is.Read)
-	public Sessao(String DHEnd, String DHStart, int SessionsId, int movie, double price, int room) {
+	public Session(String DHEnd, String DHStart, int SessionsId, int movie, double price, int room) {
 		super(SessionsId);
 		this.DHInicio = LocalDateTime.parse(DHStart, formatter);
 		this.DHTermino = LocalDateTime.parse(DHEnd, formatter);
-		this.sala = new Sala(room);
-		this.filme = new Filme(movie);
+		this.sala = new Room(room);
+		this.filme = new Movie(movie);
 		this.preco = price;
 	}
 
 	@Builder(Builder.Is.Temp)
-	public Sessao(int SessionsId) {
+	public Session(int SessionsId) {
 		super(SessionsId);
 	}
 
-	public enum Estado {
+	public enum State {
 		VaiComecar, EmAndamento, Lotada, JaTerminou;
 	}
 	
-	private static Validator<Sessao> validator = new Validator<Sessao>()
+	private static Validator<Session> validator = new Validator<Session>()
 			.add(
-					sessao -> ValidationHelper.Test(sessao.DHInicio), 
-					sessao -> new Error("itime", "!"))
+					session -> ValidationHelper.Test(session.DHInicio), 
+					session -> new Error("itime", "!"))
 			.add(
-					sessao -> ValidationHelper.Test(sessao.DHTermino), 
-					sessao -> new Error("ftime", "!"))
+					session -> ValidationHelper.Test(session.DHTermino), 
+					session -> new Error("ftime", "!"))
 			.add(
-					sessao -> sessao.preco > 0,
-					sessao -> new Error("price", "!")
+					session -> session.preco > 0,
+					session -> new Error("price", "!")
 			);
 	
 	@Override

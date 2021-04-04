@@ -1,9 +1,7 @@
 package prova3bi.Cinema;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,11 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import prova3bi.Cinema.Domain.Entidades.Filme;
-import prova3bi.Cinema.Domain.Entidades.Sala;
-import prova3bi.Cinema.Domain.Entidades.TrilhaSonora;
+import prova3bi.Cinema.Domain.Entities.Movie;
+import prova3bi.Cinema.Domain.Entities.Soundtrack;
 import prova3bi.Cinema.Domain.Interfaces.Services.IMovieService;
-import prova3bi.Cinema.Domain.Validations.Error;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
 import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Singletons.MovieHolder;
@@ -25,7 +21,7 @@ import prova3bi.Cinema.Util.Utils;
 public class MovieFormController implements Initializable {
 
 	@FXML
-	private ComboBox<TrilhaSonora> cbSoundTrack;
+	private ComboBox<Soundtrack> cbSoundTrack;
 
 	@FXML
 	private TextField txtSynopsis;
@@ -61,7 +57,7 @@ public class MovieFormController implements Initializable {
 		var title = txtTitle.getText();
 		var synopsis = txtSynopsis.getText();
 		
-		var movie = new Filme(title, "", synopsis, audioTrack);
+		var movie = new Movie(title, "", synopsis, audioTrack);
 		MovieHolder.getInstance().setMovie(movie);
 
 		return errors.addAll(movie.isValid());
@@ -85,7 +81,7 @@ public class MovieFormController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		movieService = UnitFactory.getMovieService();
-		cbSoundTrack.getItems().setAll(TrilhaSonora.values());
+		cbSoundTrack.getItems().setAll(Soundtrack.values());
 	}
 
 }

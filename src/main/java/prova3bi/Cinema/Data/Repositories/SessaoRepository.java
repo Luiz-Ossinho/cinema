@@ -4,7 +4,7 @@ import java.util.List;
 
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
-import prova3bi.Cinema.Domain.Entidades.Sessao;
+import prova3bi.Cinema.Domain.Entities.Session;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ISessaoRepository;
 
 public class SessaoRepository implements ISessaoRepository{
@@ -15,15 +15,15 @@ public class SessaoRepository implements ISessaoRepository{
 	}
 
 	@Override
-	public List<Sessao> GetAll() {
-		Query<Sessao> query = new Query<Sessao>(Query.Comand.Select, Sessao.class);
+	public List<Session> GetAll() {
+		Query<Session> query = new Query<Session>(Query.Comand.Select, Session.class);
 
 		return context.getAll(query);
 	}
 
 	@Override
-	public int Add(Sessao entidade) {
-		Query<Sessao> query =  new Query<Sessao>(Query.Comand.Insert, Sessao.class)
+	public int Add(Session entidade) {
+		Query<Session> query =  new Query<Session>(Query.Comand.Insert, Session.class)
 				.value(entidade.DHInicio, "DHInicio")
 				.value(entidade.DHTermino, "DHTermino")
 				.value(entidade.filme.getId(), "filme")

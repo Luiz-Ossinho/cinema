@@ -1,4 +1,4 @@
-package prova3bi.Cinema.Domain.Entidades;
+package prova3bi.Cinema.Domain.Entities;
 
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Column;
@@ -9,31 +9,31 @@ import prova3bi.Cinema.Domain.Validations.ErrorList;
 import prova3bi.Cinema.Domain.Validations.Validator;
 
 @Table(nome = "Rooms")
-public class Sala extends Entidade {
+public class Room extends Entity {
 
 	@Builder(Is.Insert)
-	public Sala(TipoSala tipo, int numeroCadeiras, int numeroSala) {
+	public Room(RoomType type, int chairsNum, int roomNum) {
 		super(-1);
-		this.tipo = tipo;
-		this.numPoltronas = numeroCadeiras;
-		this.numeroSala = numeroSala;
+		this.tipo = type;
+		this.numPoltronas = chairsNum;
+		this.numeroSala = roomNum;
 	}
 
 	@Builder(Is.Read)
-	public Sala(int ChairNum, int RoomNum, int RoomsId, TipoSala roomType) {
-		super(RoomsId);
+	public Room(int chairNum, int roomNum, int roomsId, RoomType roomType) {
+		super(roomsId);
 		this.tipo = roomType;
-		this.numPoltronas = ChairNum;
-		this.numeroSala = RoomNum;
+		this.numPoltronas = chairNum;
+		this.numeroSala = roomNum;
 	}
 
 	@Builder(Is.Temp)
-	public Sala(int RoomsId) {
-		super(RoomsId);
+	public Room(int roomsId) {
+		super(roomsId);
 	}
 
 	@Column(nome = "roomType", tipoSql = "INTEGER")
-	public TipoSala tipo;
+	public RoomType tipo;
 
 	@Column(nome = "ChairNum", tipoSql = "INTEGER")
 	public int numPoltronas;
@@ -41,13 +41,13 @@ public class Sala extends Entidade {
 	@Column(nome = "RoomNum", tipoSql = "INTEGER")
 	public int numeroSala;
 
-	private static Validator<Sala> validator = new Validator<Sala>()
+	private static Validator<Room> validator = new Validator<Room>()
 			.add(
-					sala -> sala.tipo != null, 
-					sala -> new Error("Type", "Chosen type: "+sala.tipo+" is invalid"))
+					room -> room.tipo != null, 
+					room -> new Error("Type", "Chosen type: "+room.tipo+" is invalid"))
 			.add(
-					sala -> sala.numPoltronas > 0,
-					sala -> new Error("SeatsNumber", "!")
+					room -> room.numPoltronas > 0,
+					room -> new Error("SeatsNumber", "!")
 			);
 	
 	// new Error("SeatsNumber", "Number of seats: "+sala.numPoltronas+" should be greater than 0"

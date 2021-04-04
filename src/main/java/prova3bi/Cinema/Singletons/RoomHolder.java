@@ -1,22 +1,22 @@
 package prova3bi.Cinema.Singletons;
 
 import javafx.collections.ObservableList;
-import prova3bi.Cinema.Domain.Entidades.Sala;
+import prova3bi.Cinema.Domain.Entities.Room;
 
 public final class RoomHolder {
 	private static RoomHolder holder = new RoomHolder();
-	private ObservableList<Sala> obsList;
-	private Sala room;
-	public ObservableList<Sala> getObsList() {
+	private ObservableList<Room> obsList;
+	private Room room;
+	public ObservableList<Room> getObsList() {
 		return obsList;
 	}
-	public void setObsList(ObservableList<Sala> obsList) {
+	public void setObsList(ObservableList<Room> obsList) {
 		this.obsList = obsList;
 	}
-	public Sala getRoom() {
+	public Room getRoom() {
 		return room;
 	}
-	public void setRoom(Sala room) {
+	public void setRoom(Room room) {
 		this.room = room;
 	}
 	public void ResetRoom() {

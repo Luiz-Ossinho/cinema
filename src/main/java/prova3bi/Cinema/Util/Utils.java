@@ -15,7 +15,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import prova3bi.Cinema.Domain.Entidades.Sessao;
+import prova3bi.Cinema.Domain.Entities.Session;
 import prova3bi.Cinema.Domain.Validations.Error;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
 
@@ -180,6 +180,6 @@ public class Utils {
 	}
 	
 	public static IParser<Double> doubleParser = str -> Double.parseDouble(str);
-	public static IParser<LocalDateTime> dateTimeParser = str -> LocalDateTime.parse(str, Sessao.formatter);
+	public static IParser<LocalDateTime> dateTimeParser = str -> LocalDateTime.parse(str, Session.formatter);
 	public static IParser<Integer> integerParser = str -> Integer.parseInt(str);
 }

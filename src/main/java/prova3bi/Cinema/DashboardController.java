@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Domain.Entities.Login;
 import prova3bi.Cinema.Singletons.LoginHolder;
 
 public class DashboardController implements Initializable {
@@ -25,7 +25,7 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	void switchAddSection(MouseEvent event) throws IOException {
-		App.setRoot("SectionAdminForm");
+		App.setRoot("SessionAdminForm");
 	}
 
 	@FXML

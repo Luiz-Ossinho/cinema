@@ -2,9 +2,9 @@ package prova3bi.Cinema.Domain.Validations;
 
 import java.util.ArrayList;
 
-import prova3bi.Cinema.Domain.Entidades.Entidade;
+import prova3bi.Cinema.Domain.Entities.Entity;
 
-public class Validator<T extends Entidade>{
+public class Validator<T extends Entity>{
 	private ArrayList<Validation<T>> validations = new ArrayList<Validation<T>>();
 	
 	public Validator<T> add(EntityCondition<T> condition, EntityError<T> error) {

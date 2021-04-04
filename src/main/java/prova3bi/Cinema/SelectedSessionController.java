@@ -10,8 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import prova3bi.Cinema.Domain.Entities.Session;
+import prova3bi.Cinema.Singletons.SessionHolder;
 
-public class SelectedSectionController implements Initializable {
+public class SelectedSessionController implements Initializable {
 
 	@FXML
 	private TextArea txtSynopsis;
@@ -30,9 +32,14 @@ public class SelectedSectionController implements Initializable {
 
 	@FXML
 	private GridPane panel;
+	
+	private Session sessionSelected;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		sessionSelected = SessionHolder.getInstance().getSession();
+		
 		// AQUI EU VOU PEGAR A LISTA DE CADEIRAS
 		List<String> listSeat = new ArrayList<>();
 

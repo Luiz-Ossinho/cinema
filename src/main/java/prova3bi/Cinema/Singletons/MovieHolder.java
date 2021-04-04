@@ -1,22 +1,22 @@
 package prova3bi.Cinema.Singletons;
 
 import javafx.collections.ObservableList;
-import prova3bi.Cinema.Domain.Entidades.Filme;
+import prova3bi.Cinema.Domain.Entities.Movie;
 
 public final class MovieHolder {
 	private static MovieHolder holder = new MovieHolder();
-	private ObservableList<Filme> obsList;
-	private Filme movie;
-	public ObservableList<Filme> getObsList() {
+	private ObservableList<Movie> obsList;
+	private Movie movie;
+	public ObservableList<Movie> getObsList() {
 		return obsList;
 	}
-	public void setObsList(ObservableList<Filme> obsList) {
+	public void setObsList(ObservableList<Movie> obsList) {
 		this.obsList = obsList;
 	}
-	public Filme getMovie() {
+	public Movie getMovie() {
 		return movie;
 	}
-	public void setMovie(Filme movie) {
+	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
 	public static MovieHolder getInstance() {

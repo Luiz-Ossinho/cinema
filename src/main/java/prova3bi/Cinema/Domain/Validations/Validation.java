@@ -1,9 +1,9 @@
 package prova3bi.Cinema.Domain.Validations;
 
 import javafx.util.Pair;
-import prova3bi.Cinema.Domain.Entidades.Entidade;
+import prova3bi.Cinema.Domain.Entities.Entity;
 
-public class Validation<T extends Entidade> {
+public class Validation<T extends Entity> {
 
 	private Pair<EntityCondition<T>, EntityError<T>> pair;
 	

@@ -1,4 +1,4 @@
-package prova3bi.Cinema.Domain.Entidades;
+package prova3bi.Cinema.Domain.Entities;
 
 import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
 

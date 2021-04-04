@@ -1,17 +1,17 @@
 package prova3bi.Cinema.Singletons;
 
-import prova3bi.Cinema.Domain.Entidades.Sessao;
+import prova3bi.Cinema.Domain.Entities.Session;
 
 public class SessionHolder {
-	private Sessao session;
+	private Session session;
 	
 	private static SessionHolder holder = new SessionHolder();
 	
-	public Sessao getSession() {
+	public Session getSession() {
 		return session;
 	}
 	
-	public void setSession(Sessao session) {
+	public void setSession(Session session) {
 		this.session = session;
 	}
 

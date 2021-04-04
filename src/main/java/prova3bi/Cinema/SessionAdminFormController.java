@@ -3,7 +3,6 @@ package prova3bi.Cinema;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -24,24 +23,20 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import prova3bi.Cinema.Domain.Entidades.Filme;
-import prova3bi.Cinema.Domain.Entidades.Sala;
-import prova3bi.Cinema.Domain.Entidades.Sessao;
-import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
+import prova3bi.Cinema.Domain.Entities.Movie;
+import prova3bi.Cinema.Domain.Entities.Room;
+import prova3bi.Cinema.Domain.Entities.Session;
 import prova3bi.Cinema.Domain.Interfaces.Services.IMovieService;
 import prova3bi.Cinema.Domain.Interfaces.Services.IRoomService;
 import prova3bi.Cinema.Domain.Interfaces.Services.ISessionService;
-import prova3bi.Cinema.Domain.Validations.Error;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
-import prova3bi.Cinema.Services.MovieService;
 import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Singletons.MovieHolder;
 import prova3bi.Cinema.Singletons.RoomHolder;
 import prova3bi.Cinema.Singletons.SessionHolder;
-import prova3bi.Cinema.Util.IParser;
 import prova3bi.Cinema.Util.Utils;
 
-public class SectionAdminFormController implements Initializable {
+public class SessionAdminFormController implements Initializable {
 
 	@FXML
 	private HBox sectionContainer;
@@ -56,10 +51,10 @@ public class SectionAdminFormController implements Initializable {
 	private TextField txtPrice;
 
 	@FXML
-	private ComboBox<Sala> cbClass;
+	private ComboBox<Room> cbClass;
 
 	@FXML
-	private ComboBox<Filme> cbMovie;
+	private ComboBox<Movie> cbMovie;
 
 	@FXML
 	private Label initialTimeLabel;
@@ -105,7 +100,7 @@ public class SectionAdminFormController implements Initializable {
 	@FXML
 	void switchMovieModal(MouseEvent event) throws IOException {
 		Stage stage = new Stage();
-		Parent root = FXMLLoader.load(SectionAdminFormController.class.getResource("MovieForm.fxml"));
+		Parent root = FXMLLoader.load(SessionAdminFormController.class.getResource("MovieForm.fxml"));
 		stage.setScene(new Scene(root));
 		stage.setTitle("Um novo filme ?!");
 		stage.initModality(Modality.WINDOW_MODAL);
@@ -117,7 +112,7 @@ public class SectionAdminFormController implements Initializable {
 	@FXML
 	void switchRoomModal(MouseEvent event) throws IOException {
 		Stage stage = new Stage();
-		Parent root = FXMLLoader.load(SectionAdminFormController.class.getResource("RoomForm.fxml"));
+		Parent root = FXMLLoader.load(SessionAdminFormController.class.getResource("RoomForm.fxml"));
 		stage.setScene(new Scene(root));
 		// precisa mesmo disse cara?
 		// stage.setTitle("Uma nova sala ?!");
@@ -138,7 +133,7 @@ public class SectionAdminFormController implements Initializable {
 		LocalDateTime initialTime = Utils.TryParseValue(Utils.dateTimeParser, initialTimeStr, errors, "itime");
 		LocalDateTime finalTime = Utils.TryParseValue(Utils.dateTimeParser, finalTimeStr, errors, "ftime");
 
-		var session = new Sessao(initialTime, finalTime, selectedRoom, selectedMovie, price);
+		var session = new Session(initialTime, finalTime, selectedRoom, selectedMovie, price);
 
 		SessionHolder.getInstance().setSession(session);
 
@@ -195,17 +190,17 @@ public class SectionAdminFormController implements Initializable {
 		movieService = UnitFactory.getMovieService();
 	}
 
-	private static Callback<ListView<Sala>, ListCell<Sala>> roomCellFactory = lv -> new ListCell<Sala>() {
+	private static Callback<ListView<Room>, ListCell<Room>> roomCellFactory = lv -> new ListCell<Room>() {
 		@Override
-		protected void updateItem(Sala item, boolean empty) {
+		protected void updateItem(Room item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(!empty ? item.numeroSala + "" : "");
 		}
 	};
 
-	private static Callback<ListView<Filme>, ListCell<Filme>> movieCellFactory = lv -> new ListCell<Filme>() {
+	private static Callback<ListView<Movie>, ListCell<Movie>> movieCellFactory = lv -> new ListCell<Movie>() {
 		@Override
-		protected void updateItem(Filme item, boolean empty) {
+		protected void updateItem(Movie item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(!empty ? item.title : "");
 		}

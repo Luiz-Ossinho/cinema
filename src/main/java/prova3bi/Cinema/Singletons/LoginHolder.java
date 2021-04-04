@@ -1,6 +1,6 @@
 package prova3bi.Cinema.Singletons;
 
-import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Domain.Entities.Login;
 
 public final class LoginHolder {
 	private Login login;

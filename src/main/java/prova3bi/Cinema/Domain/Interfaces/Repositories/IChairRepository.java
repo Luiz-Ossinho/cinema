@@ -2,11 +2,11 @@ package prova3bi.Cinema.Domain.Interfaces.Repositories;
 
 import java.util.List;
 
-import prova3bi.Cinema.Domain.Entidades.Poltrona;
+import prova3bi.Cinema.Domain.Entities.Chair;
 
 public interface IChairRepository {
-	public int Add(Poltrona chair);
-	public int Put(Poltrona chair);
-	public List<Poltrona> GetAllFromSession(int SessionId);
-	public Poltrona Get(int id);
+	public int Add(Chair chair);
+	public int Put(Chair chair);
+	public List<Chair> GetAllFromSession(int SessionId);
+	public Chair Get(int id);
 }

@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prova3bi.Cinema.Data.Abstractions.Nest;
-import prova3bi.Cinema.Domain.Entidades.Poltrona;
-import prova3bi.Cinema.Domain.Entidades.Sala;
-import prova3bi.Cinema.Domain.Entidades.Sessao;
+import prova3bi.Cinema.Domain.Entities.Chair;
+import prova3bi.Cinema.Domain.Entities.Session;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
-import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
-import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ISessaoRepository;
 import prova3bi.Cinema.Domain.Interfaces.Services.IMovieService;
 import prova3bi.Cinema.Domain.Interfaces.Services.IRoomService;
@@ -30,7 +27,7 @@ public class SessionService implements ISessionService {
 	}
 
 	@Override
-	public Sessao Add(Sessao session) {
+	public Session Add(Session session) {
 		if (Nest.Action(session.filme) == Nest.New)
 			session.filme = movieService.Add(session.filme);
 		if (Nest.Action(session.sala) == Nest.New)
@@ -44,14 +41,14 @@ public class SessionService implements ISessionService {
 		return session;
 	}
 
-	private void addAnyChairs(Sessao session) {
+	private void addAnyChairs(Session session) {
 		var NearestSmallerSquare = getSmallerNearestSquare(session.sala.numPoltronas);
 		var squareRoot = (int) Math.sqrt(NearestSmallerSquare);
 		for (int i = 0; i < squareRoot; i++) {
 			for (int j = 0; j < squareRoot; j++) {
-				var poltrona = new Poltrona(session, getColumnLetters(j), i + 1);
+				var poltrona = new Chair(session, getColumnLetters(j), i + 1);
 				chairRepo.Add(poltrona);
-				session.poltronas.add(poltrona);
+				session.chair.add(poltrona);
 			}
 		}
 		var excesso = session.sala.numPoltronas - NearestSmallerSquare;
@@ -68,9 +65,9 @@ public class SessionService implements ISessionService {
 					rowExtra = squareRoot;
 			}
 
-			var poltrona = new Poltrona(session, letraExtra, rowExtra);
+			var poltrona = new Chair(session, letraExtra, rowExtra);
 			chairRepo.Add(poltrona);
-			session.poltronas.add(poltrona);
+			session.chair.add(poltrona);
 		}
 	}
 
@@ -101,17 +98,17 @@ public class SessionService implements ISessionService {
 	}
 
 	@Override
-	public List<Sessao> GetNext() {
+	public List<Session> GetNext() {
 		var allSessions = sessionRepo.GetAll();
-		var nextSessions = new ArrayList<Sessao>();
+		var nextSessions = new ArrayList<Session>();
 		for (var sessao : allSessions) {
-			if (sessao.verEstado() != Sessao.Estado.JaTerminou) {
+			if (sessao.verEstado() != Session.State.JaTerminou) {
 				sessao.filme = movieService.Get(sessao.filme.getId());
 				sessao.sala = roomService.Get(sessao.sala.getId());
 				var poltronas = chairRepo.GetAllFromSession(sessao.getId());
 				for (var poltrona : poltronas) {
 					poltrona.sessao = sessao;
-					sessao.poltronas.add(poltrona);
+					sessao.chair.add(poltrona);
 				}
 				nextSessions.add(sessao);
 			}

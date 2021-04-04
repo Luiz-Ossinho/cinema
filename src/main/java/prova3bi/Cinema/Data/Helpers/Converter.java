@@ -15,9 +15,9 @@ import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
 import prova3bi.Cinema.Data.Abstractions.Table;
-import prova3bi.Cinema.Domain.Entidades.Entidade;
+import prova3bi.Cinema.Domain.Entities.Entity;
 
-public class Conversor {
+public class Converter {
 
 	private static Comparator<Pair<Field, Column>> alphabeticComparator = new Comparator<Pair<Field, Column>>() {
 		@Override
@@ -29,7 +29,7 @@ public class Conversor {
 		}
 	};
 
-	public static <T extends Entidade> List<T> convert(ResultSet from, Class<T> to) throws SQLException,
+	public static <T extends Entity> List<T> convert(ResultSet from, Class<T> to) throws SQLException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		var intances = new ArrayList<T>();
 		var columnPairs = getColumns(to);
@@ -52,7 +52,7 @@ public class Conversor {
 		return intances;
 	}
 
-	private static <T extends Entidade> List<Pair<Field, Column>> getColumns(Class<T> toClass) {
+	private static <T extends Entity> List<Pair<Field, Column>> getColumns(Class<T> toClass) {
 		var columnPairs = getDeclaredColumns(toClass);
 		addIdColumn(columnPairs, toClass);
 		columnPairs.sort(alphabeticComparator);
@@ -63,7 +63,7 @@ public class Conversor {
 	private static <T> void addIdColumn(List<Pair<Field, Column>> columnPairs, Class<T> to) {
 		try {
 			var idColumn = idColumn(to.getAnnotation(Table.class).nome() + "ID");
-			var mockField = Conversor.class.getField("mockField");
+			var mockField = Converter.class.getField("mockField");
 			var pair = new Pair<Field, Column>(mockField, idColumn);
 			columnPairs.add(pair);
 		} catch (NoSuchFieldException | SecurityException e) {
@@ -98,7 +98,7 @@ public class Conversor {
 		return enumConstant;
 	}
 
-	private static <T extends Entidade> Constructor<?> getReadConstructor(Class<T> toClass) {
+	private static <T extends Entity> Constructor<?> getReadConstructor(Class<T> toClass) {
 		Constructor<?> readCtor = null;
 		for (var ctor : toClass.getConstructors()) {
 			if (ctor.getAnnotation(Builder.class).value() == Builder.Is.Read) {
@@ -109,7 +109,7 @@ public class Conversor {
 		return readCtor;
 	}
 
-	private static <T extends Entidade> List<Pair<Field, Column>> getDeclaredColumns(Class<T> toClass) {
+	private static <T extends Entity> List<Pair<Field, Column>> getDeclaredColumns(Class<T> toClass) {
 		var columns = new ArrayList<Pair<Field, Column>>();
 		for (Field field : toClass.getDeclaredFields()) {
 			if (field.isAnnotationPresent(Column.class)) {

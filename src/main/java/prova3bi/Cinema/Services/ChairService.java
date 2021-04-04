@@ -2,7 +2,7 @@ package prova3bi.Cinema.Services;
 
 import java.util.List;
 
-import prova3bi.Cinema.Domain.Entidades.Poltrona;
+import prova3bi.Cinema.Domain.Entities.Chair;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
 import prova3bi.Cinema.Domain.Interfaces.Services.IChairService;
 
@@ -14,14 +14,14 @@ public class ChairService implements IChairService {
 	}
 
 	@Override
-	public Poltrona Add(Poltrona chair) {
+	public Chair Add(Chair chair) {
 		var generatedKey = chairRepo.Add(chair);
 		chair.setId(generatedKey);
 		return chair;
 	}
 
 	@Override
-	public List<Poltrona> GetAllFromSession(int SessionId) {
+	public List<Chair> GetAllFromSession(int SessionId) {
 		return chairRepo.GetAllFromSession(SessionId);
 	}
 

@@ -1,6 +1,6 @@
 package prova3bi.Cinema.Services;
 
-import prova3bi.Cinema.Domain.Entidades.Ticket;
+import prova3bi.Cinema.Domain.Entities.Ticket;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ITicketRepository;
 import prova3bi.Cinema.Domain.Interfaces.Services.ITicketService;
 

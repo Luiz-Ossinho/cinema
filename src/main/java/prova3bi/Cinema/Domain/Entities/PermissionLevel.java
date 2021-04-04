@@ -1,17 +1,16 @@
-package prova3bi.Cinema.Domain.Entidades;
+package prova3bi.Cinema.Domain.Entities;
 
 import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
 
-public enum TipoSala implements IEnumColumn {
-	DBox(1), XD(2), Prime(3);
+public enum PermissionLevel implements IEnumColumn {
+	Admin(1), Atendente(2);
 
-	TipoSala(int value) {
+	PermissionLevel(int value) {
 		this.value = value;
 	}
 
 	private int value;
 
-	@Override
 	public int valor() {
 		return this.value;
 	}

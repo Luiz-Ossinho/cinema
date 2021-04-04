@@ -1,11 +1,11 @@
-package prova3bi.Cinema.Domain.Entidades;
+package prova3bi.Cinema.Domain.Entities;
 
 import prova3bi.Cinema.Domain.Validations.ErrorList;
 
-public abstract class Entidade {
+public abstract class Entity {
 	private int Id;
 
-	protected Entidade(int id) {
+	protected Entity(int id) {
 		this.Id = id;
 	}
 

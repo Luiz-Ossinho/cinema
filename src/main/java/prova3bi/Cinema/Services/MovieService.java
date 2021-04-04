@@ -2,7 +2,7 @@ package prova3bi.Cinema.Services;
 
 import java.util.List;
 
-import prova3bi.Cinema.Domain.Entidades.Filme;
+import prova3bi.Cinema.Domain.Entities.Movie;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
 import prova3bi.Cinema.Domain.Interfaces.Services.IMovieService;
 
@@ -15,7 +15,7 @@ public class MovieService implements IMovieService {
 	}
 
 	@Override
-	public Filme Add(Filme movie) {
+	public Movie Add(Movie movie) {
 		var generatedKey = movieRepo.Add(movie);
 		movie.setId(generatedKey);
 		
@@ -23,12 +23,12 @@ public class MovieService implements IMovieService {
 	}
 
 	@Override
-	public Filme Get(int id) {
+	public Movie Get(int id) {
 		return movieRepo.Get(id);
 	}
 
 	@Override
-	public List<Filme> GetAll() {
+	public List<Movie> GetAll() {
 		return movieRepo.GetAll();
 	}
 
