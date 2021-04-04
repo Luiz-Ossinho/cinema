@@ -70,14 +70,13 @@ public class SectionAdminFormController implements Initializable {
 	private Label cbMovieLabel;
 
 	private IRoomRepository roomRepo;
-	
+
 	@FXML
 	void onSubmit(ActionEvent event) {
 		var errors = SaveSession();
-		if(!errors.isEmpty())
+		if (!errors.isEmpty())
 			setErrorMessages(errors);
 	}
-	
 
 	@FXML
 	void switchGoBack(MouseEvent event) throws IOException {
@@ -150,7 +149,7 @@ public class SectionAdminFormController implements Initializable {
 //		cbClassLabel.setText((fields.contains("class") ? errors.get("class") : ""));
 //		cbMovieLabel.setText((fields.contains("movie") ? errors.get("movie") : ""));
 //	}
-	
+
 	private ErrorList SaveSession() {
 		var errors = new ErrorList();
 		var initialTimeStr = txtInitialTime.getText();
@@ -176,11 +175,11 @@ public class SectionAdminFormController implements Initializable {
 		} catch (DateTimeParseException formatException) {
 			errors.add(new Error("ftime", "Incorrect format"));
 		}
-		
+
 		var session = new Sessao(initialTime, finalTime, selectedRoom, selectedMovie, price);
-		
+
 		SessionHolder.getInstance().setSession(session);
-		
+
 		return errors.addAll(session.isValid());
 	}
 
@@ -190,7 +189,7 @@ public class SectionAdminFormController implements Initializable {
 		finalTimeLabel.setText(errors.GetErrorLabel("ftime"));
 		priceLabel.setText(errors.GetErrorLabel("price"));
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		roomRepo = UnitFactory.getRoomRepo();
@@ -200,18 +199,19 @@ public class SectionAdminFormController implements Initializable {
 	private void initializeRoomComboBox() {
 		cbClass.setCellFactory(factory);
 		cbClass.setButtonCell(factory.call(null));
-		if(!RoomHolder.getInstance().IsEmpty())
+		if (!RoomHolder.getInstance().IsEmpty())
 			cbClass.setValue(RoomHolder.getInstance().getRoom());
-		
+
 		var roomObsList = FXCollections.observableArrayList(roomRepo.GetAll());
 		cbClass.setItems(roomObsList);
 	}
-	
+
 	private static Callback<ListView<Sala>, ListCell<Sala>> factory = lv -> new ListCell<Sala>() {
 		@Override
 		protected void updateItem(Sala item, boolean empty) {
 			super.updateItem(item, empty);
-			setText(empty ? "" : (item.numeroSala+""));
+			setText(empty ? "" : (item.numeroSala + ""));
 		}
 	};
+
 }

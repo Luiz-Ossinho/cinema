@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<HBox fx:id="sectionContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1200.0" style="-fx-background-color: #14111f;" stylesheets="@Styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prova3bi.Cinema.TicketListAuthorizationController">
+   <children>
+      <AnchorPane prefHeight="635.0" prefWidth="1200.0">
+         <children>
+            <Label layoutX="197.0" layoutY="54.0" style="-fx-font-size: 40;" styleClass="fontBold" text="Tickets" />
+            <Pane layoutX="146.0" layoutY="69.0" onMouseClicked="#switchGoBack" prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
+               <children>
+                  <Label layoutX="13.0" layoutY="5.0" style="-fx-font-size: 24; -fx-text-fill: #ff0657; -fx-font-family: Roboto;" text="&lt;" />
+               </children>
+            </Pane>
+            <Label layoutX="197.0" layoutY="101.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Listagem de tickets" />
+            <TableView fx:id="tableTicket" layoutY="180.0" prefHeight="497.0" prefWidth="1200.0">
+              <columns>
+                <TableColumn fx:id="columnSeat" prefWidth="232.0" text="POLTRONA" />
+                <TableColumn fx:id="columnStatus" prefWidth="279.0" text="STATUS DO TICKET" />
+                  <TableColumn fx:id="columnSection" prefWidth="279.0" text="SESSÃO" />
+                  <TableColumn fx:id="columnChangeStatus" prefWidth="279.0" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+   </children>
+</HBox>

@@ -36,7 +36,7 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	void switchTickets(MouseEvent event) throws IOException {
-		App.setRoot("");
+		App.setRoot("TicketListAuthorization");
 	}
 
 	@Override
