@@ -15,7 +15,7 @@ public final class LoginHolder {
 		this.login = login;
 	}
 
-	public void limparLogin() {
+	public void ResetLogin() {
 		this.login = null;
 	}
 	

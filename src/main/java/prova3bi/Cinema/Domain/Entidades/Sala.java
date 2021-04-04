@@ -4,6 +4,9 @@ import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.Table;
 import prova3bi.Cinema.Data.Abstractions.Builder.Is;
+import prova3bi.Cinema.Domain.Validations.Error;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
+import prova3bi.Cinema.Domain.Validations.Validator;
 
 @Table(nome = "Rooms")
 public class Sala extends Entidade {
@@ -38,10 +41,19 @@ public class Sala extends Entidade {
 	@Column(nome = "RoomNum", tipoSql = "INTEGER")
 	public int numeroSala;
 
+	private static Validator<Sala> validator = new Validator<Sala>()
+			.add(
+					sala -> sala.tipo != null, 
+					sala -> new Error("Type", "Chosen type: "+sala.tipo+" is invalid"))
+			.add(
+					sala -> sala.numPoltronas > 0,
+					sala -> new Error("SeatsNumber", "!")
+			);
+	
+	// new Error("SeatsNumber", "Number of seats: "+sala.numPoltronas+" should be greater than 0"
+	
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public ErrorList isValid() {
+		return validator.TestAll(this);
 	}
-
 }

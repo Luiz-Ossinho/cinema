@@ -1,15 +1,15 @@
-package prova3bi.Cinema.Domain;
+package prova3bi.Cinema.Domain.Validations;
 
 import java.time.LocalDateTime;
 
-public class Validator {
-	public static boolean isValid(String str) {
+public class ValidationHelper {
+	public static boolean Test(String str) {
 		if (isNullOrEmpty(str))
 			return false;
 		return true;
 	}
-
-	public static boolean isValid(LocalDateTime DH) {
+	
+	public static boolean Test(LocalDateTime DH) {
 		if (DH == LocalDateTime.MIN || DH == LocalDateTime.MAX || DH == null)
 			return false;
 		return true;

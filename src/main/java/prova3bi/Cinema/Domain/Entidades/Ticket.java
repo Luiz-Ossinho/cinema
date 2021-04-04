@@ -6,8 +6,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Builder.Is;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
 import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.Table;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -46,9 +48,9 @@ public class Ticket extends Entidade {
 	}
 	
 	@Override
-	public boolean isValid() {
+	public ErrorList isValid() {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 	//metodo recebe um 
 	private static Image createQR(int id)

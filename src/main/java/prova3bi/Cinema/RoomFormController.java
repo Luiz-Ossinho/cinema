@@ -1,22 +1,26 @@
 package prova3bi.Cinema;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import prova3bi.Cinema.Domain.Entidades.Sala;
 import prova3bi.Cinema.Domain.Entidades.TipoSala;
-import prova3bi.Cinema.Exception.ValidateException;
+import prova3bi.Cinema.Domain.Validations.Error;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
+import prova3bi.Cinema.Singletons.RoomHolder;
+import prova3bi.Cinema.Util.Utils;
 
 public class RoomFormController implements Initializable{
 
+	@FXML
+	private HBox RoomForm;
+	
 	@FXML
 	private ComboBox<TipoSala> cbType;
 
@@ -33,47 +37,46 @@ public class RoomFormController implements Initializable{
 	private Label txtSeatsLabel;
 
 	@FXML
-	private Label txtClassLabel;
-
-	private Sala entity;
+	private Label txtRoomLabel;
 
 	@FXML
 	void switchSubmit(ActionEvent event) {
-		try {
-			entity = getFormData();
-		} catch (ValidateException e) {
-			setErrorMessages(e.getErrors());
-		}
+			var errors = SaveRoom();
+			if(!errors.isEmpty())
+				setErrorMessages(errors);
+			else
+				Utils.currentStage(event).close();
 	}
 
-	private Sala getFormData() {
-		// Sala class = new Sala();
-		ValidateException exception = new ValidateException("Validation error");
+	private ErrorList SaveRoom() {
+		var errors = new ErrorList();
+		var tipo = cbType.getValue();
+		int RoomNumber = -1;
+		int NumberSeats = -1;
 		
-		if (cbType.getValue() == null) {
-			exception.addError("type", "!");
-		} else {
-			// section.setPacienteid(cbPatient.getValue());
+		try {
+			RoomNumber = Integer.parseInt(txtRoomNumber.getText());
+		} catch (NumberFormatException formatException) {
+			errors.add(new Error("RoomNumber", "Incorrect format"));
 		}
-
-		if (txtRoomNumber.getText() == null || txtRoomNumber.getText().trim().equals("")) {
-			exception.addError("seats", "!");
+		try {
+			NumberSeats = Integer.parseInt(txtNumberSeats.getText());
+		} catch (NumberFormatException formatException) {
+			errors.add(new Error("SeatsNumber", "Incorrect format"));
 		}
-		// class.setDescricao(txtNumverClass.getText());
-
-		if (txtNumberSeats.getText() == null || txtNumberSeats.getText().trim().equals("")) {
-			exception.addError("class", "!");
-		}
-		// class.setDescricao(txtNumberSeats.getText());
-
-		return null;
+		
+		var room = new Sala(tipo, NumberSeats, RoomNumber);
+		
+		RoomHolder.getInstance().setRoom(room);
+		
+		return errors.addAll(room.isValid());
 	}
 
-	private void setErrorMessages(Map<String, String> errors) {
-		Set<String> fields = errors.keySet();
-		txtTypeLabel.setText((fields.contains("type") ? errors.get("type") : ""));
-		txtSeatsLabel.setText((fields.contains("seats") ? errors.get("seats") : ""));
-		txtClassLabel.setText((fields.contains("class") ? errors.get("class") : ""));
+	private void setErrorMessages(ErrorList errors) {
+		RoomHolder.getInstance().ResetRoom();
+		txtTypeLabel.setText(errors.GetErrorLabel("Type"));
+		txtSeatsLabel.setText(errors.GetErrorLabel("SeatsNumber"));
+		txtRoomLabel.setText(errors.GetErrorLabel("RoomNumber"));
 	}
 
 	@Override

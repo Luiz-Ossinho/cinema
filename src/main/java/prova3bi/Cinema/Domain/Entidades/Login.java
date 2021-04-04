@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Builder.Is;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
 import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.Table;
 
@@ -54,9 +55,9 @@ public class Login extends Entidade {
 	}
 
 	@Override
-	public boolean isValid() {
+	public ErrorList isValid() {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }

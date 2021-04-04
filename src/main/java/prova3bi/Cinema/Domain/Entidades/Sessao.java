@@ -8,6 +8,10 @@ import java.util.List;
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.Table;
+import prova3bi.Cinema.Domain.Validations.Error;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
+import prova3bi.Cinema.Domain.Validations.ValidationHelper;
+import prova3bi.Cinema.Domain.Validations.Validator;
 
 @Table(nome = "Sessions", fks = { "movie;Movies", "room;Rooms" })
 public class Sessao extends Entidade {
@@ -79,9 +83,21 @@ public class Sessao extends Entidade {
 		VaiComecar, EmAndamento, Lotada, JaTerminou;
 	}
 	
+	private static Validator<Sessao> validator = new Validator<Sessao>()
+			.add(
+					sessao -> ValidationHelper.Test(sessao.DHInicio), 
+					sessao -> new Error("itime", "!"))
+			.add(
+					sessao -> ValidationHelper.Test(sessao.DHTermino), 
+					sessao -> new Error("ftime", "!"))
+			.add(
+					sessao -> sessao.preco > 0,
+					sessao -> new Error("price", "!")
+			);
+	
 	@Override
-	public boolean isValid() {
-		return false;
+	public ErrorList isValid() {
+		return validator.TestAll(this);
 	}
 
 }
