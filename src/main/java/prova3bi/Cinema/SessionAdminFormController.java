@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -34,6 +35,7 @@ import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Singletons.MovieHolder;
 import prova3bi.Cinema.Singletons.RoomHolder;
 import prova3bi.Cinema.Singletons.SessionHolder;
+import prova3bi.Cinema.Util.Alerts;
 import prova3bi.Cinema.Util.Utils;
 
 public class SessionAdminFormController implements Initializable {
@@ -77,11 +79,15 @@ public class SessionAdminFormController implements Initializable {
 
 	@FXML
 	void onSubmit(ActionEvent event) {
+		ResetErrorMessages();
 		var errors = CreateSession();
 		if (!errors.isEmpty())
 			setErrorMessages(errors);
-		else
+		else {
 			PersistSession();
+			Alerts.showAlert("Sucesso", "Cadatrado com sucesso", "Sessao cadastrada com sucesso",
+					AlertType.INFORMATION);
+		}
 	}
 
 	private void PersistSession() {
@@ -126,7 +132,7 @@ public class SessionAdminFormController implements Initializable {
 		var errors = new ErrorList();
 		var initialTimeStr = txtInitialTime.getText();
 		var finalTimeStr = txtFinalTime.getText();
-		var priceStr = txtFinalTime.getText();
+		var priceStr = txtPrice.getText();
 		var selectedRoom = cbClass.getValue();
 		var selectedMovie = cbMovie.getValue();
 		double price = Utils.TryParseValue(Utils.doubleParser, priceStr, errors, "price");
@@ -145,6 +151,12 @@ public class SessionAdminFormController implements Initializable {
 		initialTimeLabel.setText(errors.GetErrorLabel("itime"));
 		finalTimeLabel.setText(errors.GetErrorLabel("ftime"));
 		priceLabel.setText(errors.GetErrorLabel("price"));
+	}
+
+	private void ResetErrorMessages() {
+		initialTimeLabel.setText("");
+		finalTimeLabel.setText("");
+		priceLabel.setText("");
 	}
 
 	@Override
