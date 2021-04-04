@@ -51,7 +51,7 @@
                </children>
             </Pane>
             <ComboBox fx:id="cbClass" layoutX="146.0" layoutY="374.0" prefHeight="52.0" prefWidth="217.0" promptText="Sala" style="-fx-background-color: #fff; -fx-background-radius: 8;" />
-            <Pane layoutX="376.0" layoutY="381.0" onMouseClicked="#switchClassModal" prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
+            <Pane layoutX="376.0" layoutY="381.0" onMouseClicked="#switchRoomModal" prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
                <children>
                   <Label layoutX="12.0" layoutY="5.0" style="-fx-font-size: 24; -fx-text-fill: #ff0657; -fx-font-family: Roboto;" text="+" />
                </children>
@@ -62,21 +62,21 @@
                   <Label layoutX="12.0" layoutY="5.0" style="-fx-font-size: 24; -fx-text-fill: #ff0657; -fx-font-family: Roboto;" text="+" />
                </children>
             </Pane>
-            <Label fx:id="initialTimeLabel" layoutX="133.0" layoutY="207.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
+            <Label fx:id="initialTimeLabel" layoutX="133.0" layoutY="189.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
             <Button id="btSubmit" layoutX="146.0" layoutY="506.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="52.0" prefWidth="277.0" text="Salvar" />
-            <Label fx:id="finalTimeLabel" layoutX="133.0" layoutY="271.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
-            <Label fx:id="priceLabel" layoutX="133.0" layoutY="336.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
-            <Label fx:id="cbClassLabel" layoutX="133.0" layoutY="403.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
-            <Label fx:id="cbMovieLabel" layoutX="133.0" layoutY="465.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
+            <Label fx:id="finalTimeLabel" layoutX="133.0" layoutY="253.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
+            <Label fx:id="priceLabel" layoutX="133.0" layoutY="318.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
+            <Label fx:id="cbClassLabel" layoutX="133.0" layoutY="385.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
+            <Label fx:id="cbMovieLabel" layoutX="133.0" layoutY="447.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
             <Pane layoutX="146.0" layoutY="69.0" onMouseClicked="#switchGoBack" prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
                <children>
                   <Label layoutX="13.0" layoutY="5.0" style="-fx-font-size: 24; -fx-text-fill: #ff0657; -fx-font-family: Roboto;" text="&lt;" />
                </children>
             </Pane>
             <Label layoutX="197.0" layoutY="101.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Cadastre ou edite a sua sessão!" />
-            <Label layoutX="565.0" layoutY="229.0" style="-fx-opacity: 0.5;" styleClass="fontBold" text="&quot;No escurinho" />
-            <Label layoutX="651.0" layoutY="324.0" style="-fx-opacity: 0.5;" styleClass="fontBold" text="do cinema...&quot;" />
-            <Label layoutX="710.0" layoutY="411.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 18; -fx-opacity: 0.5;" text="Por acaso temos uma sessao por aqui" />
+            <Label layoutX="565.0" layoutY="255.0" style="-fx-opacity: 0.5;" styleClass="fontBold" text="&quot;No escurinho" />
+            <Label layoutX="651.0" layoutY="350.0" style="-fx-opacity: 0.5;" styleClass="fontBold" text="do cinema...&quot;" />
+            <Label layoutX="710.0" layoutY="437.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 18; -fx-opacity: 0.5;" text="Por acaso temos uma sessao por aqui" />
          </children></AnchorPane>
    </children>
 </HBox>
