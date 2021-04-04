@@ -164,6 +164,7 @@ public class SessionAdminFormController implements Initializable {
 		initializeDependencies();
 		initializeRoomComboBox();
 		initializeMovieComboBox();
+		//Constraints.dateField(txtInitialTime);
 	}
 
 	private void initializeRoomComboBox() {

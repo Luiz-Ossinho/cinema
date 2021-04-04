@@ -1,5 +1,6 @@
 package prova3bi.Cinema;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import prova3bi.Cinema.Domain.Entities.Session;
 import prova3bi.Cinema.Singletons.SessionHolder;
@@ -32,14 +34,19 @@ public class SelectedSessionController implements Initializable {
 
 	@FXML
 	private GridPane panel;
-	
+
 	private Session sessionSelected;
+
+	@FXML
+	void switchGoBack(MouseEvent event) throws IOException {
+		App.setRoot("SessionList");
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		sessionSelected = SessionHolder.getInstance().getSession();
-		
+
 		// AQUI EU VOU PEGAR A LISTA DE CADEIRAS
 		List<String> listSeat = new ArrayList<>();
 

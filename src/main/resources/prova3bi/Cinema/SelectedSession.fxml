@@ -36,7 +36,7 @@
             <Pane layoutX="517.0" layoutY="209.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-background-radius: 4;" />
             <Label layoutX="548.0" layoutY="182.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Desocupado" />
             <Label layoutX="548.0" layoutY="209.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Ocupado" />
-            <Button layoutX="994.0" layoutY="59.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #fff; -fx-font-family: Roboto; -fx-text-fill: #ff0657; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&lt;" />
+            <Button layoutX="994.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#switchGoBack" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #fff; -fx-font-family: Roboto; -fx-text-fill: #ff0657; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&lt;" />
             <Label fx:id="txtQuantity" layoutX="517.0" layoutY="558.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
             <Label layoutX="517.0" layoutY="578.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Selecione o local mais confortavel disponivel." />
             <Button layoutX="949.0" layoutY="556.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&gt;" />
