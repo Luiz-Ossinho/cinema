@@ -12,7 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+import prova3bi.Cinema.Domain.Entities.Session;
+import prova3bi.Cinema.Domain.Interfaces.Services.ISessionService;
+import prova3bi.Cinema.Services.UnitFactory;
+// TODO popular
 public class SessionListController implements Initializable {
 
 	@FXML
@@ -21,39 +24,8 @@ public class SessionListController implements Initializable {
 	@FXML
 	private HBox recentlyMovieContainer;
 
-	List<Movie> recentlyMovie;
-
-	private List<Movie> getRecentlyMovie() {
-		List<Movie> lm = new ArrayList<>();
-
-		Movie movie = new Movie();
-		movie.setImageMovie("vingImage.jpg");
-		movie.setAbout("Vingadores Ultimato");
-		lm.add(movie);
-
-		movie = new Movie();
-		movie.setImageMovie("jokerImage.png");
-		movie.setAbout("Joker the movie");
-		lm.add(movie);
-
-		movie = new Movie();
-		movie.setImageMovie("vingImage.jpg");
-		movie.setAbout("Vingadores Ultimato");
-		lm.add(movie);
-
-		movie = new Movie();
-		movie.setImageMovie("jokerImage.png");
-		movie.setAbout("Joker the movie");
-		lm.add(movie);
-
-		movie = new Movie();
-		movie.setImageMovie("vingImage.jpg");
-		movie.setAbout("Vingadores Ultimato");
-		lm.add(movie);
-
-		return lm;
-
-	}
+	private List<Session> sessions;
+	private ISessionService sessionService;
 	
 	@FXML 
 	private void switchGoBack(MouseEvent event) throws IOException{
@@ -62,22 +34,26 @@ public class SessionListController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		recentlyMovie = new ArrayList<>(getRecentlyMovie());
+		GetDependencies();
+		sessions = sessionService.GetNext();
 		try {
-			for (Movie movie : recentlyMovie) {
-				FXMLLoader fxml = new FXMLLoader();
+			for (var session : sessions) {
+				var fxml = new FXMLLoader();
 				fxml.setLocation(getClass().getResource("movie.fxml"));
-
+				
 				VBox vBox = fxml.load();
 				MovieController movieController = fxml.getController();
-				movieController.setData(movie);
-
+				movieController.setData(session);
+				
 				recentlyMovieContainer.getChildren().add(vBox);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	private void GetDependencies() {
+		sessionService = UnitFactory.getSessionService();
 	}
 
 }

@@ -1,8 +1,10 @@
 package prova3bi.Cinema.Domain.Entities;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Base64;
 
@@ -55,17 +57,9 @@ public class Movie extends Entity {
 		super(MoviesId);
 	}
 
-	public OutputStream getPosterStream() {
+	public InputStream getPosterStream() {
 		byte[] data = Base64.getDecoder().decode(this.encodedPoster);
-		OutputStream stream = null;
-		String tmpdir = System.getProperty("java.io.tmpdir");
-		try {
-			stream = new FileOutputStream(tmpdir + "\\tempPosterImg" + this.getId() + ".png");
-			stream.write(data);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return stream;
+		return new ByteArrayInputStream(data);
 	}
 
 	private static String encodeFileToBase64(String path) {

@@ -27,8 +27,8 @@
                   <Label layoutX="28.0" layoutY="258.0" style="-fx-font-family: Roboto; -fx-text-fill: #000; -fx-font-size: 16;" text="Diretor e elenco notavel:" />
                   <Label layoutX="28.0" layoutY="317.0" style="-fx-font-family: Roboto; -fx-text-fill: #000; -fx-font-size: 16;" text="Genero:" />
                   <TextArea fx:id="txtSynopsis" disable="true" layoutX="28.0" layoutY="130.0" prefHeight="112.0" prefWidth="245.0" style="-fx-background-color: transparent;" />
-                  <Label fx:id="txtDirector" layoutX="27.0" layoutY="286.0" style="-fx-text-fill: #000; -fx-font-size: 18;" />
-                  <Label fx:id="txtGender" layoutX="27.0" layoutY="343.0" style="-fx-text-fill: #000; -fx-font-size: 18;" />
+                  <!--<Label fx:id="txtDirector" layoutX="27.0" layoutY="286.0" style="-fx-text-fill: #000; -fx-font-size: 18;" />-->
+                  <!--<Label fx:id="txtGender" layoutX="27.0" layoutY="343.0" style="-fx-text-fill: #000; -fx-font-size: 18;" />-->
                </children></Pane>
             <Label layoutX="517.0" layoutY="87.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 20;" text="Ticket" />
             <Label fx:id="txtTicketValue" layoutX="518.0" layoutY="111.0" style="-fx-font-size: 40;" styleClass="fontBold" />
