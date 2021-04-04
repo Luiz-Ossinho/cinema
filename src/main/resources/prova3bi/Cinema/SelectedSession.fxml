@@ -42,10 +42,13 @@
             <Button layoutX="949.0" layoutY="556.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&gt;" />
             <HBox layoutX="517.0" layoutY="278.0" prefHeight="246.0" prefWidth="477.0">
                <children>
-                  <GridPane prefHeight="0.0" prefWidth="0.0">
+                  <GridPane fx:id="panel" prefHeight="0.0" prefWidth="0.0">
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
+                     <children>
+                        <HBox fx:id="chairSession" prefHeight="0.0" prefWidth="0.0" />
+                     </children>
                   </GridPane>
                </children>
             </HBox>

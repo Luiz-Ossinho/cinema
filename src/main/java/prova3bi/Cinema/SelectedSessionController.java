@@ -14,9 +14,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import prova3bi.Cinema.Domain.Entities.Chair;
 import prova3bi.Cinema.Domain.Entities.Session;
 import prova3bi.Cinema.Singletons.SessionHolder;
@@ -40,6 +41,9 @@ public class SelectedSessionController implements Initializable {
 
 	@FXML
 	private GridPane panel;
+	
+	@FXML
+	private HBox chairSession;
 
 	private Session sessionSelected;
 
@@ -66,11 +70,15 @@ public class SelectedSessionController implements Initializable {
 		var lenght = getLenght(listSeat);
 		 try {
 				for (var seat : listSeat) {
-	                FXMLLoader fxmlLoader = new FXMLLoader();
-	                fxmlLoader.setLocation(getClass().getResource("Chair.fxml"));
-	                AnchorPane anchorPane = fxmlLoader.load();
+					var fxml = new FXMLLoader();
+					fxml.setLocation(getClass().getResource("Chair.fxml"));
+					VBox vBox = fxml.load();
+					ChairController chairController = fxml.getController();
+					chairController.setChair(seat);
+					
+					chairSession.getChildren().add(vBox);
 	                
-	                ChairController controller = fxmlLoader.getController();
+	                ChairController controller = fxml.getController();
 	                controller.setChair(seat);	   
 	                
 					if (column == maxWidth) {
@@ -78,7 +86,7 @@ public class SelectedSessionController implements Initializable {
 						row++;
 					}
 					
-					panel.add(anchorPane, column++, row);
+					panel.add(vBox, column++, row);
 					
 					panel.setMinWidth(Region.USE_COMPUTED_SIZE);
 					panel.setPrefWidth(Region.USE_COMPUTED_SIZE);
@@ -88,7 +96,7 @@ public class SelectedSessionController implements Initializable {
 	                panel.setPrefHeight(Region.USE_COMPUTED_SIZE);
 	                panel.setMaxHeight(Region.USE_PREF_SIZE);
 	                
-	                GridPane.setMargin(anchorPane, new Insets(10));
+	                GridPane.setMargin(vBox, new Insets(10));
 				}
 	        }catch (Exception e) {
 				e.printStackTrace();
