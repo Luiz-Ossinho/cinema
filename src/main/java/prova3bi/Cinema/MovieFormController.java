@@ -12,7 +12,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import prova3bi.Cinema.Domain.Entidades.Filme;
+import prova3bi.Cinema.Domain.Entidades.Sala;
 import prova3bi.Cinema.Domain.Entidades.TrilhaSonora;
+import prova3bi.Cinema.Domain.Interfaces.Services.IMovieService;
+import prova3bi.Cinema.Domain.Validations.Error;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
+import prova3bi.Cinema.Services.UnitFactory;
+import prova3bi.Cinema.Singletons.MovieHolder;
+import prova3bi.Cinema.Singletons.RoomHolder;
+import prova3bi.Cinema.Util.Utils;
 
 public class MovieFormController implements Initializable {
 
@@ -34,49 +42,49 @@ public class MovieFormController implements Initializable {
 	@FXML
 	private Label synopsisLabel;
 
-	private Filme entity;
+	private IMovieService movieService;
 
 	@FXML
 	void switchSubmit(ActionEvent event) {
-//		try {
-//			entity = getFormData();
-//		} catch (ValidateException e) {
-//			setErrorMessages(e.getErrors());
-//		}
+		var errors = CreateMovie();
+		if (!errors.isEmpty())
+			setErrorMessages(errors);
+		else {
+			PersistMovie();
+			Utils.currentStage(event).close();
+		}
 	}
 
-//	private Filme getFormData() {
-//		// Filme movie = new Filme();
-//		ValidateException exception = new ValidateException("Validation error");
-//
-//		if (txtTitle.getText() == null || txtTitle.getText().trim().equals("")) {
-//			exception.addError("title", "!");
-//		}
-//		// movie.setDescricao(txtTitle.getText());
-//
-//		if (txtSynopsis.getText() == null || txtSynopsis.getText().trim().equals("")) {
-//			exception.addError("synopsis", "!");
-//		}
-//		// movie.setDescricao(txtSynopsis.getText());
-//
-//		if (cbSoundTrack.getValue() == null) {
-//			exception.addError("soundtrack", "!");
-//		} else {
-//			// movie.setPacienteid(cbPatient.cbSoundTrack());
-//		}
-//
-//		return null;
-//	}
+	private ErrorList CreateMovie() {
+		var errors = new ErrorList();
+		var audioTrack = cbSoundTrack.getValue();
+		var title = txtTitle.getText();
+		var synopsis = txtSynopsis.getText();
+		
+		var movie = new Filme(title, "", synopsis, audioTrack);
+		MovieHolder.getInstance().setMovie(movie);
 
-	private void setErrorMessages(Map<String, String> errors) {
-		Set<String> fields = errors.keySet();
-		cbSoundTrackLabel.setText((fields.contains("soundtrack") ? errors.get("soundtrack") : ""));
-		titleLabel.setText((fields.contains("title") ? errors.get("title") : ""));
-		synopsisLabel.setText((fields.contains("synopsis") ? errors.get("synopsis") : ""));
+		return errors.addAll(movie.isValid());
+	}
+	
+	private void PersistMovie() {
+		var holderInstance = MovieHolder.getInstance();
+		var movie = holderInstance.getMovie();
+		var updatedMovie = movieService.Add(movie);
+		holderInstance.getObsList().add(updatedMovie);
+		holderInstance.setMovie(updatedMovie);
+	}
+
+	private void setErrorMessages(ErrorList errors) {
+		RoomHolder.getInstance().ResetRoom();
+		cbSoundTrackLabel.setText(errors.GetErrorLabel("audioTrack"));
+		titleLabel.setText(errors.GetErrorLabel("title"));
+		synopsisLabel.setText(errors.GetErrorLabel("synopsis"));
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		movieService = UnitFactory.getMovieService();
 		cbSoundTrack.getItems().setAll(TrilhaSonora.values());
 	}
 

@@ -34,4 +34,22 @@ public class ChairRepository implements IChairRepository {
 		return context.getAll(query);
 	}
 
+	@Override
+	public int Put(Poltrona chair) {
+		Query<Poltrona> query = new Query<Poltrona>(Query.Comand.Update, Poltrona.class)
+				.value(chair.column, "column")
+				.value(chair.ocupada, "ocupada")
+				.value(chair.row, "row")
+				.value(chair.sessao.getId() + "", "sessao")
+				.PKEquals(chair.getId() + "");
+		return context.execute(query);
+	}
+
+	@Override
+	public Poltrona Get(int id) {
+		Query<Poltrona> query = new Query<Poltrona>(Query.Comand.Select, Query.Modifiers.Limit1, Poltrona.class)
+				.PKEquals(id + "");
+		return context.get(query);
+	}
+
 }

@@ -19,6 +19,10 @@ public final class LoginHolder {
 		this.login = null;
 	}
 	
+	public void Reset() {
+		ResetLogin();
+	}
+	
 	public static LoginHolder getInstance() {
 		return holder;
 	}

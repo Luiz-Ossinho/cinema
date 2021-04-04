@@ -42,6 +42,10 @@ public class Poltrona extends Entidade {
 	@Column(nome = "row", tipoSql = "INTEGER")
 	public int row;
 
+	public void OccupyChair() {
+		this.ocupada = true;
+	}
+	
 	@Override
 	public ErrorList isValid() {
 		// TODO Auto-generated method stub

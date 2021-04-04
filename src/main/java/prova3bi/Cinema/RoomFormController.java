@@ -11,16 +11,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import prova3bi.Cinema.Domain.Entidades.Sala;
 import prova3bi.Cinema.Domain.Entidades.TipoSala;
+import prova3bi.Cinema.Domain.Interfaces.Services.IRoomService;
+import prova3bi.Cinema.Domain.Interfaces.Services.ISessionService;
 import prova3bi.Cinema.Domain.Validations.Error;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
+import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Singletons.RoomHolder;
+import prova3bi.Cinema.Util.IParser;
 import prova3bi.Cinema.Util.Utils;
 
-public class RoomFormController implements Initializable{
+public class RoomFormController implements Initializable {
 
 	@FXML
 	private HBox RoomForm;
-	
+
 	@FXML
 	private ComboBox<TipoSala> cbType;
 
@@ -39,37 +43,40 @@ public class RoomFormController implements Initializable{
 	@FXML
 	private Label txtRoomLabel;
 
+	private IRoomService roomService;
+
 	@FXML
 	void switchSubmit(ActionEvent event) {
-			var errors = SaveRoom();
-			if(!errors.isEmpty())
-				setErrorMessages(errors);
-			else
-				Utils.currentStage(event).close();
+		var errors = CreateRoom();
+		if (!errors.isEmpty())
+			setErrorMessages(errors);
+		else {
+			PersistRoom();
+			Utils.currentStage(event).close();
+		}
 	}
 
-	private ErrorList SaveRoom() {
+	private ErrorList CreateRoom() {
 		var errors = new ErrorList();
 		var tipo = cbType.getValue();
-		int RoomNumber = -1;
-		int NumberSeats = -1;
-		
-		try {
-			RoomNumber = Integer.parseInt(txtRoomNumber.getText());
-		} catch (NumberFormatException formatException) {
-			errors.add(new Error("RoomNumber", "Incorrect format"));
-		}
-		try {
-			NumberSeats = Integer.parseInt(txtNumberSeats.getText());
-		} catch (NumberFormatException formatException) {
-			errors.add(new Error("SeatsNumber", "Incorrect format"));
-		}
-		
+		var RoomNumberStr = txtRoomNumber.getText();
+		var NumbeSeatsrStr = txtNumberSeats.getText();
+		int RoomNumber = Utils.TryParseValue(Utils.integerParser, RoomNumberStr, errors, "RoomNumber");
+		int NumberSeats = Utils.TryParseValue(Utils.integerParser, NumbeSeatsrStr, errors, "SeatsNumber");
+
 		var room = new Sala(tipo, NumberSeats, RoomNumber);
-		
+
 		RoomHolder.getInstance().setRoom(room);
-		
+
 		return errors.addAll(room.isValid());
+	}
+	
+	private void PersistRoom() {
+		var holderInstance = RoomHolder.getInstance();
+		var room = holderInstance.getRoom();
+		var updatedRoom = roomService.Add(room);
+		holderInstance.getObsList().add(updatedRoom);
+		holderInstance.setRoom(updatedRoom);
 	}
 
 	private void setErrorMessages(ErrorList errors) {
@@ -81,6 +88,11 @@ public class RoomFormController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initializeTypeComboBox();
+		roomService = UnitFactory.getRoomService();
+	}
+	
+	public void initializeTypeComboBox() {
 		cbType.getItems().setAll(TipoSala.values());
 	}
 

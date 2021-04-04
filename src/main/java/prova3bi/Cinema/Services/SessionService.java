@@ -5,41 +5,43 @@ import java.util.List;
 
 import prova3bi.Cinema.Data.Abstractions.Nest;
 import prova3bi.Cinema.Domain.Entidades.Poltrona;
+import prova3bi.Cinema.Domain.Entidades.Sala;
 import prova3bi.Cinema.Domain.Entidades.Sessao;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ISessaoRepository;
+import prova3bi.Cinema.Domain.Interfaces.Services.IMovieService;
+import prova3bi.Cinema.Domain.Interfaces.Services.IRoomService;
 import prova3bi.Cinema.Domain.Interfaces.Services.ISessionService;
 
 public class SessionService implements ISessionService {
-
+	private IRoomService roomService;
+	private IMovieService movieService;
 	private ISessaoRepository sessionRepo;
-	private IRoomRepository roomRepo;
-	private IMovieRepository movieRepo;
 	private IChairRepository chairRepo;
 
-	public SessionService(ISessaoRepository sessionRepo, IRoomRepository roomRepo, IMovieRepository movieRepo,
+	public SessionService(ISessaoRepository sessionRepo, IRoomService roomService, IMovieService movieService,
 			IChairRepository chairRepo) {
 		this.sessionRepo = sessionRepo;
-		this.roomRepo = roomRepo;
-		this.movieRepo = movieRepo;
+		this.roomService = roomService;
+		this.movieService = movieService;
 		this.chairRepo = chairRepo;
 	}
 
 	@Override
-	public int Add(Sessao session) {
+	public Sessao Add(Sessao session) {
 		if (Nest.Action(session.filme) == Nest.New)
-			session.filme.setId(movieRepo.Add(session.filme));
+			session.filme = movieService.Add(session.filme);
 		if (Nest.Action(session.sala) == Nest.New)
-			session.sala.setId(roomRepo.Add(session.sala));
+			session.sala = roomService.Add(session.sala);
 
 		var generatedKey = sessionRepo.Add(session);
 		session.setId(generatedKey);
 
 		addAnyChairs(session);
 
-		return generatedKey;
+		return session;
 	}
 
 	private void addAnyChairs(Sessao session) {
@@ -104,8 +106,8 @@ public class SessionService implements ISessionService {
 		var nextSessions = new ArrayList<Sessao>();
 		for (var sessao : allSessions) {
 			if (sessao.verEstado() != Sessao.Estado.JaTerminou) {
-				sessao.filme = movieRepo.Get(sessao.filme.getId());
-				sessao.sala = roomRepo.Get(sessao.sala.getId());
+				sessao.filme = movieService.Get(sessao.filme.getId());
+				sessao.sala = roomService.Get(sessao.sala.getId());
 				var poltronas = chairRepo.GetAllFromSession(sessao.getId());
 				for (var poltrona : poltronas) {
 					poltrona.sessao = sessao;
