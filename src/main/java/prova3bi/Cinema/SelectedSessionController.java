@@ -63,11 +63,10 @@ public class SelectedSessionController implements Initializable {
 
 		// INICIALIZAR A QUANTIDADE DE COLUNAS E LINHAS
 		int column = 0;
-		int row = 0;
+		int row = 1;
 
 		// ONDE VAI ACONTECER A LISTAGEM NA TELA DE CADEIRAS
-		var maxWidth = getWidth(listSeat);
-		var lenght = getLenght(listSeat);
+		var maxWidth = getWidth(listSeat)+1;
 		 try {
 				for (var seat : listSeat) {
 					var fxml = new FXMLLoader();
@@ -107,12 +106,12 @@ public class SelectedSessionController implements Initializable {
 			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ));
 	
 	public int getWidth(List<Chair> list) {
-		int largestLetter = Integer.MAX_VALUE;
+		int largestLetter = Integer.MIN_VALUE;
 		for (var chair : list) {
 			var letter = chair.column;
 			var numLetter = letters.indexOf(letter);
 			if(largestLetter < numLetter)
-				largestLetter = numLetter;
+				largestLetter = numLetter+1;
 		}
 		
 		return largestLetter;
