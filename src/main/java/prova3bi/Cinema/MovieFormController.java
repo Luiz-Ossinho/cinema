@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import prova3bi.Cinema.Domain.Entidades.Filme;
 import prova3bi.Cinema.Domain.Entidades.TrilhaSonora;
-import prova3bi.Cinema.Exception.ValidateException;
 
 public class MovieFormController implements Initializable {
 
@@ -39,35 +38,35 @@ public class MovieFormController implements Initializable {
 
 	@FXML
 	void switchSubmit(ActionEvent event) {
-		try {
-			entity = getFormData();
-		} catch (ValidateException e) {
-			setErrorMessages(e.getErrors());
-		}
+//		try {
+//			entity = getFormData();
+//		} catch (ValidateException e) {
+//			setErrorMessages(e.getErrors());
+//		}
 	}
 
-	private Filme getFormData() {
-		// Filme movie = new Filme();
-		ValidateException exception = new ValidateException("Validation error");
-
-		if (txtTitle.getText() == null || txtTitle.getText().trim().equals("")) {
-			exception.addError("title", "!");
-		}
-		// movie.setDescricao(txtTitle.getText());
-
-		if (txtSynopsis.getText() == null || txtSynopsis.getText().trim().equals("")) {
-			exception.addError("synopsis", "!");
-		}
-		// movie.setDescricao(txtSynopsis.getText());
-
-		if (cbSoundTrack.getValue() == null) {
-			exception.addError("soundtrack", "!");
-		} else {
-			// movie.setPacienteid(cbPatient.cbSoundTrack());
-		}
-
-		return null;
-	}
+//	private Filme getFormData() {
+//		// Filme movie = new Filme();
+//		ValidateException exception = new ValidateException("Validation error");
+//
+//		if (txtTitle.getText() == null || txtTitle.getText().trim().equals("")) {
+//			exception.addError("title", "!");
+//		}
+//		// movie.setDescricao(txtTitle.getText());
+//
+//		if (txtSynopsis.getText() == null || txtSynopsis.getText().trim().equals("")) {
+//			exception.addError("synopsis", "!");
+//		}
+//		// movie.setDescricao(txtSynopsis.getText());
+//
+//		if (cbSoundTrack.getValue() == null) {
+//			exception.addError("soundtrack", "!");
+//		} else {
+//			// movie.setPacienteid(cbPatient.cbSoundTrack());
+//		}
+//
+//		return null;
+//	}
 
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();

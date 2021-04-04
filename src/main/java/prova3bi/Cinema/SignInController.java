@@ -10,10 +10,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import prova3bi.Cinema.Domain.Validator;
 import prova3bi.Cinema.Domain.Entidades.Login;
 import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
+import prova3bi.Cinema.Domain.Validations.ValidationHelper;
 import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Singletons.LoginHolder;
 import prova3bi.Cinema.Util.Alerts;
@@ -38,7 +38,7 @@ public class SignInController implements Initializable {
 		var username = textField.getText();
 		var password = passField.getText();
 
-		if (Validator.isNullOrEmpty(username) || Validator.isNullOrEmpty(password)) {
+		if (ValidationHelper.isNullOrEmpty(username) || ValidationHelper.isNullOrEmpty(password)) {
 			Alerts.showAlert("Ops... aconteceu algum problema!", "Pelo visto você esqueceu de inserir os dados.",
 					"Preencha os campos para continuar!", AlertType.INFORMATION);
 			return;

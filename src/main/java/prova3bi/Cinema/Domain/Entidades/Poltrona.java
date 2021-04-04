@@ -4,6 +4,7 @@ import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Column;
 import prova3bi.Cinema.Data.Abstractions.Table;
 import prova3bi.Cinema.Data.Abstractions.Builder.Is;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
 
 @Table(nome = "Poltronas", fks = { "session;Sessions" })
 public class Poltrona extends Entidade {
@@ -42,9 +43,9 @@ public class Poltrona extends Entidade {
 	public int row;
 
 	@Override
-	public boolean isValid() {
+	public ErrorList isValid() {
 		// TODO Auto-generated method stub
-		return true;
+		return null;
 	}
 
 }

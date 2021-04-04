@@ -1,5 +1,7 @@
 package prova3bi.Cinema.Domain.Entidades;
 
+import prova3bi.Cinema.Domain.Validations.ErrorList;
+
 public abstract class Entidade {
 	private int Id;
 
@@ -7,7 +9,7 @@ public abstract class Entidade {
 		this.Id = id;
 	}
 
-	public abstract boolean isValid();
+	public abstract ErrorList isValid();
 
 	// USE ESSE METODO APENAS NA CAMADA DE SERVICOS
 	// PARA SETAR O ID DE ENTIDADES ANINHADAS CRIADAS NA HORA

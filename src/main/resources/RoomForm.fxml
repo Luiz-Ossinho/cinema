@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #14111f;" stylesheets="@Styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prova3bi.Cinema.RoomFormController">
+<HBox fx:id="RoomForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #14111f;" stylesheets="@Styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prova3bi.Cinema.RoomFormController">
    <children>
       <AnchorPane prefHeight="635.0" prefWidth="1200.0">
          <children>
@@ -36,7 +36,7 @@
             <Button id="btSubmit" layoutX="62.0" layoutY="296.0" mnemonicParsing="false" onAction="#switchSubmit" prefHeight="52.0" prefWidth="277.0" text="Salvar" />
            <Label fx:id="txtTypeLabel" layoutX="44.0" layoutY="127.0" style="-fx-text-fill: #fff;" />
             <Label fx:id="txtSeatsLabel" layoutX="44.0" layoutY="189.0" style="-fx-text-fill: #fff;" />
-            <Label fx:id="txtClassLabel" layoutX="44.0" layoutY="250.0" style="-fx-text-fill: #fff;" />
+            <Label fx:id="txtRoomLabel" layoutX="44.0" layoutY="250.0" style="-fx-text-fill: #fff;" />
          </children></AnchorPane>
    </children>
 </HBox>
