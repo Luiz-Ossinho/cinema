@@ -6,5 +6,7 @@ import prova3bi.Cinema.Domain.Entidades.Poltrona;
 
 public interface IChairRepository {
 	public int Add(Poltrona chair);
+	public int Put(Poltrona chair);
 	public List<Poltrona> GetAllFromSession(int SessionId);
+	public Poltrona Get(int id);
 }

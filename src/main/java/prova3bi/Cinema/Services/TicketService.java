@@ -12,9 +12,10 @@ public class TicketService implements ITicketService {
 	}
 
 	@Override
-	public int QuitarTicket(int TicketsID) {
+	public Ticket QuitarTicket(int TicketsID) {
 		var ticket = ticketRepo.Get(TicketsID);
 		ticket.Quitar();
-		return ticketRepo.Put(ticket);
+		ticketRepo.Put(ticket);
+		return ticket;
 	}
 }
