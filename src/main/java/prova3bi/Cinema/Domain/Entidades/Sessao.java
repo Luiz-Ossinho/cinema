@@ -97,7 +97,7 @@ public class Sessao extends Entidade {
 	
 	@Override
 	public ErrorList isValid() {
-		return validator.TestAll(this);
+		return validator.TestAll(this).addAll(this.sala.isValid()).addAll(this.filme.isValid());
 	}
 
 }

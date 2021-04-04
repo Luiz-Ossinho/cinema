@@ -1,10 +1,11 @@
-package prova3bi.Cinema.Domain.Interfaces.Repositories;
+package prova3bi.Cinema.Domain.Interfaces.Services;
 
 import java.util.List;
+
 import prova3bi.Cinema.Domain.Entidades.Sala;
 
-public interface IRoomRepository {
-	public int Add(Sala sala);
+public interface IRoomService {
+	public Sala Add(Sala room);
 	public Sala Get(int id);
 	public List<Sala> GetAll();
 }

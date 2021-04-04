@@ -23,6 +23,12 @@ public class SessionHolder {
 		this.session = null;
 	}
 	
+	public void Reset() {
+		ResetSession();
+		RoomHolder.getInstance().Reset();
+		MovieHolder.getInstance().Reset();
+	}
+	
 	public static SessionHolder getInstance() {
 		return holder;
 	}
