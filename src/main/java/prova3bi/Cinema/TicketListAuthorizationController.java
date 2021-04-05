@@ -2,71 +2,58 @@ package prova3bi.Cinema;
 
 import java.io.IOException;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import prova3bi.Cinema.Domain.Entities.Ticket;
 
 public class TicketListAuthorizationController {
 
 	@FXML
-	private HBox sectionContainer;
+	private TextField txtTicket;
 
 	@FXML
-	private TableView<Ticket> tableTicket;
+	private Label ticketLabel;
 
 	@FXML
-	private TableColumn<Ticket, ?> columnSeat;
+	private Label successTitle;
 
 	@FXML
-	private TableColumn<Ticket, ?> columnStatus;
+	private Label successStatusTicket;
 
 	@FXML
-	private TableColumn<Ticket, ?> columnSection;
+	private Label successMovie;
 
 	@FXML
-	private TableColumn<Ticket, Ticket> columnChangeStatus;
+	private Label successRoom;
+
+	@FXML
+	private Label successInitMovie;
+
+	@FXML
+	private Label successFinalSection;
+
+	@FXML
+	private Label successMessage;
 
 	@FXML
 	void switchGoBack(MouseEvent event) throws IOException {
 		App.setRoot("Dashboard");
 	}
 
-	private void initializeNodes() {
-		columnSeat.setCellValueFactory(new PropertyValueFactory<>("id"));
-		columnStatus.setCellValueFactory(new PropertyValueFactory<>("name"));
-	/*	columnSection.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Appointment, String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(TableColumn.CellDataFeatures<Appointment, String> param) {
-						return new SimpleStringProperty(param.getValue().getPacienteid().getNome());
-					}
-				});*/
-
-		//appointmentTable.setItems(sortedData);
-	}
-
-	private void initChangeStatusButtons() {
-		columnChangeStatus.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		columnChangeStatus.setCellFactory(param -> new TableCell<Ticket, Ticket>() {
-			private final Button button = new Button("quitar ticket");
-
-			@Override
-			protected void updateItem(Ticket obj, boolean empty) {
-				super.updateItem(obj, empty);
-				if (obj == null) {
-					setGraphic(null);
-					return;
-				}
-				setGraphic(button);
-			}
-		});
+	@FXML
+	void onSubmit(ActionEvent event) {
+		var ticketId = txtTicket.getText();
+		
+		ticketLabel.setText("");
+		successTitle.setText("");
+		successStatusTicket.setText("");
+		successMovie.setText("");
+		successRoom.setText("");
+		successInitMovie.setText("");
+		successFinalSection.setText("");
+		successMessage.setText("");
 	}
 
 }

@@ -20,7 +20,7 @@
             </ImageView>
             <Pane layoutX="145.0" layoutY="314.0" prefHeight="52.0" prefWidth="277.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
                <children>
-                  <TextField fx:id="txtUser" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Ticket usuário" style="-fx-background-color: transparent;" />
+                  <TextField fx:id="txtTicket" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Ticket usuário" style="-fx-background-color: transparent;" />
                   <ImageView fitHeight="30.0" fitWidth="20.0" layoutX="24.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/ticketIcon.png" />
@@ -29,8 +29,7 @@
                </children></Pane>
             <Label layoutX="197.0" layoutY="54.0" style="-fx-font-size: 40;" styleClass="fontBold" text="Ticket" />
             <Button id="btSubmit" layoutX="145.0" layoutY="379.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="52.0" prefWidth="277.0" text="Quitar" />
-            <Label fx:id="userLabel" layoutX="132.0" layoutY="282.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
-            <Label fx:id="passLabel" layoutX="131.0" layoutY="350.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
+            <Label fx:id="ticketLabel" layoutX="132.0" layoutY="326.0" style="-fx-text-fill: #fff; -fx-font-size: 20;" />
             <Pane layoutX="146.0" layoutY="69.0" onMouseClicked="#switchGoBack" prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
                <children>
                   <Label layoutX="13.0" layoutY="5.0" style="-fx-font-size: 24; -fx-text-fill: #ff0657; -fx-font-family: Roboto;" text="&lt;" />
