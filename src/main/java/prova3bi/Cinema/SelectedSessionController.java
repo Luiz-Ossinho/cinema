@@ -42,13 +42,16 @@ public class SelectedSessionController implements Initializable {
 	private Label txtQuantity;
 
 	@FXML
+	private Label txtTitle;
+
+	@FXML
 	private GridPane panel;
 
 	@FXML
 	private HBox chairSession;
 
 	private Session session;
-	
+
 	private ObservableList<Chair> obsList = FXCollections.observableArrayList();
 
 	@FXML
@@ -61,8 +64,12 @@ public class SelectedSessionController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		session = SessionHolder.getInstance().getSession();
 		txtTicketValue.setText(session.preco + " R$");
+		txtTitle.setText(session.filme.title);
+		txtSynopsis.setText(session.filme.synopsis);
+		txtSynopsis.setWrapText(true);
+		txtQuantity.setText("Cadeiras disponiveis na sessão " + session.numPoltronasVagas());
+		
 		RenderChairs(session.chairs);
-
 	}
 
 	private void RenderChairs(Chair[][] chairs) {
@@ -86,12 +93,15 @@ public class SelectedSessionController implements Initializable {
 			}
 		}
 	}
-	
+
 	private FXMLLoader GetChairLoader() {
 		var fxml = new FXMLLoader();
 		fxml.setLocation(getClass().getResource("Chair.fxml"));
 		return fxml;
 	}
+
+	private static List<String> letters = new ArrayList<String>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H",
+			"I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
 
 	private void LoadChair(Chair chair, VBox vBox, FXMLLoader fxml) {
 		ChairController chairController = fxml.getController();
