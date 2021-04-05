@@ -42,6 +42,28 @@ public class SessionService implements ISessionService {
 		return session;
 	}
 
+	@Override
+	public List<Session> GetNext() {
+		var allSessions = sessionRepo.GetAll();
+		var nextSessions = new ArrayList<Session>();
+		for (var sessao : allSessions) {
+			if (sessao.verEstado() != Session.State.JaTerminou) {
+				sessao.filme = movieService.Get(sessao.filme.getId());
+				sessao.sala = roomService.Get(sessao.sala.getId());
+				var poltronas = chairRepo.GetAllFromSession(sessao.getId());
+				sessao.chairs = GetEmptyMatrix(poltronas);
+				for (var poltrona : poltronas) {
+					poltrona.sessao = sessao;
+					var i = lettersList.indexOf(poltrona.column);
+					var j = poltrona.row - 1;
+					sessao.chairs[i][j] = poltrona;
+				}
+				nextSessions.add(sessao);
+			}
+		}
+		return nextSessions;
+	}
+	
 	private void addAnyChairs(Session session) {
 		var nearestSmallerSquare = getSmallerNearestSquare(session.sala.numPoltronas);
 		var squareRoot = (int) Math.sqrt(nearestSmallerSquare);
@@ -57,7 +79,7 @@ public class SessionService implements ISessionService {
 	private Chair[][] GetEmptyMatrix(List<Chair> list) {
 		var width = getWidth(list);
 		var length = getLenght(list);
-		return new Chair[width][length];
+		return new Chair[width+1][length];
 	}
 
 	private Chair[][] GetSquareMatrix(int squareRoot, Session session) {
@@ -120,56 +142,34 @@ public class SessionService implements ISessionService {
 		}
 		return NearestSmallerSquare;
 	}
-
+	
 	private static ArrayList<String> lettersList = new ArrayList<String>(Arrays.asList("A", "B", "C", "D", "E", "F",
 			"G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
-
+	
 	private static String getColumnLetters(int columnNumber) {
 		var letters = "";
 		if (columnNumber < 26) {
-			letters += lettersList.get(columnNumber);// [];
+			letters += lettersList.get(columnNumber);
 		} else {
 			letters += getColumnLetters((int) columnNumber / 26);
 			letters += getColumnLetters(columnNumber % 26);
 		}
 		return letters;
 	}
-
-	@Override
-	public List<Session> GetNext() {
-		var allSessions = sessionRepo.GetAll();
-		var nextSessions = new ArrayList<Session>();
-		for (var sessao : allSessions) {
-			if (sessao.verEstado() != Session.State.JaTerminou) {
-				sessao.filme = movieService.Get(sessao.filme.getId());
-				sessao.sala = roomService.Get(sessao.sala.getId());
-				var poltronas = chairRepo.GetAllFromSession(sessao.getId());
-				sessao.chairs = GetEmptyMatrix(poltronas);
-				for (var poltrona : poltronas) {
-					poltrona.sessao = sessao;
-					var i = lettersList.indexOf(poltrona.column);
-					var j = poltrona.row - 1;
-					sessao.chairs[i][j] = poltrona;
-				}
-				nextSessions.add(sessao);
-			}
-		}
-		return nextSessions;
-	}
-
-	public int getWidth(List<Chair> list) {
+	
+	private int getWidth(List<Chair> list) {
 		int largestLetter = Integer.MIN_VALUE;
 		for (var chair : list) {
 			var letter = chair.column;
 			var numLetter = lettersList.indexOf(letter);
-			if (largestLetter < numLetter)
-				largestLetter = numLetter + 1;
+			if (numLetter > largestLetter)
+				largestLetter = numLetter;
 		}
 
 		return largestLetter;
 	}
 
-	public int getLenght(List<Chair> list) {
+	private int getLenght(List<Chair> list) {
 		int largest = Integer.MIN_VALUE;
 		for (var chair : list) {
 			if (largest < chair.row)
