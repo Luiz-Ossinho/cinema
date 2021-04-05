@@ -27,15 +27,16 @@ public class Session extends Entity {
 	@Column(nome = "movie", tipoSql = "INTEGER", isFk = true)
 	public Movie filme;
 
-	//public List<Chair> chair = new ArrayList<Chair>();
+	// public List<Chair> chair = new ArrayList<Chair>();
 	public Chair[][] chairs;
 
 	public int numPoltronasVagas() {
 		int counter = 0;
 		for (int i = 0; i < chairs.length; i++) {
 			for (int j = 0; j < chairs[0].length; j++) {
-				if (!chairs[i][j].ocupada)
-					counter++;
+				if (chairs[i][j] != null)
+					if (!chairs[i][j].ocupada)
+						counter++;
 			}
 		}
 		return counter;
@@ -47,7 +48,7 @@ public class Session extends Entity {
 			estado = State.VaiComecar;
 		else if (this.DHInicio.isBefore(LocalDateTime.now()) && this.DHTermino.isAfter(LocalDateTime.now()))
 			estado = State.EmAndamento;
-		else if (this.numPoltronasVagas()<=0)
+		else if (this.numPoltronasVagas() <= 0)
 			estado = State.Lotada;
 		else if (this.DHTermino.isBefore(LocalDateTime.now()))
 			estado = State.JaTerminou;
@@ -85,19 +86,12 @@ public class Session extends Entity {
 	public enum State {
 		VaiComecar, EmAndamento, Lotada, JaTerminou;
 	}
-	
+
 	private static Validator<Session> validator = new Validator<Session>()
-			.add(
-					session -> ValidationHelper.Test(session.DHInicio), 
-					session -> new Error("itime", "!"))
-			.add(
-					session -> ValidationHelper.Test(session.DHTermino), 
-					session -> new Error("ftime", "!"))
-			.add(
-					session -> session.preco > 0,
-					session -> new Error("price", "!")
-			);
-	
+			.add(session -> ValidationHelper.Test(session.DHInicio), session -> new Error("itime", "!"))
+			.add(session -> ValidationHelper.Test(session.DHTermino), session -> new Error("ftime", "!"))
+			.add(session -> session.preco > 0, session -> new Error("price", "!"));
+
 	@Override
 	public ErrorList isValid() {
 		return validator.TestAll(this).addAll(this.sala.isValid()).addAll(this.filme.isValid());
