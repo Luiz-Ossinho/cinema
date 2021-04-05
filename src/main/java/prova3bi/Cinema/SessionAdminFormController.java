@@ -146,6 +146,11 @@ public class SessionAdminFormController implements Initializable {
 		return errors.addAll(session.isValid());
 	}
 
+	@FXML
+	void switchTicketFinalized(MouseEvent event) {
+		/* EVENTO DE FINALIZAR O BILHETE */
+	}
+
 	private void setErrorMessages(ErrorList errors) {
 		SessionHolder.getInstance().ResetSession();
 		initialTimeLabel.setText(errors.GetErrorLabel("itime"));
@@ -164,7 +169,14 @@ public class SessionAdminFormController implements Initializable {
 		initializeDependencies();
 		initializeRoomComboBox();
 		initializeMovieComboBox();
-		//Constraints.dateField(txtInitialTime);
+
+		/*
+		 * SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); try {
+		 * txtInitialTime.setTextFormatter( new TextFormatter<>(new
+		 * DateTimeStringConverter(format), format.parse("2020/12/21 00:00:00"))); }
+		 * catch (ParseException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 	}
 
 	private void initializeRoomComboBox() {
