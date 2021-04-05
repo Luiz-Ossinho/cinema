@@ -75,26 +75,21 @@ public class SessionService implements ISessionService {
 	private Chair[][] GetRemainderMatrix(int remainder, int squareRoot, Session session) {
 		int sizeRemainingColumns = (int) Math.ceil(((double) remainder / squareRoot));
 		var RemainderMatrix = new Chair[sizeRemainingColumns][squareRoot];
+		int remainderCount = 0;
+		for (int i = 0; i < sizeRemainingColumns; i++) {
 
-		int columnsExtra = 1;
+			var letraExtra = getColumnLetters((squareRoot - 1) + (i + 1));
 
-		for (int i = 1; i <= remainder; i++) {
-			var letraExtra = getColumnLetters((squareRoot - 1) + columnsExtra);
-			if ((i % squareRoot) == 0)
-				columnsExtra++;
-
-			int rowExtra = i;
-			if (i > squareRoot) {
-				rowExtra = (i % squareRoot);
-				if (rowExtra == 0)
-					rowExtra = squareRoot;
+			for (int j = 0; j < RemainderMatrix[0].length; j++) {
+				if (remainderCount < remainder) {
+					var poltrona = new Chair(session, letraExtra, j + 1);
+					RemainderMatrix[i][j] = poltrona;
+					chairRepo.Add(poltrona);
+					remainderCount++;
+				} else
+					break;
 			}
-
-			var poltrona = new Chair(session, letraExtra, rowExtra);
-			RemainderMatrix[columnsExtra - 1][rowExtra - 1] = poltrona;
-			chairRepo.Add(poltrona);
 		}
-
 		return RemainderMatrix;
 	}
 
