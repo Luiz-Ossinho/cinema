@@ -1,7 +1,6 @@
 package prova3bi.Cinema;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,12 +34,13 @@ public class App extends Application {
 	}
 
 	public static void main(String[] args) {
+//		var sessionService = UnitFactory.getSessionService();
 //		var DH = LocalDateTime.now().plusHours(2);
 //		var DHLater = DH.plusHours(2);
-//		var room = new Sala(TipoSala.Prime, 15, 13);
-//		var movie = new Filme("Filme Generico", "", "Sinopse braba", TrilhaSonora.Legendado);
-//		var session = new Sessao(DH, DHLater, room, movie, 12d);
-//		var sessionService = UnitFactory.getSessionService();
+//		var movie = new Movie("Filme Generico", "", "Sinopse braba", Soundtrack.Legendado);
+//		var room = new Room(RoomType.Prime, 14, 13);
+//		var session = new Session(DH, DHLater, room, movie, 12d);
+//		var returnedSession = sessionService.Add(session);
 //		var list = sessionService.GetNext();
 // CODIGO USADO PARA TESTAR
 // NO MEU FUNCIONOU KKKKKKKK
