@@ -23,12 +23,15 @@ public class ChairController implements Initializable {
 		this.chair = chair;
 		chairPosition.setText(chair.column + " " + chair.row);
 
-		if (chair.ocupada) {
-			chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
-			chairPosition.setStyle("-fx-text-fill: #ffffff;");
-		}
+		if (chair.ocupada)
+			SetAsOccupied();
 	}
 
+	private void SetAsOccupied() {
+		chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
+		chairPosition.setStyle("-fx-text-fill: #ffffff;");
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}

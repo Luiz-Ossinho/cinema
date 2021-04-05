@@ -1,13 +1,21 @@
 package prova3bi.Cinema;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import prova3bi.Cinema.Domain.Entities.Movie;
+import prova3bi.Cinema.Domain.Entities.Room;
 //import api iText
+import prova3bi.Cinema.Domain.Entities.RoomType;
+import prova3bi.Cinema.Domain.Entities.Session;
+import prova3bi.Cinema.Domain.Entities.Soundtrack;
+import prova3bi.Cinema.Services.UnitFactory;
+import prova3bi.Cinema.Util.Utils;
 
 /**
  * JavaFX App
@@ -35,22 +43,6 @@ public class App extends Application {
 
 
 	public static void main(String[] args) {
-//		var DH = LocalDateTime.now().plusHours(2);
-//		var DHLater = DH.plusHours(2);
-//		var room = new Sala(TipoSala.Prime, 15, 13);
-//		var movie = new Filme("Filme Generico", "", "Sinopse braba", TrilhaSonora.Legendado);
-//		var session = new Sessao(DH, DHLater, room, movie, 12d);
-//		var sessionService = UnitFactory.getSessionService();
-//		var list = sessionService.GetNext();
-// CODIGO USADO PARA TESTAR
-// NO MEU FUNCIONOU KKKKKKKK
-/*		ArrayList<Ticket> tickets = new ArrayList<>();
-		tickets.add(new Ticket(1));
-		tickets.add(new Ticket(2));
-		tickets.add(new Ticket(3));
-		tickets.add(new Ticket(4));
-		Ticket.createPDF(tickets);
-		*/
 		launch();
 	}
 }

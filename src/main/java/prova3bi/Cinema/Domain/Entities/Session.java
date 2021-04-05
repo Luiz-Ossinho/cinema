@@ -27,13 +27,16 @@ public class Session extends Entity {
 	@Column(nome = "movie", tipoSql = "INTEGER", isFk = true)
 	public Movie filme;
 
-	public List<Chair> chair = new ArrayList<Chair>();
+	//public List<Chair> chair = new ArrayList<Chair>();
+	public Chair[][] chairs;
 
 	public int numPoltronasVagas() {
 		int counter = 0;
-		for (var chair : chair) {
-			if (!chair.ocupada)
-				counter++;
+		for (int i = 0; i < chairs.length; i++) {
+			for (int j = 0; j < chairs[0].length; j++) {
+				if (!chairs[i][j].ocupada)
+					counter++;
+			}
 		}
 		return counter;
 	}

@@ -1,6 +1,7 @@
 package prova3bi.Cinema.Services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import prova3bi.Cinema.Data.Abstractions.Nest;
@@ -42,18 +43,42 @@ public class SessionService implements ISessionService {
 	}
 
 	private void addAnyChairs(Session session) {
-		var NearestSmallerSquare = getSmallerNearestSquare(session.sala.numPoltronas);
-		var squareRoot = (int) Math.sqrt(NearestSmallerSquare);
+		var nearestSmallerSquare = getSmallerNearestSquare(session.sala.numPoltronas);
+		var squareRoot = (int) Math.sqrt(nearestSmallerSquare);
+
+		var SquareMatrix = GetSquareMatrix(squareRoot, session);
+
+		var remainder = session.sala.numPoltronas - nearestSmallerSquare;
+
+		var RemainderMatrix = GetRemainderMatrix(remainder, squareRoot, session);
+		session.chairs = appendMatrixes(SquareMatrix, RemainderMatrix);
+	}
+
+	private Chair[][] GetEmptyMatrix(List<Chair> list) {
+		var width = getWidth(list);
+		var length = getLenght(list);
+		return new Chair[width][length];
+	}
+
+	private Chair[][] GetSquareMatrix(int squareRoot, Session session) {
+		var SquareMatrix = new Chair[squareRoot][squareRoot];
 		for (int i = 0; i < squareRoot; i++) {
 			for (int j = 0; j < squareRoot; j++) {
 				var poltrona = new Chair(session, getColumnLetters(j), i + 1);
+				SquareMatrix[i][j] = poltrona;
 				chairRepo.Add(poltrona);
-				session.chair.add(poltrona);
 			}
 		}
-		var excesso = session.sala.numPoltronas - NearestSmallerSquare;
+		return SquareMatrix;
+	}
+
+	private Chair[][] GetRemainderMatrix(int remainder, int squareRoot, Session session) {
+		int sizeRemainingColumns = (int) Math.ceil(((double) remainder / squareRoot));
+		var RemainderMatrix = new Chair[sizeRemainingColumns][squareRoot];
+
 		int columnsExtra = 1;
-		for (int i = 1; i <= excesso; i++) {
+
+		for (int i = 1; i <= remainder; i++) {
 			var letraExtra = getColumnLetters((squareRoot - 1) + columnsExtra);
 			if ((i % squareRoot) == 0)
 				columnsExtra++;
@@ -66,9 +91,27 @@ public class SessionService implements ISessionService {
 			}
 
 			var poltrona = new Chair(session, letraExtra, rowExtra);
+			RemainderMatrix[columnsExtra - 1][rowExtra - 1] = poltrona;
 			chairRepo.Add(poltrona);
-			session.chair.add(poltrona);
 		}
+
+		return RemainderMatrix;
+	}
+
+	private Chair[][] appendMatrixes(Chair[][] A, Chair[][] B) {
+		var totalLength = A.length + B.length;
+		var appended = new Chair[totalLength][A[0].length];
+		for (int i = 0; i < A.length; i++) {
+			for (int j = 0; j < A[0].length; j++) {
+				appended[i][j] = A[i][j];
+			}
+		}
+		for (int i = A.length; i < totalLength; i++) {
+			for (int j = 0; j < A[0].length; j++) {
+				appended[i][j] = B[i - A.length][j];
+			}
+		}
+		return appended;
 	}
 
 	private static int getSmallerNearestSquare(int integer) {
@@ -83,13 +126,13 @@ public class SessionService implements ISessionService {
 		return NearestSmallerSquare;
 	}
 
-	private static String[] lettersArray = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+	private static ArrayList<String> lettersList = new ArrayList<String>(Arrays.asList("A", "B", "C", "D", "E", "F",
+			"G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
 
 	private static String getColumnLetters(int columnNumber) {
 		var letters = "";
-		if (columnNumber <= 26) {
-			letters += lettersArray[columnNumber];
+		if (columnNumber < 26) {
+			letters += lettersList.get(columnNumber);// [];
 		} else {
 			letters += getColumnLetters((int) columnNumber / 26);
 			letters += getColumnLetters(columnNumber % 26);
@@ -106,9 +149,12 @@ public class SessionService implements ISessionService {
 				sessao.filme = movieService.Get(sessao.filme.getId());
 				sessao.sala = roomService.Get(sessao.sala.getId());
 				var poltronas = chairRepo.GetAllFromSession(sessao.getId());
+				sessao.chairs = GetEmptyMatrix(poltronas);
 				for (var poltrona : poltronas) {
 					poltrona.sessao = sessao;
-					sessao.chair.add(poltrona);
+					var i = lettersList.indexOf(poltrona.column);
+					var j = poltrona.row - 1;
+					sessao.chairs[i][j] = poltrona;
 				}
 				nextSessions.add(sessao);
 			}
@@ -116,4 +162,24 @@ public class SessionService implements ISessionService {
 		return nextSessions;
 	}
 
+	public int getWidth(List<Chair> list) {
+		int largestLetter = Integer.MIN_VALUE;
+		for (var chair : list) {
+			var letter = chair.column;
+			var numLetter = lettersList.indexOf(letter);
+			if (largestLetter < numLetter)
+				largestLetter = numLetter + 1;
+		}
+
+		return largestLetter;
+	}
+
+	public int getLenght(List<Chair> list) {
+		int largest = Integer.MIN_VALUE;
+		for (var chair : list) {
+			if (largest < chair.row)
+				largest = chair.row;
+		}
+		return largest;
+	}
 }

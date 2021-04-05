@@ -2,7 +2,7 @@ package prova3bi.Cinema.Singletons;
 
 import prova3bi.Cinema.Domain.Entities.Session;
 
-public class SessionHolder {
+public final class SessionHolder {
 	private Session session;
 	
 	private static SessionHolder holder = new SessionHolder();
