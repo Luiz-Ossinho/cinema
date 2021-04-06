@@ -39,11 +39,10 @@ public class DBContext implements AutoCloseable {
 	};
 
 	public <T extends Entity> List<T> getAll(Query<T> fromQuery) {
-		ResultSet results = null;
-		List<T> instances = null;
+		List<T> instances = new ArrayList<T>();
 		try {
-			results = DBConnection.connection.createStatement().executeQuery(fromQuery.toString());
-			instances = Converter.convert(results, fromQuery.type);
+			var results = DBConnection.connection.createStatement().executeQuery(fromQuery.toString());
+			instances.addAll(Converter.convert(results, fromQuery.type));
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| SQLException e) {
 			e.printStackTrace();
@@ -69,7 +68,7 @@ public class DBContext implements AutoCloseable {
 	private static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
 	private static Class<?>[] getClasses() throws ClassNotFoundException, IOException {
-		var packageName = "prova3bi.Cinema.Domain.Entidades";
+		var packageName = "prova3bi.Cinema.Domain.Entities";
 		var path = packageName.replace('.', '/');
 		var resources = classLoader.getResources(path);
 		var dirs = new ArrayList<File>();

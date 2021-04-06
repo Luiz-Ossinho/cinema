@@ -22,6 +22,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import prova3bi.Cinema.Domain.Entities.Chair;
 import prova3bi.Cinema.Domain.Entities.Session;
+import prova3bi.Cinema.Singletons.ChairHolder;
 import prova3bi.Cinema.Singletons.SessionHolder;
 
 public class SelectedSessionController implements Initializable {
@@ -75,6 +76,7 @@ public class SelectedSessionController implements Initializable {
 		txtQuantity.setText("Cadeiras disponiveis na sessão " + session.numPoltronasVagas());
 
 		RenderChairs(session.chairs);
+		ChairHolder.GetInstance().setObsList(obsList);
 	}
 
 	private void RenderChairs(Chair[][] chairs) {
