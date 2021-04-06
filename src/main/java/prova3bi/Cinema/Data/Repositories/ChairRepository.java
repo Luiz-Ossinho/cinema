@@ -4,7 +4,7 @@ import java.util.List;
 
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
-import prova3bi.Cinema.Domain.Entidades.Poltrona;
+import prova3bi.Cinema.Domain.Entities.Chair;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
 
 public class ChairRepository implements IChairRepository {
@@ -16,8 +16,8 @@ public class ChairRepository implements IChairRepository {
 	}
 
 	@Override
-	public int Add(Poltrona chair) {
-		Query<Poltrona> query = new Query<Poltrona>(Query.Comand.Insert, Poltrona.class)
+	public int Add(Chair chair) {
+		Query<Chair> query = new Query<Chair>(Query.Comand.Insert, Chair.class)
 				.value(chair.column, "column")
 				.value(chair.ocupada, "ocupada")
 				.value(chair.row, "row")
@@ -27,11 +27,29 @@ public class ChairRepository implements IChairRepository {
 	}
 
 	@Override
-	public List<Poltrona> GetAllFromSession(int SessionId) {
-		Query<Poltrona> query = new Query<Poltrona>(Query.Comand.Select, Poltrona.class)
+	public List<Chair> GetAllFromSession(int SessionId) {
+		Query<Chair> query = new Query<Chair>(Query.Comand.Select, Chair.class)
 				.addCondition("Poltronas.session = " + SessionId);
 
 		return context.getAll(query);
+	}
+
+	@Override
+	public int Put(Chair chair) {
+		Query<Chair> query = new Query<Chair>(Query.Comand.Update, Chair.class)
+				.value(chair.column, "column")
+				.value(chair.ocupada, "ocupada")
+				.value(chair.row, "row")
+				.value(chair.sessao.getId() + "", "sessao")
+				.PKEquals(chair.getId() + "");
+		return context.execute(query);
+	}
+
+	@Override
+	public Chair Get(int id) {
+		Query<Chair> query = new Query<Chair>(Query.Comand.Select, Query.Modifiers.Limit1, Chair.class)
+				.PKEquals(id + "");
+		return context.get(query);
 	}
 
 }

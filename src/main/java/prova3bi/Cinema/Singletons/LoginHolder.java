@@ -1,6 +1,6 @@
 package prova3bi.Cinema.Singletons;
 
-import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Domain.Entities.Login;
 
 public final class LoginHolder {
 	private Login login;
@@ -15,6 +15,14 @@ public final class LoginHolder {
 		this.login = login;
 	}
 
+	public void ResetLogin() {
+		this.login = null;
+	}
+	
+	public void Reset() {
+		ResetLogin();
+	}
+	
 	public static LoginHolder getInstance() {
 		return holder;
 	}

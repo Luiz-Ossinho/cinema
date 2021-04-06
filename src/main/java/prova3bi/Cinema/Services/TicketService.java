@@ -1,6 +1,6 @@
 package prova3bi.Cinema.Services;
 
-import prova3bi.Cinema.Domain.Entidades.Ticket;
+import prova3bi.Cinema.Domain.Entities.Ticket;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ITicketRepository;
 import prova3bi.Cinema.Domain.Interfaces.Services.ITicketService;
 
@@ -12,9 +12,10 @@ public class TicketService implements ITicketService {
 	}
 
 	@Override
-	public int QuitarTicket(int TicketsID) {
+	public Ticket QuitarTicket(int TicketsID) {
 		var ticket = ticketRepo.Get(TicketsID);
 		ticket.Quitar();
-		return ticketRepo.Put(ticket);
+		ticketRepo.Put(ticket);
+		return ticket;
 	}
 }

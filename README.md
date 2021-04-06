@@ -21,7 +21,10 @@ This project is just a cinema software with purchase of tickets and list of empl
 ### 🚀 Tech
 
 - JavaFX ☕
+- Maven 🗄️
 - SQLite 🪶
+- Openpdf 📃
+- Zxing
 
 ### 📐 Architecture
 
@@ -42,13 +45,13 @@ MVC or Model View Controller
 - [x] Initial page
 - [x] SignIn
 - [x] Dashboard
-- [ ] Enployee List
-- [ ] Enployee Form
-- [ ] Section List
-- [ ] Section Forn
-- [x] Section
-- [ ] Selected Section
-- [ ] Ticket generated
+- [x] Enployee form
+- [x] Section form
+- [x] Movie form
+- [x] Room form
+- [x] Ticket authorization
+- [x] Section list
+- [x] Selected section
 
 
 

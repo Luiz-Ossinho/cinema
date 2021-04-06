@@ -2,6 +2,7 @@ package prova3bi.Cinema.Util;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -14,6 +15,9 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import prova3bi.Cinema.Domain.Entities.Session;
+import prova3bi.Cinema.Domain.Validations.Error;
+import prova3bi.Cinema.Domain.Validations.ErrorList;
 
 public class Utils {
 	public static Stage currentStage(ActionEvent event) {
@@ -155,4 +159,27 @@ public class Utils {
 				+ CPF.substring(9, 11));
 	}
 
+	public static <T> T TryParseValue(IParser<T> method, String value,ErrorList errors,String fieldName, String error){
+		T parsed = null;
+		try {
+			parsed = method.parse(value);
+		} catch (Exception formatException) {
+			errors.add(new Error(fieldName, error));
+		}
+		return parsed;
+	}
+	
+	public static <T> T TryParseValue(IParser<T> method, String value,ErrorList errors,String fieldName){
+		T parsed = null;
+		try {
+			parsed = method.parse(value);
+		} catch (Exception formatException) {
+			errors.add(new Error(fieldName, "Incorrect format"));
+		}
+		return parsed;
+	}
+	
+	public static IParser<Double> doubleParser = str -> Double.parseDouble(str);
+	public static IParser<LocalDateTime> dateTimeParser = str -> LocalDateTime.parse(str, Session.formatter);
+	public static IParser<Integer> integerParser = str -> Integer.parseInt(str);
 }

@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
-import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Domain.Entities.Login;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ILoginRepository;
 
 public class LoginRepository implements ILoginRepository {

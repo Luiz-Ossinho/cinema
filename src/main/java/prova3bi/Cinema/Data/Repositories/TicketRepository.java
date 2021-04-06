@@ -2,7 +2,7 @@ package prova3bi.Cinema.Data.Repositories;
 
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
-import prova3bi.Cinema.Domain.Entidades.Ticket;
+import prova3bi.Cinema.Domain.Entities.Ticket;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ITicketRepository;
 
 public class TicketRepository implements ITicketRepository {

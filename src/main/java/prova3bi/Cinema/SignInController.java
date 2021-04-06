@@ -5,17 +5,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import prova3bi.Cinema.Domain.Validator;
-import javafx.scene.layout.Pane;
-import prova3bi.Cinema.Domain.Entidades.Login;
-import prova3bi.Cinema.Domain.Entidades.NivelPermissao;
+import prova3bi.Cinema.Domain.Entities.Login;
+import prova3bi.Cinema.Domain.Entities.PermissionLevel;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
+import prova3bi.Cinema.Domain.Validations.ValidationHelper;
 import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Singletons.LoginHolder;
 import prova3bi.Cinema.Util.Alerts;
@@ -40,7 +38,7 @@ public class SignInController implements Initializable {
 		var username = textField.getText();
 		var password = passField.getText();
 
-		if (Validator.isNullOrEmpty(username) || Validator.isNullOrEmpty(password)) {
+		if (ValidationHelper.isNullOrEmpty(username) || ValidationHelper.isNullOrEmpty(password)) {
 			Alerts.showAlert("Ops... aconteceu algum problema!", "Pelo visto você esqueceu de inserir os dados.",
 					"Preencha os campos para continuar!", AlertType.INFORMATION);
 			return;
@@ -53,7 +51,7 @@ public class SignInController implements Initializable {
 	}
 	
 	private void FirstLogin(String username, String password){
-		Login log = new Login(username, password, NivelPermissao.Admin);
+		Login log = new Login(username, password, PermissionLevel.Admin);
 		LoginHolder.getInstance().setLogin(service.Add(log));
 		GoToDashboard();
 	}

@@ -6,7 +6,7 @@ import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
 import prova3bi.Cinema.Data.Abstractions.Query.Comand;
 import prova3bi.Cinema.Data.Abstractions.Query.Modifiers;
-import prova3bi.Cinema.Domain.Entidades.Filme;
+import prova3bi.Cinema.Domain.Entities.Movie;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
 
 public class MovieRepository implements IMovieRepository {
@@ -18,16 +18,16 @@ public class MovieRepository implements IMovieRepository {
 	}
 	
 	@Override
-	public Filme Get(int id) {
-		Query<Filme> query = new Query<Filme>(Comand.Select, Modifiers.Limit1, Filme.class)
+	public Movie Get(int id) {
+		Query<Movie> query = new Query<Movie>(Comand.Select, Modifiers.Limit1, Movie.class)
 				.PKEquals(id+"");
 
 		return context.get(query);
 	}
 
 	@Override
-	public int Add(Filme movie) {
-		Query<Filme> query = new Query<Filme>(Comand.Insert, Filme.class)
+	public int Add(Movie movie) {
+		Query<Movie> query = new Query<Movie>(Comand.Insert, Movie.class)
 				.value(movie.title, "title")
 				.value(movie.encodedPoster, "encodedPoster")
 				.value(movie.synopsis, "synopsis")
@@ -37,8 +37,8 @@ public class MovieRepository implements IMovieRepository {
 	}
 
 	@Override
-	public List<Filme> GetAll() {
-		var query = new Query<Filme>(Comand.Select, Filme.class);
+	public List<Movie> GetAll() {
+		var query = new Query<Movie>(Comand.Select, Movie.class);
 		
 		return context.getAll(query);
 	}

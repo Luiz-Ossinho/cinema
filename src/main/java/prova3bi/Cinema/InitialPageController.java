@@ -15,7 +15,7 @@ public class InitialPageController implements Initializable {
 
 	@FXML
 	private void switchMovieList() throws IOException {
-		App.setRoot("SectionList");
+		App.setRoot("SessionList");
 	}
 	
 	@FXML

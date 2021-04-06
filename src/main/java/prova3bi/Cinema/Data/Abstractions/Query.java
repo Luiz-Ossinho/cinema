@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 import prova3bi.Cinema.Data.Helpers.QueryHelper;
-import prova3bi.Cinema.Domain.Entidades.Entidade;
+import prova3bi.Cinema.Domain.Entities.Entity;
 
-public class Query<T extends Entidade> {
+public class Query<T extends Entity> {
 	public enum Modifiers {
 		Limit1("LIMIT 1");
 

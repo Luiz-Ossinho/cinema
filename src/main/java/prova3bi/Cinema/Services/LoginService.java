@@ -1,6 +1,6 @@
 package prova3bi.Cinema.Services;
 
-import prova3bi.Cinema.Domain.Entidades.Login;
+import prova3bi.Cinema.Domain.Entities.Login;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ILoginRepository;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
 

@@ -2,9 +2,9 @@ package prova3bi.Cinema.Domain.Interfaces.Services;
 
 import java.util.List;
 
-import prova3bi.Cinema.Domain.Entidades.Sessao;
+import prova3bi.Cinema.Domain.Entities.Session;
 
 public interface ISessionService {
-	public int Add(Sessao session);
-	public List<Sessao> GetNext();
+	public Session Add(Session session);
+	public List<Session> GetNext();
 }

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import prova3bi.Cinema.Data.Abstractions.Query;
 import prova3bi.Cinema.Data.Abstractions.Table;
-import prova3bi.Cinema.Data.Helpers.Conversor;
-import prova3bi.Cinema.Domain.Entidades.Entidade;
+import prova3bi.Cinema.Data.Helpers.Converter;
+import prova3bi.Cinema.Domain.Entities.Entity;
 
 public class DBContext implements AutoCloseable {
 	private DatabaseConnection DBConnection;
@@ -25,12 +25,12 @@ public class DBContext implements AutoCloseable {
 		}
 	}
 
-	public <T extends Entidade> T get(Query<T> fromQuery) {
+	public <T extends Entity> T get(Query<T> fromQuery) {
 		ResultSet results = null;
 		T instance = null;
 		try {
 			results = DBConnection.connection.createStatement().executeQuery(fromQuery.toString());
-			instance = Conversor.convert(results, fromQuery.type).stream().findFirst().get();
+			instance = Converter.convert(results, fromQuery.type).stream().findFirst().get();
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| SQLException e) {
 			e.printStackTrace();
@@ -38,12 +38,11 @@ public class DBContext implements AutoCloseable {
 		return instance;
 	};
 
-	public <T extends Entidade> List<T> getAll(Query<T> fromQuery) {
-		ResultSet results = null;
-		List<T> instances = null;
+	public <T extends Entity> List<T> getAll(Query<T> fromQuery) {
+		List<T> instances = new ArrayList<T>();
 		try {
-			results = DBConnection.connection.createStatement().executeQuery(fromQuery.toString());
-			instances = Conversor.convert(results, fromQuery.type);
+			var results = DBConnection.connection.createStatement().executeQuery(fromQuery.toString());
+			instances.addAll(Converter.convert(results, fromQuery.type));
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| SQLException e) {
 			e.printStackTrace();
@@ -69,7 +68,7 @@ public class DBContext implements AutoCloseable {
 	private static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
 	private static Class<?>[] getClasses() throws ClassNotFoundException, IOException {
-		var packageName = "prova3bi.Cinema.Domain.Entidades";
+		var packageName = "prova3bi.Cinema.Domain.Entities";
 		var path = packageName.replace('.', '/');
 		var resources = classLoader.getResources(path);
 		var dirs = new ArrayList<File>();
