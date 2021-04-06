@@ -88,6 +88,7 @@ public class SelectedSessionController implements Initializable {
 		session = SessionHolder.getInstance().getSession();
 		txtTicketValue.setText(session.preco + " R$");
 		txtTitle.setText(session.filme.title);
+		txtTitle.setWrapText(true);
 		txtSynopsis.setText(session.filme.synopsis);
 		txtSynopsis.setWrapText(true);
 		txtQuantity.setText("Cadeiras disponiveis na sessão " + session.numPoltronasVagas());
