@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -43,7 +42,7 @@
             <Label fx:id="txtQuantity" layoutX="517.0" layoutY="558.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
             <Label layoutX="517.0" layoutY="578.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Selecione o local mais confortavel disponivel." />
             <Button layoutX="949.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#switchFinalizedTicket" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&gt;" />
-            <HBox layoutX="517.0" layoutY="290.0" prefHeight="246.0" prefWidth="477.0">
+            <HBox layoutX="576.0" layoutY="281.0" prefHeight="246.0" prefWidth="477.0">
                <children>
                   <GridPane fx:id="panel" prefHeight="0.0" prefWidth="0.0">
                     <rowConstraints>
@@ -58,11 +57,6 @@
                   </GridPane>
                </children>
             </HBox>
-            <ImageView fitHeight="138.0" fitWidth="306.0" layoutX="603.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/sceneSession.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
    </children>

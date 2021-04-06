@@ -20,8 +20,8 @@ public class ChairController implements Initializable {
 	private Label chairPosition;
 
 	private Chair chair;
-	
-	private boolean IsSelected;
+
+	private boolean IsSelected = false;
 
 	public void setChair(Chair chair) {
 		this.chair = chair;
@@ -34,7 +34,7 @@ public class ChairController implements Initializable {
 	@FXML
 	void onSelectChair(MouseEvent event) {
 		if (!this.chair.ocupada) {
-			if(IsSelected) {
+			if (IsSelected) {
 				var obsList = ChairHolder.GetInstance().getObsList();
 				SetAsDisselected();
 				obsList.remove(chair);
@@ -51,17 +51,14 @@ public class ChairController implements Initializable {
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}
 
-	// Implementa ae guilherme, precisa ser clicavel
 	private void SetAsDisselected() {
-		this.chair.ocupada = true;
-		chairContainer.setStyle("");
-		chairPosition.setStyle("");
+		chairContainer.setStyle("-fx-cursor: hand; -fx-background-color:  #ffffff; -fx-background-radius: 8; ");
+		chairPosition.setStyle("-fx-text-fill: #000000;");
 	}
-	
-	// Implementa ae guilherme, precisa ser clicavel
+
 	private void SetAsSeleceted() {
-		this.chair.ocupada = true;
-		chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
+		IsSelected = true;
+		chairContainer.setStyle("-fx-cursor: hand; -fx-background-color: #af2350c9; -fx-background-radius: 8;");
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}
 
