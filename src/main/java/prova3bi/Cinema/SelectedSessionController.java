@@ -60,6 +60,11 @@ public class SelectedSessionController implements Initializable {
 		App.setRoot("SessionList");
 	}
 
+	@FXML
+	void switchFinalizedTicket(MouseEvent event) throws IOException {
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		session = SessionHolder.getInstance().getSession();
@@ -68,7 +73,7 @@ public class SelectedSessionController implements Initializable {
 		txtSynopsis.setText(session.filme.synopsis);
 		txtSynopsis.setWrapText(true);
 		txtQuantity.setText("Cadeiras disponiveis na sessão " + session.numPoltronasVagas());
-		
+
 		RenderChairs(session.chairs);
 	}
 
