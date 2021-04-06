@@ -1,11 +1,10 @@
 package prova3bi.Cinema.Domain.Entities;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.List;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -66,8 +65,8 @@ public class Ticket extends Entity {
 		return qr;
 	}
 
-	public static OutputStream createPDF(ArrayList<Ticket> tickets) {
-		var rect = new Rectangle(500, 550);
+	public static OutputStream createPDF(List<Ticket> tickets) {
+		var rect = new Rectangle(500, 605);
 		var document = new Document(rect, 0, 0, 0, 0);
 		PdfWriter writer = null;
 		var pdfByteArrayStream = new ByteArrayOutputStream();
@@ -77,11 +76,11 @@ public class Ticket extends Entity {
 			Image logo = Image.getInstance("src/main/resources/prova3bi/Images/cinenowLogo.png");
 
 			logo.setAlignment(Image.ALIGN_CENTER);
-			writer.open();
+			document.open();
 
 			int pageCount = 0;
 			for (var ticket : tickets) {
-				Paragraph idCentralizado = new Paragraph(ticket + "");
+				Paragraph idCentralizado = new Paragraph(ticket.getId()+"");
 				idCentralizado.setAlignment(Element.ALIGN_CENTER);
 				document.add(logo);
 				var qrCodeImg = Ticket.createQR(ticket.getId());
@@ -98,7 +97,7 @@ public class Ticket extends Entity {
 			e.printStackTrace();
 		}
 
-		writer.close();
+		document.close();
 		return pdfByteArrayStream;
 	}
 }
