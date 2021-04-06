@@ -41,7 +41,7 @@
             <Label layoutX="548.0" layoutY="209.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Ocupado" />
             <Label fx:id="txtQuantity" layoutX="517.0" layoutY="558.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
             <Label layoutX="517.0" layoutY="578.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Selecione o local mais confortavel disponivel." />
-            <Button onMouseClicked="#switchFinalizedTicket" layoutX="949.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#switchFinalizedTicket" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&gt;" />
+            <Button layoutX="949.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#switchFinalizedTicket" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&gt;" />
             <HBox layoutX="576.0" layoutY="281.0" prefHeight="246.0" prefWidth="477.0">
                <children>
                   <GridPane fx:id="panel" prefHeight="0.0" prefWidth="0.0">
