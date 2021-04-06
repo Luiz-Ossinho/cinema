@@ -21,25 +21,30 @@ public class ChairController implements Initializable {
 
 	private Chair chair;
 	
-	private boolean IsSelected;
+	private boolean IsSelected = false;
 
 	public void setChair(Chair chair) {
 		this.chair = chair;
 		chairPosition.setText(this.chair.column + " " + this.chair.row);
 
-		if (this.chair.ocupada)
+		switch (this.chair.state) {
+		case Occupied:
 			SetAsOccupied();
+			break;
+		case Pending:
+			SetAsPending();
+			break;
+		}
 	}
 
 	@FXML
 	void onSelectChair(MouseEvent event) {
-		if (!this.chair.ocupada) {
+		if (this.chair.state != Chair.State.Occupied) {
+			var obsList = ChairHolder.GetInstance().getObsList();
 			if(IsSelected) {
-				var obsList = ChairHolder.GetInstance().getObsList();
 				SetAsDisselected();
 				obsList.remove(chair);
 			} else {
-				var obsList = ChairHolder.GetInstance().getObsList();
 				SetAsSeleceted();
 				obsList.add(chair);
 			}
@@ -51,16 +56,22 @@ public class ChairController implements Initializable {
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}
 
+	// Implementar pendente
+	private void SetAsPending() {
+		chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
+		chairPosition.setStyle("-fx-text-fill: #ffffff;");
+	}
+	
 	// Implementa ae guilherme, precisa ser clicavel
 	private void SetAsDisselected() {
-		this.chair.ocupada = true;
+		this.IsSelected = false;
 		chairContainer.setStyle("");
 		chairPosition.setStyle("");
 	}
 	
 	// Implementa ae guilherme, precisa ser clicavel
 	private void SetAsSeleceted() {
-		this.chair.ocupada = true;
+		this.IsSelected = true;
 		chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}

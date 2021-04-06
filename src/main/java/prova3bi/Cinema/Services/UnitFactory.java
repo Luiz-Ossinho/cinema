@@ -6,15 +6,19 @@ import prova3bi.Cinema.Data.Repositories.LoginRepository;
 import prova3bi.Cinema.Data.Repositories.MovieRepository;
 import prova3bi.Cinema.Data.Repositories.RoomRepository;
 import prova3bi.Cinema.Data.Repositories.SessaoRepository;
+import prova3bi.Cinema.Data.Repositories.TicketRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IChairRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ILoginRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IRoomRepository;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.ISessaoRepository;
+import prova3bi.Cinema.Domain.Interfaces.Repositories.ITicketRepository;
+import prova3bi.Cinema.Domain.Interfaces.Services.IChairService;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
 import prova3bi.Cinema.Domain.Interfaces.Services.IMovieService;
 import prova3bi.Cinema.Domain.Interfaces.Services.IRoomService;
 import prova3bi.Cinema.Domain.Interfaces.Services.ISessionService;
+import prova3bi.Cinema.Domain.Interfaces.Services.ITicketService;
 
 // USE ESSES METODOS PARA OBTER INSTANCIAS
 // ISSO EVITA ERROS DE :
@@ -33,7 +37,10 @@ public class UnitFactory {
 	private static ILoginService loginService;
 	private static IRoomService roomService;
 	private static IMovieService movieService;
+	private static IChairService chairService;
 	private static ISessionService sessionService;
+	private static ITicketRepository ticketRepo;
+	private static ITicketService ticketService;
 
 	public static DBContext getContext() {
 		if (context == null)
@@ -82,7 +89,6 @@ public class UnitFactory {
 			loginService = new LoginService(getLoginRepo());
 		return loginService;
 	}
-	
 
 	public static IRoomService getRoomService() {
 		if (roomService == null)
@@ -94,5 +100,23 @@ public class UnitFactory {
 		if (movieService == null)
 			movieService = new MovieService(getMovieRepo());
 		return movieService;
+	}
+
+	public static ITicketRepository getTicketRepository() {
+		if (ticketRepo == null)
+			ticketRepo = new TicketRepository(getContext());
+		return ticketRepo;
+	}
+
+	public static ITicketService getTicketService() {
+		if (ticketService == null)
+			ticketService = new TicketService(getTicketRepository());
+		return ticketService;
+	}
+
+	public static IChairService getChairService() {
+		if (chairService == null)
+			chairService = new ChairService(getChairRepo());
+		return chairService;
 	}
 }

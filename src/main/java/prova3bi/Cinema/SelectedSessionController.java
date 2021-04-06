@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,8 +23,13 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import prova3bi.Cinema.Domain.Entities.Chair;
 import prova3bi.Cinema.Domain.Entities.Session;
+import prova3bi.Cinema.Domain.Interfaces.Services.IChairService;
+import prova3bi.Cinema.Domain.Interfaces.Services.ITicketService;
+import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Singletons.ChairHolder;
 import prova3bi.Cinema.Singletons.SessionHolder;
+import prova3bi.Cinema.Singletons.TicketHolder;
+import prova3bi.Cinema.Util.Alerts;
 
 public class SelectedSessionController implements Initializable {
 
@@ -55,23 +61,60 @@ public class SelectedSessionController implements Initializable {
 
 	private ObservableList<Chair> obsList = FXCollections.observableArrayList();
 
+	private ITicketService ticketService;
+
+	private IChairService chairService;
+
 	@FXML
 	void switchGoBack(MouseEvent event) throws IOException {
 		SessionHolder.getInstance().Reset();
 		App.setRoot("SessionList");
 	}
 
+	@FXML
+	void switchFinalizedTicket(MouseEvent event) throws IOException {
+		if (obsList.isEmpty())
+			WarnEmpty();
+		else {
+			PersistPending(obsList);
+			WarnSucess();
+			// GOT TO NEXT PAGE
+		}
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		GetDependencies();
 		session = SessionHolder.getInstance().getSession();
 		txtTicketValue.setText(session.preco + " R$");
 		txtTitle.setText(session.filme.title);
 		txtSynopsis.setText(session.filme.synopsis);
 		txtSynopsis.setWrapText(true);
 		txtQuantity.setText("Cadeiras disponiveis na sessão " + session.numPoltronasVagas());
-		
+
 		RenderChairs(session.chairs);
 		ChairHolder.GetInstance().setObsList(obsList);
+	}
+
+	private void WarnSucess() {
+		Alerts.showAlert("Sucesso", "Tickets gerados com sucesso",
+				"Ate que seu ticket esteja quitado a cadeira ainda ser listada como vaga.", AlertType.INFORMATION);
+	}
+
+	private void WarnEmpty() {
+		Alerts.showAlert("Sem poltronas", "Nenhuma poltrona foi selecionada",
+				"Selecione pelo menos uma cadeira para continuar.", AlertType.ERROR);
+	}
+
+	private void PersistPending(List<Chair> chairs) {
+		this.chairService.SetAsPending(obsList);
+		var tickets = this.ticketService.CreateAll(obsList);
+		TicketHolder.getInstance().SetTickets(tickets);
+	}
+
+	private void GetDependencies() {
+		this.chairService = UnitFactory.getChairService();
+		this.ticketService = UnitFactory.getTicketService();
 	}
 
 	private void RenderChairs(Chair[][] chairs) {
@@ -102,8 +145,9 @@ public class SelectedSessionController implements Initializable {
 		return fxml;
 	}
 
-	private static List<String> letters = new ArrayList<String>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H",
-			"I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
+// PODE VIR A SER UTIl
+//	private static List<String> letters = new ArrayList<String>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H",
+//			"I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
 
 	private void LoadChair(Chair chair, VBox vBox, FXMLLoader fxml) {
 		ChairController chairController = fxml.getController();

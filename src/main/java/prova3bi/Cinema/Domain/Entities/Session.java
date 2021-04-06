@@ -35,7 +35,7 @@ public class Session extends Entity {
 		for (int i = 0; i < chairs.length; i++) {
 			for (int j = 0; j < chairs[0].length; j++) {
 				if (chairs[i][j] != null)
-					if (!chairs[i][j].ocupada)
+					if (chairs[i][j].state != Chair.State.Occupied)
 						counter++;
 			}
 		}

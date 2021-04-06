@@ -1,7 +1,9 @@
 package prova3bi.Cinema.Domain.Entities;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -25,8 +27,7 @@ import prova3bi.Cinema.Domain.Validations.ErrorList;
 @Table(nome = "Tickets", fks = { "poltrona;Poltronas" })
 public class Ticket extends Entity {
 	private final static String pathQR = "qr.jpg";
-	private final static String pathPDF = "tickets.pdf";
-
+	
 	@Builder(Is.Read)
 	public Ticket(int TicketsID, TicketStatus status, int chair) {
 		super(TicketsID);
@@ -38,6 +39,7 @@ public class Ticket extends Entity {
 	public Ticket(Chair chair) {
 		super(-1);
 		this.poltrona = chair;
+		this.status = TicketStatus.Pendente;
 	}
 
 	@Column(nome = "status", tipoSql = "INTEGER")
@@ -62,26 +64,26 @@ public class Ticket extends Entity {
 		return qr;
 	}
 
-	public static void createPDF(ArrayList<Ticket> ticket) {
-		Rectangle rect = new Rectangle(500, 550);
-		Document document = new Document(rect, 0, 0, 0, 0);
+	public static OutputStream createPDF(ArrayList<Ticket> ticket) {
+		var rect = new Rectangle(500, 550);
+		var document = new Document(rect, 0, 0, 0, 0);
+		PdfWriter writer = null;
+		var pdfByteArrayStream = new ByteArrayOutputStream();
 		try {
-
-			PdfWriter.getInstance(document, new FileOutputStream(pathPDF));
+			writer = PdfWriter.getInstance(document, pdfByteArrayStream);
 
 			Image logo = Image.getInstance("cinenow.png");
 
 			logo.setAlignment(Image.ALIGN_CENTER);
-			document.open();
+			writer.open();
 
 			for (int i = 0; i < ticket.size(); i++) {
-				document.add(logo);
-				document.add(Ticket.createQR(ticket.get(i).getId()));
+				writer.add(logo);
+				writer.add(Ticket.createQR(ticket.get(i).getId()));
 				if (i > 1) {
-					document.newPage();
+					writer.newPage();
 				}
 			}
-
 		} catch (DocumentException de) {
 			System.err.println(de.getMessage());
 		} catch (IOException ioe) {
@@ -89,7 +91,7 @@ public class Ticket extends Entity {
 		} catch (WriterException e) {
 			e.printStackTrace();
 		}
-
-		document.close();
+		writer.close();
+		return pdfByteArrayStream;
 	}
 }

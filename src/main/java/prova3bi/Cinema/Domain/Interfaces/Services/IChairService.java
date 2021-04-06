@@ -7,5 +7,6 @@ import prova3bi.Cinema.Domain.Entities.Chair;
 public interface IChairService {
 	public void OccupyChairs(List<Integer> chairIds);
 	public Chair Add(Chair chair);
+	public void SetAsPending(List<Chair> chairs);
 	public List<Chair> GetAllFromSession(int SessionId);
 }

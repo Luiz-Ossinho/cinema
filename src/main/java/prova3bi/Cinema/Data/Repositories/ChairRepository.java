@@ -19,7 +19,7 @@ public class ChairRepository implements IChairRepository {
 	public int Add(Chair chair) {
 		Query<Chair> query = new Query<Chair>(Query.Comand.Insert, Chair.class)
 				.value(chair.column, "column")
-				.value(chair.ocupada, "ocupada")
+				.value(chair.state, "state")
 				.value(chair.row, "row")
 				.value(chair.sessao.getId() + "", "sessao");
 
@@ -38,7 +38,7 @@ public class ChairRepository implements IChairRepository {
 	public int Put(Chair chair) {
 		Query<Chair> query = new Query<Chair>(Query.Comand.Update, Chair.class)
 				.value(chair.column, "column")
-				.value(chair.ocupada, "ocupada")
+				.value(chair.state, "state")
 				.value(chair.row, "row")
 				.value(chair.sessao.getId() + "", "sessao")
 				.PKEquals(chair.getId() + "");

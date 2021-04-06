@@ -33,4 +33,12 @@ public class ChairService implements IChairService {
 			chairRepo.Put(chair);
 		}
 	}
+
+	@Override
+	public void SetAsPending(List<Chair> chairs) {
+		for(var chair : chairs){
+			chair.state = Chair.State.Pending;
+			chairRepo.Put(chair);
+		}
+	}
 }

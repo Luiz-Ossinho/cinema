@@ -211,7 +211,10 @@ public class Query<T extends Entity> {
 			for (int i = 0; i < this.properties.size(); i++) {
 				var property = this.properties.get(i);
 				var value = this.values.get(i);
-				strProperties += property + " = " + value.getKey() + ", ";
+				if(String.class.isAssignableFrom(value.getValue()))
+					strProperties += property + " = \"" + value.getKey() + "\", ";
+				else
+					strProperties += property + " = " + value.getKey() + ", ";
 			}
 			strProperties = strProperties.substring(0, strProperties.length() - 2);
 			break;
