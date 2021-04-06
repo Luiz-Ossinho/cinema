@@ -1,3 +1,4 @@
 /cinema.db
 *.class
 */target/**
+.tempFiles/
