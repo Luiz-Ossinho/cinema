@@ -24,7 +24,7 @@ This project is just a cinema software with purchase of tickets and list of empl
 - Maven 🗄️
 - SQLite 🪶
 - Openpdf 📃
-- Zxing
+- Zxing 🦖
 
 ### 📐 Architecture
 
