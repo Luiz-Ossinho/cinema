@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.fontBold{
+	-fx-text-fill: #f0f2f0;
+	-fx-font-size: 60.0;
+	-fx-font-family: 'Audiowide'
+}
+
+.scroll-pane > .viewport {
+   -fx-background: #14111f;
+}
+
+#buttonStyle{
+	-fx-background-color: #ff0657;
+	-fx-background-radius: 4.0;
+	-fx-text-fill: #f0f2f0;
+	-fx-font-size: 20.0;
+	-fx-cursor: hand;
+	-fx-font-family: 'Roboto'
+}
+
+#inputWithIcon{
+	-fx-padding: 0.0 0.0 0.0 46.0;
+}
+
+
+
+
