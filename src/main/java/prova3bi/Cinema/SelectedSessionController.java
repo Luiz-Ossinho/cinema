@@ -78,7 +78,7 @@ public class SelectedSessionController implements Initializable {
 		else {
 			PersistPending(obsList);
 			WarnSucess();
-			// GOT TO NEXT PAGE
+			App.setRoot("FinalizedTicket");
 		}
 	}
 
