@@ -30,7 +30,7 @@ public class SignInController implements Initializable {
 
 	@FXML
 	private void switchGoBack(MouseEvent event) throws IOException {
-		App.setRoot("InitialPage");
+		GoToInitialPage();
 	}
 
 	@FXML
@@ -49,31 +49,47 @@ public class SignInController implements Initializable {
 		else
 			UsualLogin(username, password);
 	}
-	
-	private void FirstLogin(String username, String password){
+
+	private void FirstLogin(String username, String password) {
 		Login log = new Login(username, password, PermissionLevel.Admin);
 		LoginHolder.getInstance().setLogin(service.Add(log));
 		GoToDashboard();
 	}
-	
+
 	private void UsualLogin(String username, String password) {
 		Login log = service.VerificarUsuario(username, password);
 		if (log != null) {
 			LoginHolder.getInstance().setLogin(log);
 			GoToDashboard();
-		} else 
-			Alerts.showAlert("Ops... aconteceu algum problema!",
-					"Aparentemente o usuário ou a senha esta incorreta!", "Tente novamente!", AlertType.ERROR);
+		} else
+			Alerts.showAlert("Ops... aconteceu algum problema!", "Aparentemente o usuário ou a senha esta incorreta!",
+					"Tente novamente!", AlertType.ERROR);
 	}
-	
+
 	private void GoToDashboard() {
-		try {
-			App.setRoot("Dashboard");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		App.setRoot("Dashboard");
+		Reset();
 	}
-	
+
+	private void GoToInitialPage() {
+		App.setRoot("InitialPage");
+		Reset();
+	}
+
+	private void Reset() {
+		ResetFields();
+		ResetDependencies();
+	}
+
+	private void ResetFields() {
+		this.passField.setText("");
+		this.textField.setText("");
+	}
+
+	private void ResetDependencies() {
+		this.service = null;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		service = UnitFactory.getLoginService();

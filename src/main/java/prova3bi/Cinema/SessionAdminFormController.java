@@ -97,6 +97,16 @@ public class SessionAdminFormController implements Initializable {
 		var session = holderInsance.getSession();
 		var updatedSession = sessionService.Add(session);
 		holderInsance.setSession(updatedSession);
+		ResetFields();
+	}
+
+	private void ResetFields() {
+		txtInitialTime.setText("");
+		txtFinalTime.setText("");
+		txtPrice.setText("");
+		cbClass.setValue(null);
+		cbMovie.setValue(null);
+
 	}
 
 	@FXML
@@ -132,31 +142,30 @@ public class SessionAdminFormController implements Initializable {
 
 	@FXML
 	void dateTimekeyPressed(KeyEvent event) {
-		var source = (TextField)event.getSource();
+		var source = (TextField) event.getSource();
 		var result = source.getText();
-		
-		if (event.getCode() == KeyCode.BACK_SPACE)
-		{
+
+		if (event.getCode() == KeyCode.BACK_SPACE) {
 			source.setText("");
 			source.positionCaret(0);
 			return;
 		}
-			
+
 		result = Utils.applyDateTimeMask(result);
-		
+
 		source.setText(result);
 		source.positionCaret(result.length());
 	}
-	
+
 	@FXML
 	void dateTimekeyReleased(KeyEvent event) {
-		var source = (TextField)event.getSource();
+		var source = (TextField) event.getSource();
 		var result = source.getText();
 		result = Utils.take(result, 0, 16);
 		source.setText(result);
 		source.positionCaret(result.length());
 	}
-	
+
 	private ErrorList CreateSession() {
 		var errors = new ErrorList();
 		var initialTimeStr = txtInitialTime.getText();
@@ -193,7 +202,7 @@ public class SessionAdminFormController implements Initializable {
 		initializeDependencies();
 		initializeRoomComboBox();
 		initializeMovieComboBox();
-		//Constraints.dateField(txtInitialTime);
+		// Constraints.dateField(txtInitialTime);
 	}
 
 	private void initializeRoomComboBox() {

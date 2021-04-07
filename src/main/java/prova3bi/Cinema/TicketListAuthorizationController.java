@@ -67,8 +67,7 @@ public class TicketListAuthorizationController implements Initializable {
 			ticket = ticketService.QuitarTicket(ticketId);
 			WarnSuccess(ticket);
 		}
-
-		txtTicket.setText("");
+		ResetFields();
 	}
 
 	private void WarnPayed() {
@@ -88,6 +87,10 @@ public class TicketListAuthorizationController implements Initializable {
 
 		Alerts.showAlert("Sucesso!", "Ticket quitado", srtBody, AlertType.INFORMATION);
 
+	}
+	
+	public void ResetFields() {
+		txtTicket.setText("");
 	}
 
 	@Override
