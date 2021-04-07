@@ -29,8 +29,9 @@ import prova3bi.Cinema.Domain.Validations.ErrorList;
 public class Ticket extends Entity {
 	private final static String pathQR = "qr.jpg";
 
+	// [1, 4, Pendente]
 	@Builder(Is.Read)
-	public Ticket(int TicketsID, TicketStatus status, int chair) {
+	public Ticket(int TicketsID, int chair, TicketStatus status) {
 		super(TicketsID);
 		this.status = status;
 		this.poltrona = new Chair(chair);

@@ -23,6 +23,8 @@ public class ChairController implements Initializable {
 
 	private boolean IsSelected = false;
 
+	private Chair.State initialState;
+
 	public void setChair(Chair chair) {
 		this.chair = chair;
 		chairPosition.setText(this.chair.column + " " + this.chair.row);
@@ -52,20 +54,24 @@ public class ChairController implements Initializable {
 	}
 
 	private void SetAsOccupied() {
+		initialState = Chair.State.Occupied;
 		chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}
 
 	// Implementar pendente
 	private void SetAsPending() {
+		initialState = Chair.State.Pending;
 		chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}
 
 	private void SetAsDisselected() {
-		IsSelected = false;
-		chairContainer.setStyle("-fx-cursor: hand; -fx-background-color:  #ffffff; -fx-background-radius: 8; ");
-		chairPosition.setStyle("-fx-text-fill: #000000;");
+		if (initialState != Chair.State.Occupied) {
+			IsSelected = false;
+			chairContainer.setStyle("-fx-cursor: hand; -fx-background-color:  #ffffff; -fx-background-radius: 8; ");
+			chairPosition.setStyle("-fx-text-fill: #000000;");
+		}
 	}
 
 	private void SetAsSeleceted() {

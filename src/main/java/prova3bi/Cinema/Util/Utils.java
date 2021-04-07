@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -180,6 +182,35 @@ public class Utils {
 	}
 	
 	public static IParser<Double> doubleParser = str -> Double.parseDouble(str);
-	public static IParser<LocalDateTime> dateTimeParser = str -> LocalDateTime.parse(str, Session.formatter);
+
 	public static IParser<Integer> integerParser = str -> Integer.parseInt(str);
+	public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	public static IParser<LocalDateTime> dateTimeParser = str -> LocalDateTime.parse(str, dateTimeFormatter);
+	
+	public static String take(String s, int begin, int count) {
+		if (begin > s.length())
+			return "";
+		var result = "";
+		var chars = s.toCharArray();
+		for(int i=begin, scount=0; i < s.length() && scount < count; i++, scount++) {
+			result += chars[i];
+		}
+		return result;
+	}
+	
+	public static String applyDateTimeMask(String result) {
+		result = result.replaceAll("[^0-9/: ]", "");
+		
+		if (result.length() == 2)
+			result += "/";
+		else if (result.length() == 5)
+			result += "/";
+		else if (result.length() == 10)
+			result += " ";
+		else if (result.length() == 13)
+			result += ":";
+		
+		result = Utils.take(result, 0, 16);
+		return result;
+	}
 }

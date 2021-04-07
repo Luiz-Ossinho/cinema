@@ -19,6 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -128,6 +130,33 @@ public class SessionAdminFormController implements Initializable {
 		stage.showAndWait();
 	}
 
+	@FXML
+	void dateTimekeyPressed(KeyEvent event) {
+		var source = (TextField)event.getSource();
+		var result = source.getText();
+		
+		if (event.getCode() == KeyCode.BACK_SPACE)
+		{
+			source.setText("");
+			source.positionCaret(0);
+			return;
+		}
+			
+		result = Utils.applyDateTimeMask(result);
+		
+		source.setText(result);
+		source.positionCaret(result.length());
+	}
+	
+	@FXML
+	void dateTimekeyReleased(KeyEvent event) {
+		var source = (TextField)event.getSource();
+		var result = source.getText();
+		result = Utils.take(result, 0, 16);
+		source.setText(result);
+		source.positionCaret(result.length());
+	}
+	
 	private ErrorList CreateSession() {
 		var errors = new ErrorList();
 		var initialTimeStr = txtInitialTime.getText();

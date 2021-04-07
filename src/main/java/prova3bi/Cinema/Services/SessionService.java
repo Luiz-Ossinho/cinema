@@ -177,4 +177,12 @@ public class SessionService implements ISessionService {
 		}
 		return largest;
 	}
+
+	@Override
+	public Session Get(int id) {
+		var session = sessionRepo.Get(id);
+		session.filme = movieService.Get(session.filme.getId());
+		session.sala = roomService.Get(session.sala.getId());
+		return session;
+	}
 }

@@ -22,7 +22,7 @@
             </ImageView>
             <Pane layoutX="146.0" layoutY="173.0" prefHeight="52.0" prefWidth="277.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
                <children>
-                  <TextField fx:id="txtInitialTime" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Início" style="-fx-background-color: transparent;" />
+                  <TextField fx:id="txtInitialTime" onKeyPressed="#dateTimekeyPressed" onKeyReleased="#dateTimekeyReleased" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Início" style="-fx-background-color: transparent;" />
                   <ImageView fitHeight="30.0" fitWidth="20.0" layoutX="24.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/Inicial.png" />
@@ -32,7 +32,7 @@
             <Label layoutX="197.0" layoutY="54.0" style="-fx-font-size: 40;" styleClass="fontBold" text="Sessão" />
             <Pane layoutX="146.0" layoutY="240.0" prefHeight="52.0" prefWidth="277.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
                <children>
-                  <TextField fx:id="txtFinalTime" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Termino" style="-fx-background-color: transparent;" />
+                  <TextField fx:id="txtFinalTime" onKeyPressed="#dateTimekeyPressed" onKeyReleased="#dateTimekeyReleased" layoutX="56.0" layoutY="12.0" prefHeight="30.0" prefWidth="206.0" promptText="Termino" style="-fx-background-color: transparent;" />
                   <ImageView fitHeight="30.0" fitWidth="20.0" layoutX="24.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/Final.png" />

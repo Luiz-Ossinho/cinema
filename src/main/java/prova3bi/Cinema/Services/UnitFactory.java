@@ -110,13 +110,13 @@ public class UnitFactory {
 
 	public static ITicketService getTicketService() {
 		if (ticketService == null)
-			ticketService = new TicketService(getTicketRepository());
+			ticketService = new TicketService(getTicketRepository(), getChairService());
 		return ticketService;
 	}
 
 	public static IChairService getChairService() {
 		if (chairService == null)
-			chairService = new ChairService(getChairRepo());
+			chairService = new ChairService(getChairRepo(), getSessionService());
 		return chairService;
 	}
 }

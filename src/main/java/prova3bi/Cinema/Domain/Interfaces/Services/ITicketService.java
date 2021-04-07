@@ -7,6 +7,8 @@ import prova3bi.Cinema.Domain.Entities.Ticket;
 
 public interface ITicketService {
 	public Ticket QuitarTicket(int TicketsID);
+	
+	public Ticket Get(int ticketId);
 
 	public Ticket Create(Chair chair);
 

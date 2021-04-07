@@ -12,6 +12,7 @@ import prova3bi.Cinema.Domain.Validations.Error;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
 import prova3bi.Cinema.Domain.Validations.ValidationHelper;
 import prova3bi.Cinema.Domain.Validations.Validator;
+import prova3bi.Cinema.Util.Utils;
 
 @Table(nome = "Sessions", fks = { "movie;Movies", "room;Rooms" })
 public class Session extends Entity {
@@ -55,8 +56,6 @@ public class Session extends Entity {
 		return estado;
 	}
 
-	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSSSS");
-
 	@Builder(Builder.Is.Insert)
 	public Session(LocalDateTime dHInicio, LocalDateTime dHTermino, Room sala, Movie filme, double preco) {
 		super(-1);
@@ -71,8 +70,8 @@ public class Session extends Entity {
 	@Builder(Builder.Is.Read)
 	public Session(String DHEnd, String DHStart, int SessionsId, int movie, double price, int room) {
 		super(SessionsId);
-		this.DHInicio = LocalDateTime.parse(DHStart, formatter);
-		this.DHTermino = LocalDateTime.parse(DHEnd, formatter);
+		this.DHInicio = LocalDateTime.parse(DHStart, Utils.dateTimeFormatter);
+		this.DHTermino = LocalDateTime.parse(DHEnd, Utils.dateTimeFormatter);
 		this.sala = new Room(room);
 		this.filme = new Movie(movie);
 		this.preco = price;
