@@ -27,18 +27,17 @@
             <Pane layoutX="139.0" layoutY="229.0" prefHeight="389.0" prefWidth="300.0" style="-fx-background-color: #eee; -fx-background-radius: 16;">
                <children>
                   <Label fx:id="txtTitle" layoutX="27.0" layoutY="22.0" style="-fx-font-size: 40; -fx-text-fill: #000;" styleClass="fontBold" />
-                  <Label layoutX="27.0" layoutY="79.0" style="-fx-font-family: Roboto; -fx-text-fill: #9c9595; -fx-font-size: 14;" text="Duraçao:" />
-                  <Label layoutX="27.0" layoutY="110.0" style="-fx-font-family: Roboto; -fx-text-fill: #000; -fx-font-size: 16;" text="Sinopse:" />
-                  <TextArea fx:id="txtSynopsis" disable="true" layoutX="28.0" layoutY="130.0" prefHeight="220.0" prefWidth="245.0" style="-fx-background-color: transparent;" />
+                  <Label layoutX="28.0" layoutY="88.0" style="-fx-font-family: Roboto; -fx-text-fill: #000; -fx-font-size: 16;" text="Sinopse:" />
+                  <TextArea fx:id="txtSynopsis" disable="true" layoutX="28.0" layoutY="110.0" prefHeight="240.0" prefWidth="245.0" style="-fx-background-color: transparent;" />
                   <!--<Label fx:id="txtDirector" layoutX="27.0" layoutY="286.0" style="-fx-text-fill: #000; -fx-font-size: 18;" />-->
                   <!--<Label fx:id="txtGender" layoutX="27.0" layoutY="343.0" style="-fx-text-fill: #000; -fx-font-size: 18;" />-->
                </children></Pane>
             <Label layoutX="517.0" layoutY="87.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 20;" text="Ticket" />
             <Label fx:id="txtTicketValue" layoutX="518.0" layoutY="111.0" style="-fx-font-size: 40;" styleClass="fontBold" />
             <Pane layoutX="517.0" layoutY="182.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #fff; -fx-background-radius: 4;" />
-            <Pane layoutX="517.0" layoutY="209.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-background-radius: 4;" />
+            <Pane layoutX="517.0" layoutY="209.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #B24C63; -fx-background-radius: 4;" />
             <Label layoutX="548.0" layoutY="182.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Desocupado" />
-            <Label layoutX="548.0" layoutY="209.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Ocupado" />
+            <Label layoutX="548.0" layoutY="209.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Selecionado" />
             <Label fx:id="txtQuantity" layoutX="517.0" layoutY="558.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
             <Label layoutX="517.0" layoutY="578.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Selecione o local mais confortavel disponivel." />
             <Button layoutX="949.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#switchFinalizedTicket" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 24; -fx-background-radius: 8; -fx-cursor: hand;" text="&gt;" />
@@ -57,6 +56,10 @@
                   </GridPane>
                </children>
             </HBox>
+            <Pane layoutX="651.0" layoutY="182.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #8B1E3F; -fx-background-radius: 4;" />
+            <Label layoutX="682.0" layoutY="182.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Pendente" />
+            <Pane layoutX="651.0" layoutY="209.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #ff0657; -fx-background-radius: 4;" />
+            <Label layoutX="682.0" layoutY="209.0" style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" text="Ocupado" />
          </children>
       </AnchorPane>
    </children>
