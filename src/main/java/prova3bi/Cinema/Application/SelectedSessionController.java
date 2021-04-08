@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,32 +34,6 @@ import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Util.Alerts;
 
 public class SelectedSessionController implements Initializable {
-
-	@FXML
-	private TextArea txtSynopsis;
-
-	@FXML
-	private Label txtDirector;
-
-	@FXML
-	private Label txtGender;
-
-	@FXML
-	private Label txtTicketValue;
-
-	@FXML
-	private Label txtQuantity;
-
-	@FXML
-	private Label txtTitle;
-
-	@FXML
-	private GridPane panel;
-
-	@FXML
-	private HBox chairSession;
-
-	private Session session;
 
 	private ObservableList<Chair> obsList = FXCollections.observableArrayList();
 
@@ -161,10 +133,6 @@ public class SelectedSessionController implements Initializable {
 		return fxml;
 	}
 
-// PODE VIR A SER UTIl
-//	private static List<String> letters = new ArrayList<String>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H",
-//			"I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
-
 	private void LoadChair(Chair chair, VBox vBox, FXMLLoader fxml) {
 		ChairController chairController = fxml.getController();
 		chairController.setChair(chair);
@@ -179,4 +147,30 @@ public class SelectedSessionController implements Initializable {
 		panel.setPrefHeight(Region.USE_COMPUTED_SIZE);
 		panel.setMaxHeight(Region.USE_PREF_SIZE);
 	}
+	
+	@FXML
+	private TextArea txtSynopsis;
+
+	@FXML
+	private Label txtDirector;
+
+	@FXML
+	private Label txtGender;
+
+	@FXML
+	private Label txtTicketValue;
+
+	@FXML
+	private Label txtQuantity;
+
+	@FXML
+	private Label txtTitle;
+
+	@FXML
+	private GridPane panel;
+
+	@FXML
+	private HBox chairSession;
+
+	private Session session;
 }

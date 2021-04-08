@@ -6,26 +6,13 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import prova3bi.Cinema.Application.Singletons.LoginHolder;
 import prova3bi.Cinema.Domain.Entities.Login;
-import prova3bi.Cinema.Domain.Entities.PermissionLevel;
 
 public class DashboardController implements Initializable {
-
-	private Login signedUser;
-
-	@FXML
-	private Label levelAuthorization;
-	
-	@FXML
-	private Pane buttonEmp;
-	
-	@FXML 
-	private Pane buttonSess;
 
 	@FXML
 	void switchAddEmployee(MouseEvent event) throws IOException {
@@ -51,14 +38,25 @@ public class DashboardController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		signedUser = LoginHolder.getInstance().getLogin();
-		
-		if(signedUser.nivelPermissao.equals(PermissionLevel.Atendente)) {
+
+		if (signedUser.nivelPermissao.equals(Login.Level.Atendente)) {
 			buttonEmp.setStyle("-fx-opacity: 0.9;");
 			buttonEmp.setDisable(true);
-			
+
 			buttonSess.setStyle("-fx-opacity: 0.9;");
 			buttonSess.setDisable(true);
 		}
 	}
+
+	private Login signedUser;
+
+	@FXML
+	private Label levelAuthorization;
+
+	@FXML
+	private Pane buttonEmp;
+
+	@FXML
+	private Pane buttonSess;
 
 }

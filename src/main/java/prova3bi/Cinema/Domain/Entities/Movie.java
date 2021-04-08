@@ -2,15 +2,14 @@ package prova3bi.Cinema.Domain.Entities;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Base64;
 
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Builder.Is;
 import prova3bi.Cinema.Data.Abstractions.Column;
+import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
 import prova3bi.Cinema.Data.Abstractions.Table;
 import prova3bi.Cinema.Domain.Validations.Error;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
@@ -18,7 +17,26 @@ import prova3bi.Cinema.Domain.Validations.Validator;
 
 @Table(nome = "Movies")
 public class Movie extends Entity {
+	public enum Soundtrack implements IEnumColumn {
+		Dublado(1, "Audio dublado"), Legendado(2, "Audio original com legenda"), Orignal(3, "Audio original");
 
+		Soundtrack(int value, String description) {
+			this.description = description;
+			this.value = value;
+		}
+
+		private String description;
+		private int value;
+
+		public String description() {
+			return description;
+		}
+
+		@Override
+		public int valor() {
+			return value;
+		}
+	}
 	@Column(nome = "audioTrack", tipoSql = "INTEGER")
 	public Soundtrack audioTrack;
 	@Column(nome = "synopsis", tipoSql = "TEXT")

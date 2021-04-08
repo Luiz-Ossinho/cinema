@@ -15,14 +15,6 @@ import prova3bi.Cinema.Application.Singletons.SessionHolder;
 import prova3bi.Cinema.Domain.Entities.Session;
 
 public class MovieController implements Initializable {
-	
-	@FXML
-	private ImageView posterMovie;
-
-	@FXML
-	private Label descriptionMovie;
-
-	private Session session;
 
 	@FXML
 	void switchGoToSession(MouseEvent event) throws IOException {
@@ -51,4 +43,11 @@ public class MovieController implements Initializable {
 		descriptionMovie.setTextAlignment(TextAlignment.JUSTIFY);
 	}
 
+	@FXML
+	private ImageView posterMovie;
+
+	@FXML
+	private Label descriptionMovie;
+
+	private Session session;
 }

@@ -41,44 +41,7 @@ import prova3bi.Cinema.Util.Alerts;
 import prova3bi.Cinema.Util.Utils;
 
 public class SessionAdminFormController implements Initializable {
-
-	@FXML
-	private HBox sectionContainer;
-
-	@FXML
-	private TextField txtInitialTime;
-
-	@FXML
-	private TextField txtFinalTime;
-
-	@FXML
-	private TextField txtPrice;
-
-	@FXML
-	private ComboBox<Room> cbClass;
-
-	@FXML
-	private ComboBox<Movie> cbMovie;
-
-	@FXML
-	private Label initialTimeLabel;
-
-	@FXML
-	private Label finalTimeLabel;
-
-	@FXML
-	private Label priceLabel;
-
-	@FXML
-	private Label cbRoomLabel;
-
-	@FXML
-	private Label cbMovieLabel;
-
-	private IRoomService roomService;
-	private ISessionService sessionService;
-	private IMovieService movieService;
-
+	
 	@FXML
 	void onSubmit(ActionEvent event) {
 		ResetErrorMessages();
@@ -120,7 +83,6 @@ public class SessionAdminFormController implements Initializable {
 		Stage stage = new Stage();
 		Parent root = FXMLLoader.load(SessionAdminFormController.class.getResource("MovieForm.fxml"));
 		stage.setScene(new Scene(root));
-		stage.setTitle("Um novo filme ?!");
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setResizable(false);
 		stage.initOwner(((Node) event.getSource()).getScene().getWindow());
@@ -132,8 +94,6 @@ public class SessionAdminFormController implements Initializable {
 		Stage stage = new Stage();
 		Parent root = FXMLLoader.load(SessionAdminFormController.class.getResource("RoomForm.fxml"));
 		stage.setScene(new Scene(root));
-		// precisa mesmo disse cara?
-		// stage.setTitle("Uma nova sala ?!");
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setResizable(false);
 		stage.initOwner(((Node) event.getSource()).getScene().getWindow());
@@ -256,4 +216,41 @@ public class SessionAdminFormController implements Initializable {
 			setText(!empty ? item.title : "");
 		}
 	};
+	
+	@FXML
+	private HBox sectionContainer;
+
+	@FXML
+	private TextField txtInitialTime;
+
+	@FXML
+	private TextField txtFinalTime;
+
+	@FXML
+	private TextField txtPrice;
+
+	@FXML
+	private ComboBox<Room> cbClass;
+
+	@FXML
+	private ComboBox<Movie> cbMovie;
+
+	@FXML
+	private Label initialTimeLabel;
+
+	@FXML
+	private Label finalTimeLabel;
+
+	@FXML
+	private Label priceLabel;
+
+	@FXML
+	private Label cbRoomLabel;
+
+	@FXML
+	private Label cbMovieLabel;
+
+	private IRoomService roomService;
+	private ISessionService sessionService;
+	private IMovieService movieService;
 }

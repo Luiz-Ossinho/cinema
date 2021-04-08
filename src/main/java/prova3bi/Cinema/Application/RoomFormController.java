@@ -12,36 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import prova3bi.Cinema.Application.Singletons.RoomHolder;
 import prova3bi.Cinema.Domain.Entities.Room;
-import prova3bi.Cinema.Domain.Entities.RoomType;
 import prova3bi.Cinema.Domain.Interfaces.Services.IRoomService;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
 import prova3bi.Cinema.Services.UnitFactory;
 import prova3bi.Cinema.Util.Utils;
 
 public class RoomFormController implements Initializable {
-
-	@FXML
-	private HBox RoomForm;
-
-	@FXML
-	private ComboBox<RoomType> cbType;
-
-	@FXML
-	private TextField txtRoomNumber;
-
-	@FXML
-	private TextField txtNumberSeats;
-
-	@FXML
-	private Label txtTypeLabel;
-
-	@FXML
-	private Label txtSeatsLabel;
-
-	@FXML
-	private Label txtRoomLabel;
-
-	private IRoomService roomService;
 
 	@FXML
 	void switchSubmit(ActionEvent event) {
@@ -68,7 +44,7 @@ public class RoomFormController implements Initializable {
 
 		return errors.addAll(room.isValid());
 	}
-	
+
 	private void PersistRoom() {
 		var holderInstance = RoomHolder.getInstance();
 		var room = holderInstance.getRoom();
@@ -84,14 +60,36 @@ public class RoomFormController implements Initializable {
 		txtRoomLabel.setText(errors.GetErrorLabel("RoomNumber"));
 	}
 
+	public void initializeTypeComboBox() {
+		cbType.getItems().setAll(Room.Type.values());
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeTypeComboBox();
 		roomService = UnitFactory.getRoomService();
 	}
-	
-	public void initializeTypeComboBox() {
-		cbType.getItems().setAll(RoomType.values());
-	}
 
+	@FXML
+	private HBox RoomForm;
+
+	@FXML
+	private ComboBox<Room.Type> cbType;
+
+	@FXML
+	private TextField txtRoomNumber;
+
+	@FXML
+	private TextField txtNumberSeats;
+
+	@FXML
+	private Label txtTypeLabel;
+
+	@FXML
+	private Label txtSeatsLabel;
+
+	@FXML
+	private Label txtRoomLabel;
+
+	private IRoomService roomService;
 }

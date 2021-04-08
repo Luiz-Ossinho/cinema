@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import prova3bi.Cinema.Application.Singletons.LoginHolder;
 import prova3bi.Cinema.Domain.Entities.Login;
-import prova3bi.Cinema.Domain.Entities.PermissionLevel;
 import prova3bi.Cinema.Domain.Interfaces.Services.ILoginService;
 import prova3bi.Cinema.Domain.Validations.ValidationHelper;
 import prova3bi.Cinema.Services.UnitFactory;
@@ -51,7 +50,7 @@ public class SignInController implements Initializable {
 	}
 
 	private void FirstLogin(String username, String password) {
-		Login log = new Login(username, password, PermissionLevel.Admin);
+		Login log = new Login(username, password, Login.Level.Admin);
 		LoginHolder.getInstance().setLogin(service.Add(log));
 		GoToDashboard();
 	}
