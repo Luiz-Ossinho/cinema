@@ -9,7 +9,7 @@ module prova3bi.Cinema {
 	requires com.google.zxing.javase;
 	requires javafx.graphics;
 
-    opens prova3bi.Cinema to javafx.fxml;
-    exports prova3bi.Cinema;
+    opens prova3bi.Cinema.Application to javafx.fxml;
+    exports prova3bi.Cinema.Application;
     exports prova3bi.Cinema.Data;
 }

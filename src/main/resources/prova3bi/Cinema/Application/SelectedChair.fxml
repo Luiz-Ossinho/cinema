@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity"
+	onMouseClicked="#switchGoToSession" prefHeight="30.0" prefWidth="30.0"
+	style="-fx-cursor: hand; -fx-background-color: #ff0657; -fx-background-radius: 8;"
+	xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="prova3bi.Cinema.Application.MovieController" />

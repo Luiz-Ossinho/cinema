@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<HBox fx:id="backgroundScene" maxHeight="-Infinity"
+	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+	prefHeight="675.0" prefWidth="1200.0"
+	style="-fx-background-color: #14111f;"
+	stylesheets="@Styles/application.css"
+	xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="prova3bi.Cinema.Application.SessionListController">
+	<children>
+		<AnchorPane prefHeight="635.0" prefWidth="1200.0">
+			<children>
+				<Pane layoutX="1010.0" layoutY="71.0"
+					onMouseClicked="#switchGoBack" prefHeight="38.0" prefWidth="38.0"
+					style="-fx-background-color: #f0f2f0; -fx-background-radius: 8; -fx-cursor: hand;">
+					<children>
+						<Label layoutX="13.0" layoutY="5.0"
+							style="-fx-font-size: 24; -fx-text-fill: #ff0657; -fx-font-family: Roboto;"
+							text="&lt;" />
+					</children>
+				</Pane>
+				<Label layoutX="146.0" layoutY="64.0"
+					style="-fx-font-size: 36;" styleClass="fontBold" text="Sess" />
+				<Label layoutX="238.0" layoutY="64.0"
+					style="-fx-font-size: 36; -fx-text-fill: #ff0657;"
+					styleClass="fontBold" text="ões" />
+				<ScrollPane layoutX="146.0" layoutY="137.0"
+					prefHeight="258.0" prefWidth="1053.0"
+					style="-fx-background-color: transparent;">
+					<content>
+						<HBox fx:id="recentlyMovieContainer" prefHeight="0.0"
+							prefWidth="0.0" spacing="10.0">
+							<padding>
+								<Insets left="20.0" />
+							</padding>
+						</HBox>
+					</content>
+				</ScrollPane>
+				<ImageView fitHeight="178.0" fitWidth="483.0"
+					layoutX="146.0" layoutY="403.0" pickOnBounds="true"
+					preserveRatio="true">
+					<image>
+						<Image url="@../../../Images/ads.png" />
+					</image>
+				</ImageView>
+			</children>
+		</AnchorPane>
+	</children>
+</HBox>

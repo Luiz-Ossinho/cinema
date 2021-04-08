@@ -22,16 +22,31 @@ import com.lowagie.text.pdf.PdfWriter;
 import prova3bi.Cinema.Data.Abstractions.Builder;
 import prova3bi.Cinema.Data.Abstractions.Builder.Is;
 import prova3bi.Cinema.Data.Abstractions.Column;
+import prova3bi.Cinema.Data.Abstractions.IEnumColumn;
 import prova3bi.Cinema.Data.Abstractions.Table;
 import prova3bi.Cinema.Domain.Validations.ErrorList;
 
 @Table(nome = "Tickets", fks = { "poltrona;Poltronas" })
 public class Ticket extends Entity {
-	private final static String pathQR = "qr.jpg";
+	public enum Status implements IEnumColumn {
+		Pendente(1), Quitado(2);
 
+		Status(int value) {
+			this.value = value;
+		}
+
+		private int value;
+
+		@Override
+		public int valor() {
+			return value;
+		}
+
+	}
+	
 	// [1, 4, Pendente]
 	@Builder(Is.Read)
-	public Ticket(int TicketsID, int chair, TicketStatus status) {
+	public Ticket(int TicketsID, int chair, Ticket.Status status) {
 		super(TicketsID);
 		this.status = status;
 		this.poltrona = new Chair(chair);
@@ -41,16 +56,16 @@ public class Ticket extends Entity {
 	public Ticket(Chair chair) {
 		super(-1);
 		this.poltrona = chair;
-		this.status = TicketStatus.Pendente;
+		this.status = Ticket.Status.Pendente;
 	}
 
 	@Column(nome = "status", tipoSql = "INTEGER")
-	public TicketStatus status;
+	public Status status;
 	@Column(nome = "poltrona", tipoSql = "INTEGER", isFk = true)
 	public Chair poltrona;
 
 	public void Quitar() {
-		this.status = TicketStatus.Quitado;
+		this.status = Ticket.Status.Quitado;
 	}
 
 	@Override
@@ -60,10 +75,9 @@ public class Ticket extends Entity {
 
 	private static Image createQR(int id) throws WriterException, IOException {
 		BitMatrix matrix = new MultiFormatWriter().encode(Integer.toString(id), BarcodeFormat.QR_CODE, 500, 500);
-
-		MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(pathQR));
-		Image qr = Image.getInstance(pathQR);
-		return qr;
+		var byteArraySteam = new ByteArrayOutputStream();
+		MatrixToImageWriter.writeToStream(matrix, "jpg", byteArraySteam);
+		return Image.getInstance(byteArraySteam.toByteArray());
 	}
 
 	public static OutputStream createPDF(List<Ticket> tickets) {
@@ -73,8 +87,7 @@ public class Ticket extends Entity {
 		var pdfByteArrayStream = new ByteArrayOutputStream();
 		try {
 			writer = PdfWriter.getInstance(document, pdfByteArrayStream);
-
-			Image logo = Image.getInstance("src/main/resources/prova3bi/Images/cinenowLogo.png");
+			Image logo = Image.getInstance("src/main/resources/Images/cinenowLogo.png");
 
 			logo.setAlignment(Image.ALIGN_CENTER);
 			document.open();

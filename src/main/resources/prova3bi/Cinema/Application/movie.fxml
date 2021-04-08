@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity"
+	onMouseClicked="#switchGoToSession" prefHeight="225.0"
+	prefWidth="138.0" style="-fx-cursor: hand;"
+	xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="prova3bi.Cinema.Application.MovieController">
+	<children>
+		<ImageView fx:id="posterMovie" fitHeight="209.0"
+			fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../../../Images/jokerImage.png" />
+			</image>
+		</ImageView>
+		<Label fx:id="descriptionMovie" prefHeight="18.0"
+			prefWidth="138.0" text="dljvnofdvonbvon" />
+	</children>
+</VBox>

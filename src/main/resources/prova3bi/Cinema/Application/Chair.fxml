@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="chairContainer" maxHeight="-Infinity"
+	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+	onMouseClicked="#onSelectChair" prefHeight="30.0" prefWidth="30.0"
+	style="-fx-cursor: hand; -fx-background-color: #fff; -fx-background-radius: 8;"
+	xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="prova3bi.Cinema.Application.ChairController">
+	<children>
+		<AnchorPane prefHeight="200.0" prefWidth="200.0"
+			style="-fx-background-color: transparent;">
+			<children>
+				<Label fx:id="chairPosition" layoutX="3.0" layoutY="4.0"
+					text="A 2">
+					<padding>
+						<Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+					</padding>
+				</Label>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>

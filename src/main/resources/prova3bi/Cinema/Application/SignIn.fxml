@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0"
+	prefWidth="1200.0" style="-fx-background-color: #14111f;"
+	stylesheets="@Styles/application.css"
+	xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="prova3bi.Cinema.Application.SignInController">
+	<children>
+		<AnchorPane prefHeight="635.0" prefWidth="1200.0"
+			stylesheets="@Styles/application.css">
+			<children>
+				<ImageView fitHeight="809.0" fitWidth="1228.0"
+					layoutX="-4.0" layoutY="-25.0" pickOnBounds="true"
+					preserveRatio="true" style="-fx-opacity: 0.08;">
+					<image>
+						<Image url="@../../../Images/backgroundLogin.jpg" />
+					</image>
+				</ImageView>
+				<Label layoutX="737.0" layoutY="218.0"
+					style="-fx-font-size: 36;" styleClass="fontBold" text="cine" />
+				<Label layoutX="816.0" layoutY="218.0"
+					style="-fx-font-size: 36; -fx-text-fill: #ff0657;"
+					styleClass="fontBold" text="now" />
+				<Button id="buttonStyle" layoutX="743.0" layoutY="478.0"
+					mnemonicParsing="false" onAction="#switchLogin" prefHeight="52.0"
+					prefWidth="300.0" text="Entrar" />
+				<Pane layoutX="743.0" layoutY="541.0"
+					onMouseClicked="#switchGoBack" prefHeight="36.0" prefWidth="70.0"
+					style="-fx-cursor: hand;">
+					<children>
+						<Label layoutY="7.0"
+							style="-fx-font-family: Roboto; -fx-font-size: 18; -fx-text-fill: #f0f2f0;"
+							text="&lt; Voltar" />
+					</children>
+				</Pane>
+				<ImageView fitHeight="23.0" fitWidth="29.0"
+					layoutX="757.0" layoutY="338.0" pickOnBounds="true"
+					preserveRatio="true">
+					<image>
+						<Image url="@../../../Images/userIcon.png" />
+					</image>
+				</ImageView>
+				<ImageView fitHeight="23.0" fitWidth="29.0"
+					layoutX="757.0" layoutY="417.0" pickOnBounds="true"
+					preserveRatio="true">
+					<image>
+						<Image url="@../../../Images/passIcon.png" />
+					</image>
+				</ImageView>
+				<Pane layoutX="743.0" layoutY="320.0" prefHeight="60.0"
+					prefWidth="300.0"
+					style="-fx-background-color: #fff; -fx-background-radius: 8;">
+					<children>
+						<TextField fx:id="textField" layoutX="56.0"
+							layoutY="15.0" prefHeight="30.0" prefWidth="220.0"
+							promptText="Usuário" style="-fx-background-color: transparent;" />
+						<ImageView fitHeight="20.0" fitWidth="20.0"
+							layoutX="24.0" layoutY="20.0" pickOnBounds="true"
+							preserveRatio="true">
+							<image>
+								<Image url="@../../../Images/userIcon2.png" />
+							</image>
+						</ImageView>
+					</children>
+				</Pane>
+				<Pane layoutX="743.0" layoutY="399.0" prefHeight="60.0"
+					prefWidth="300.0"
+					style="-fx-background-color: #fff; -fx-background-radius: 8;">
+					<children>
+						<ImageView fitHeight="20.0" fitWidth="20.0"
+							layoutX="24.0" layoutY="20.0" pickOnBounds="true"
+							preserveRatio="true">
+							<image>
+								<Image url="@../../../Images/passwordIcon.png" />
+							</image>
+						</ImageView>
+						<PasswordField fx:id="passField" layoutX="56.0"
+							layoutY="15.0" prefHeight="30.0" prefWidth="220.0"
+							promptText="Senha" style="-fx-background-color: transparent;" />
+					</children>
+				</Pane>
+			</children>
+		</AnchorPane>
+	</children>
+</HBox>

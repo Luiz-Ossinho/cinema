@@ -4,8 +4,6 @@ import java.util.List;
 
 import prova3bi.Cinema.Data.DBContext;
 import prova3bi.Cinema.Data.Abstractions.Query;
-import prova3bi.Cinema.Data.Abstractions.Query.Comand;
-import prova3bi.Cinema.Data.Abstractions.Query.Modifiers;
 import prova3bi.Cinema.Domain.Entities.Movie;
 import prova3bi.Cinema.Domain.Interfaces.Repositories.IMovieRepository;
 
@@ -19,7 +17,7 @@ public class MovieRepository implements IMovieRepository {
 	
 	@Override
 	public Movie Get(int id) {
-		Query<Movie> query = new Query<Movie>(Comand.Select, Modifiers.Limit1, Movie.class)
+		Query<Movie> query = new Query<Movie>(Query.Comand.Select, Query.Modifiers.Limit1, Movie.class)
 				.PKEquals(id+"");
 
 		return context.get(query);
@@ -27,7 +25,7 @@ public class MovieRepository implements IMovieRepository {
 
 	@Override
 	public int Add(Movie movie) {
-		Query<Movie> query = new Query<Movie>(Comand.Insert, Movie.class)
+		Query<Movie> query = new Query<Movie>(Query.Comand.Insert, Movie.class)
 				.value(movie.title, "title")
 				.value(movie.encodedPoster, "encodedPoster")
 				.value(movie.synopsis, "synopsis")
@@ -38,7 +36,7 @@ public class MovieRepository implements IMovieRepository {
 
 	@Override
 	public List<Movie> GetAll() {
-		var query = new Query<Movie>(Comand.Select, Movie.class);
+		var query = new Query<Movie>(Query.Comand.Select, Movie.class);
 		
 		return context.getAll(query);
 	}
