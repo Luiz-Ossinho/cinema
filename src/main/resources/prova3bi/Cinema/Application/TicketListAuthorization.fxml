@@ -63,20 +63,13 @@
 					text="Autorização de tickets " />
 				<Label fx:id="successTitle" layoutX="616.0" layoutY="216.0"
 					style="-fx-font-size: 40;" styleClass="fontBold" />
-				<Label fx:id="successStatusTicket" layoutX="616.0"
-					layoutY="300.0"
+				<Label fx:id="successChair" layoutX="616.0" layoutY="300.0"
 					style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
 				<Label fx:id="successMovie" layoutX="616.0" layoutY="345.0"
 					style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
 				<Label fx:id="successRoom" layoutX="616.0" layoutY="387.0"
 					style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
-				<Label fx:id="successInitMovie" layoutX="616.0"
-					layoutY="426.0"
-					style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
-				<Label fx:id="successFinalSection" layoutX="616.0"
-					layoutY="459.0"
-					style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
-				<Label fx:id="successMessage" layoutX="616.0" layoutY="496.0"
+				<Label fx:id="successMessage" layoutX="616.0" layoutY="435.0"
 					style="-fx-font-family: Roboto; -fx-text-fill: #fff; -fx-font-size: 16;" />
 			</children>
 		</AnchorPane>

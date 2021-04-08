@@ -36,6 +36,9 @@ public class ChairController implements Initializable {
 		case Pending:
 			SetAsPending();
 			break;
+		case Available:
+			initialState = Chair.State.Available;
+			break;
 		}
 	}
 
@@ -62,21 +65,24 @@ public class ChairController implements Initializable {
 	// Implementar pendente
 	private void SetAsPending() {
 		initialState = Chair.State.Pending;
-		chairContainer.setStyle("-fx-background-color:  #ff0657; -fx-background-radius: 8;");
+		chairContainer.setStyle("-fx-cursor: hand; -fx-background-color: #8B1E3F; -fx-background-radius: 8;");
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}
 
 	private void SetAsDisselected() {
-		if (initialState != Chair.State.Occupied) {
+		if (initialState == Chair.State.Available) {
 			IsSelected = false;
 			chairContainer.setStyle("-fx-cursor: hand; -fx-background-color:  #ffffff; -fx-background-radius: 8; ");
 			chairPosition.setStyle("-fx-text-fill: #000000;");
+		} else if (initialState == Chair.State.Pending) {
+			IsSelected = false;
+			SetAsPending();
 		}
 	}
 
 	private void SetAsSeleceted() {
 		IsSelected = true;
-		chairContainer.setStyle("-fx-cursor: hand; -fx-background-color: #af2350c9; -fx-background-radius: 8;");
+		chairContainer.setStyle("-fx-cursor: hand; -fx-background-color: #B24C63; -fx-background-radius: 8;");
 		chairPosition.setStyle("-fx-text-fill: #ffffff;");
 	}
 

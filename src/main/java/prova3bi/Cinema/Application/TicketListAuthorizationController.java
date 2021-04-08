@@ -30,20 +30,14 @@ public class TicketListAuthorizationController implements Initializable {
 	private Label successTitle;
 
 	@FXML
-	private Label successStatusTicket;
+	private Label successChair;
 
 	@FXML
 	private Label successMovie;
 
 	@FXML
 	private Label successRoom;
-
-	@FXML
-	private Label successInitMovie;
-
-	@FXML
-	private Label successFinalSection;
-
+	
 	@FXML
 	private Label successMessage;
 
@@ -79,12 +73,12 @@ public class TicketListAuthorizationController implements Initializable {
 		var session = chair.sessao;
 		var room = session.sala;
 		var movie = session.filme;
-		var srtBody = "Ticket id: " + ticket.getId() + " \n";
-		srtBody += "Poltrona: " + chair.column + " " + " " + chair.row + " \n";
-		srtBody += "Na sala: " + room.numeroSala + " \n";
-		srtBody += "Para o filme: " + movie.title + " \n";
-
-		Alerts.showAlert("Sucesso!", "Ticket quitado", srtBody, AlertType.INFORMATION);
+		
+		successTitle.setText("Ticket gerado! Id: " + ticket.getId());
+		successMovie.setText("Filme: " + movie.title);
+		successRoom.setText("Sala: " + room.numeroSala + "");
+		successChair.setText("Poltrona: " + chair.column + " " + " " + chair.row);
+		successMessage.setText("Se prepara que o filme ja vai começar!");
 
 	}
 	
